@@ -326,6 +326,11 @@ return [
             'url'         => 'product',
             'icon'        => 'fa fa-shopping-bag',
         ],
+        [
+            'text'        => 'Service',
+            'url'         => 'service',
+            'icon'        => 'fa fa-briefcase',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

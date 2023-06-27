@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,10 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::get('/product/edit/{kode}', [ProductController::class, 'edit'])->name('product.edit');
 Route::post('/product/update/{kode}', [ProductController::class, 'update'])->name('product.update');
 Route::get('/product/destroy/{kode}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+Route::get('/service', [ServiceController::class, 'index'])->name('service.index');
+Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create');
+Route::post('/service/store', [ServiceController::class, 'store'])->name('service.store');
+Route::get('/service/edit/{kode}', [ServiceController::class, 'edit'])->name('service.edit');
+Route::post('/service/update/{kode}', [ServiceController::class, 'update'])->name('service.update');
+Route::get('/service/destroy/{kode}', [ServiceController::class, 'destroy'])->name('service.destroy');
