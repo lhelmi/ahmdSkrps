@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\BlogController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +47,10 @@ Route::post('/service/store', [ServiceController::class, 'store'])->name('servic
 Route::get('/service/edit/{kode}', [ServiceController::class, 'edit'])->name('service.edit');
 Route::post('/service/update/{kode}', [ServiceController::class, 'update'])->name('service.update');
 Route::get('/service/destroy/{kode}', [ServiceController::class, 'destroy'])->name('service.destroy');
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
+Route::post('/blog/store', [BlogController::class, 'store'])->name('blog.store');
+Route::get('/blog/edit/{kode}', [BlogController::class, 'edit'])->name('blog.edit');
+Route::post('/blog/update/{kode}', [BlogController::class, 'update'])->name('blog.update');
+Route::get('/blog/destroy/{kode}', [BlogController::class, 'destroy'])->name('blog.destroy');

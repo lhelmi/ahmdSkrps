@@ -331,6 +331,16 @@ return [
             'url'         => 'service',
             'icon'        => 'fa fa-briefcase',
         ],
+        [
+            'text'        => 'Media',
+            'url'         => 'media',
+            'icon'        => 'fa fa-rss',
+        ],
+        [
+            'text'        => 'Pengenalan',
+            'url'         => 'blog',
+            'icon'        => 'fa fa-info',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

@@ -4,7 +4,7 @@
 /public/admin/images/products
 /public/admin/images/services
 /public/admin/images/medias
-/public/admin/images/blog
+/public/admin/images/blogs
 /public/storage
 /storage/*.key
 /vendor
