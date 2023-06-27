@@ -117,7 +117,7 @@
                                     @enderror
                                 @endif
                                 <div class="form-group">
-                                    <img src="{{ 'http://localhost:8000/'.$data->images->path.$item }}" width="100%" height="100%" id="img_{{$no}}">
+                                    <img src="{{ URL::to('/').'/'.$data->images->path.$item }}" width="100%" height="100%" id="img_{{$no}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
