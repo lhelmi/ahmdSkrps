@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('type');
             $table->bigInteger('price');
             $table->string('description');
+            $table->string('images');
             $table->string('created_by');
             $table->timestamps();
         });

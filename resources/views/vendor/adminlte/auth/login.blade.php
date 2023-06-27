@@ -18,16 +18,21 @@
     @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
 @endif
 
-@section('auth_header', __('adminlte::adminlte.login_message'))
+{{-- @section('auth_header', __('adminlte::adminlte.login_message')) --}}
 
 @section('auth_body')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success mt-2">{{ $message }}</div>
+    @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger mt-2">{{ $message }}</div>
+    @endif
     <form action="{{ $login_url }}" method="post">
         @csrf
-
-        {{-- Email field --}}
+        {{-- username field --}}
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
+            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                   value="{{ old('username') }}" placeholder="Username" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -35,7 +40,7 @@
                 </div>
             </div>
 
-            @error('email')
+            @error('username')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -62,7 +67,7 @@
 
         {{-- Login field --}}
         <div class="row">
-            <div class="col-7">
+            {{-- <div class="col-12">
                 <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -70,9 +75,9 @@
                         {{ __('adminlte::adminlte.remember_me') }}
                     </label>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-5">
+            <div class="col-12">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
@@ -84,21 +89,26 @@
 @stop
 
 @section('auth_footer')
-    {{-- Password reset link --}}
-    @if($password_reset_url)
-        <p class="my-0">
-            <a href="{{ $password_reset_url }}">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
-            </a>
-        </p>
-    @endif
-
     {{-- Register link --}}
-    @if($register_url)
-        <p class="my-0">
-            <a href="{{ $register_url }}">
-                {{ __('adminlte::adminlte.register_a_new_membership') }}
-            </a>
-        </p>
-    @endif
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            @if($register_url)
+            <p class="my-0">
+                <a href="{{ $register_url }}">
+                    Sign Up
+                </a>
+            </p>
+            @endif
+        </div>
+        <div class="col-sm-12 col-md-6">
+            {{-- Password reset link --}}
+            @if($password_reset_url)
+            <p class="my-0">
+                <a href="{{ $password_reset_url }}">
+                    Forget Password
+                </a>
+            </p>
+            @endif
+        </div>
+    </div>
 @stop

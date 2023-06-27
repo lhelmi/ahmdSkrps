@@ -15,7 +15,7 @@
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
-            <form method="POST" action="{{ route('product.store') }}">
+            <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data" >
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -79,6 +79,13 @@
                         @error('price')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputFile">Foto</label>
+                        <div class="input-group">
+                            <input type="file" name="images[]" id="images" multiple=true>
+                        </div>
                     </div>
 
                     <div class="form-group">

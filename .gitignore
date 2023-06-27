@@ -1,6 +1,10 @@
 /node_modules
 /public/build
 /public/hot
+/public/admin/images/products
+/public/admin/images/services
+/public/admin/images/medias
+/public/admin/images/blog
 /public/storage
 /storage/*.key
 /vendor

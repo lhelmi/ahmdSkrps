@@ -11,4 +11,5 @@ class Constant{
     const UPDATE_FAIL = "Data Gagal Diubah";
     const NOT_FOUND = "Data Tidak Ditemukan";
     const ERROR = "Proses Gagal";
+    const UPLOAD_FAIL = "Proses Upload File Gagal";
 }
