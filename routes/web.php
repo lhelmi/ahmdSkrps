@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\MediaController;
 
 
 /*
@@ -54,3 +55,10 @@ Route::post('/blog/store', [BlogController::class, 'store'])->name('blog.store')
 Route::get('/blog/edit/{kode}', [BlogController::class, 'edit'])->name('blog.edit');
 Route::post('/blog/update/{kode}', [BlogController::class, 'update'])->name('blog.update');
 Route::get('/blog/destroy/{kode}', [BlogController::class, 'destroy'])->name('blog.destroy');
+
+Route::get('/media', [MediaController::class, 'index'])->name('media.index');
+Route::get('/media/create', [MediaController::class, 'create'])->name('media.create');
+Route::post('/media/store', [MediaController::class, 'store'])->name('media.store');
+Route::get('/media/edit/{kode}', [MediaController::class, 'edit'])->name('media.edit');
+Route::post('/media/update/{kode}', [MediaController::class, 'update'])->name('media.update');
+Route::get('/media/destroy/{kode}', [MediaController::class, 'destroy'])->name('media.destroy');
