@@ -15,9 +15,8 @@
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
-            <form action="{{ route('admin.update', $data->id) }}">
+            <form action="{{ route('admin.update', $data->id) }}" method="POST">
                 @csrf
-                @method("PUT")
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">Nama</label>

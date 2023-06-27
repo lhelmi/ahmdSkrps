@@ -318,7 +318,7 @@ return [
         ],
         [
             'text'        => 'Admin',
-            'url'         => 'admin',
+            'url'         => 'auth/admin',
             'icon'        => 'fa fa-fw fa-user',
         ],
         [

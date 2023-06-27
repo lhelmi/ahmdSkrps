@@ -24,12 +24,12 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
-Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
-Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-Route::get('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
-Route::get('/admin/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::get('/auth/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/auth/admin/create', [AdminController::class, 'create'])->name('admin.create');
+Route::post('/auth/admin/store', [AdminController::class, 'store'])->name('admin.store');
+Route::get('/auth/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+Route::post('/auth/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+Route::get('/auth/admin/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');

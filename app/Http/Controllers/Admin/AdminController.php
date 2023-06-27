@@ -64,6 +64,7 @@ class AdminController extends Controller
             return redirect()->route('admin.index')->with('success', Constant::SAVE_SUCCESS);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
+            dd($th->getMessage());
             return redirect()->route('admin.create')->with('error', Constant::SAVE_FAIL);
         }
 
