@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MediaController;
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductFeController;
+use App\Http\Controllers\Front\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,9 @@ use App\Http\Controllers\Front\ProductFeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('front.index');
 Route::get('/home', [HomeController::class, 'index'])->name('front.home');
+Route::get('/order', [OrderController::class, 'index'])->name('front.order.index');
 Route::get('/product', [ProductFeController::class, 'index'])->name('front.product.index');
-Route::get('/product/{id}', [ProductFeController::class, 'detail'])->name('front.product.detail');
+Route::get('/product/{id}', [ProductFeController::class, 'show'])->name('front.product.show');
 
 Auth::routes();
 Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');

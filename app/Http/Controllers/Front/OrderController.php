@@ -9,7 +9,7 @@ use App\Models\Service;
 use App\Models\User;
 use config\Constant;
 
-class ProductFeController extends Controller
+class OrderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,16 +28,6 @@ class ProductFeController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(1);
-        return view('front.product.index', compact('products'));
-    }
-
-    public function show(String $id)
-    {
-        $data = Product::where('kode', $id)->first();
-        if($data == null) return redirect()->route('front.product.index')->with('error', Constant::NOT_FOUND);
-
-        $data->images = json_decode($data->images);
-        return view('front.product.show', compact('data'));
+        return view('front.order');
     }
 }

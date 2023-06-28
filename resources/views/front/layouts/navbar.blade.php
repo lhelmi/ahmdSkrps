@@ -17,13 +17,13 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">About us</a>
+                    <a class="nav-link" href="{{ route('front.index') }}">About us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">Pengenalan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Produk</a>
+                    <a class="nav-link" href="{{ route('front.product.index') }}">Produk</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">Jasa</a>
@@ -32,7 +32,7 @@
                     <a class="nav-link" href="{{ route('login') }}">Media</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Pemesanan</a>
+                    <a class="nav-link" href="{{ route('front.order.index') }}">Pemesanan</a>
                 </li>
                 <!-- Authentication Links -->
                 @guest

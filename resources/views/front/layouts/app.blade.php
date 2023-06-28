@@ -25,6 +25,7 @@
         <main role="main">
             @yield('content')
         </main>
+        @include('front.layouts.footer')
     </div>
     @yield('js')
 </body>

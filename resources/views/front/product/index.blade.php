@@ -19,7 +19,7 @@
                         <img class="card-img-top" style="height: 225px; width: 100%; display: block;"
                         src="{{ URL::to('/').'/'.$product->images->path.'/'.$product->images->images[0] }}" data-holder-rendered="true">
                         <div class="card-body">
-                            <h5 class="card-link"><a href="{{ route('front.product.detail', $product->kode )}}"> {{ $product->name }}</a></h5>
+                            <h5 class="card-link"><a href="{{ route('front.product.show', $product->kode )}}"> {{ $product->name }}</a></h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 Rp. {{ number_format($product->price,2,',','.') }}
                             </div>
