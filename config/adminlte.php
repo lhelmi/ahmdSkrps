@@ -313,7 +313,7 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'home',
+            'url'         => 'admin/home',
             'icon'        => 'fa fa-fw fa-home',
         ],
         [
@@ -323,22 +323,22 @@ return [
         ],
         [
             'text'        => 'Produk',
-            'url'         => 'product',
+            'url'         => 'admin/product',
             'icon'        => 'fa fa-shopping-bag',
         ],
         [
             'text'        => 'Service',
-            'url'         => 'service',
+            'url'         => 'admin/service',
             'icon'        => 'fa fa-briefcase',
         ],
         [
             'text'        => 'Media',
-            'url'         => 'media',
+            'url'         => 'admin/media',
             'icon'        => 'fa fa-rss',
         ],
         [
             'text'        => 'Pengenalan',
-            'url'         => 'blog',
+            'url'         => 'admin/blog',
             'icon'        => 'fa fa-info',
         ],
         // ['header' => 'account_settings'],
