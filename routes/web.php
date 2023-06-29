@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductFeController;
 use App\Http\Controllers\Front\OrderController;
+use App\Http\Controllers\Front\MediaController as FeMediaController;
+use App\Http\Controllers\Front\ServiceController as FEServiceController;
+use App\Http\Controllers\Front\BlogController as FEBlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('front.home');
 Route::get('/order', [OrderController::class, 'index'])->name('front.order.index');
 Route::get('/product', [ProductFeController::class, 'index'])->name('front.product.index');
 Route::get('/product/{id}', [ProductFeController::class, 'show'])->name('front.product.show');
+Route::get('/media', [FeMediaController::class, 'index'])->name('front.media.index');
+Route::get('/media/{id}', [FeMediaController::class, 'download'])->name('front.media.download');
+Route::get('/service', [FEServiceController::class, 'index'])->name('front.service.index');
+Route::get('/service/{id}', [FEServiceController::class, 'show'])->name('front.service.show');
+Route::get('/blog', [FEBlogController::class, 'index'])->name('front.blog.index');
 
 Auth::routes();
 Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');

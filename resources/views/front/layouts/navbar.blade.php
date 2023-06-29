@@ -20,16 +20,16 @@
                     <a class="nav-link" href="{{ route('front.index') }}">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Pengenalan</a>
+                    <a class="nav-link" href="{{ route('front.blog.index') }}">Pengenalan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.product.index') }}">Produk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Jasa</a>
+                    <a class="nav-link" href="{{ route('front.service.index') }}">Jasa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Media</a>
+                    <a class="nav-link" href="{{ route('front.media.index') }}">Media</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.order.index') }}">Pemesanan</a>
@@ -43,7 +43,7 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a href="{{ route('dashboard.index') }}" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
                     </li>
