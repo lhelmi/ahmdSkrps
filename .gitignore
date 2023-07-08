@@ -1,6 +1,7 @@
 /node_modules
 /public/build
 /public/hot
+/public/admin
 /public/admin/images/products
 /public/admin/images/services
 /public/admin/images/medias
@@ -8,7 +9,7 @@
 /public/storage
 /storage/*.key
 /vendor
-# .env
+.env
 .env.backup
 .env.production
 .phpunit.result.cache
