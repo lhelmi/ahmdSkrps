@@ -53,50 +53,52 @@ Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.c
 Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
 
 Auth::routes();
-Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::middleware(['isAdmin'])->group(function () {
 
-Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');
-Route::get('/admin/administrasi/create', [AdminController::class, 'create'])->name('admin.create');
-Route::post('/admin/administrasi/store', [AdminController::class, 'store'])->name('admin.store');
-Route::get('/admin/administrasi/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-Route::post('/admin/administrasi/update/{id}', [AdminController::class, 'update'])->name('admin.update');
-Route::get('/admin/administrasi/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
-Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
-Route::get('/admin/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-Route::post('/admin/user/update/{id}', [UserController::class, 'update'])->name('user.update');
-Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/administrasi/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin/administrasi/store', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/administrasi/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::post('/admin/administrasi/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+    Route::get('/admin/administrasi/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
-Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('admin/product/create', [ProductController::class, 'create'])->name('product.create');
-Route::post('admin/product/store', [ProductController::class, 'store'])->name('product.store');
-Route::get('admin/product/edit/{kode}', [ProductController::class, 'edit'])->name('product.edit');
-Route::post('admin/product/update/{kode}', [ProductController::class, 'update'])->name('product.update');
-Route::get('admin/product/destroy/{kode}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/admin/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/admin/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
-Route::get('admin/service/create', [ServiceController::class, 'create'])->name('service.create');
-Route::post('admin/service/store', [ServiceController::class, 'store'])->name('service.store');
-Route::get('admin/service/edit/{kode}', [ServiceController::class, 'edit'])->name('service.edit');
-Route::post('admin/service/update/{kode}', [ServiceController::class, 'update'])->name('service.update');
-Route::get('admin/service/destroy/{kode}', [ServiceController::class, 'destroy'])->name('service.destroy');
+    Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('admin/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('admin/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('admin/product/edit/{kode}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::post('admin/product/update/{kode}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('admin/product/destroy/{kode}', [ProductController::class, 'destroy'])->name('product.destroy');
 
-Route::get('admin/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('admin/blog/create', [BlogController::class, 'create'])->name('blog.create');
-Route::post('admin/blog/store', [BlogController::class, 'store'])->name('blog.store');
-Route::get('admin/blog/edit/{kode}', [BlogController::class, 'edit'])->name('blog.edit');
-Route::post('admin/blog/update/{kode}', [BlogController::class, 'update'])->name('blog.update');
-Route::get('admin/blog/destroy/{kode}', [BlogController::class, 'destroy'])->name('blog.destroy');
+    Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('admin/service/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('admin/service/store', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('admin/service/edit/{kode}', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::post('admin/service/update/{kode}', [ServiceController::class, 'update'])->name('service.update');
+    Route::get('admin/service/destroy/{kode}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
-Route::get('admin/media', [MediaController::class, 'index'])->name('media.index');
-Route::get('admin/media/create', [MediaController::class, 'create'])->name('media.create');
-Route::post('admin/media/store', [MediaController::class, 'store'])->name('media.store');
-Route::get('admin/media/edit/{kode}', [MediaController::class, 'edit'])->name('media.edit');
-Route::post('admin/media/update/{kode}', [MediaController::class, 'update'])->name('media.update');
-Route::get('admin/media/destroy/{kode}', [MediaController::class, 'destroy'])->name('media.destroy');
+    Route::get('admin/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('admin/blog/create', [BlogController::class, 'create'])->name('blog.create');
+    Route::post('admin/blog/store', [BlogController::class, 'store'])->name('blog.store');
+    Route::get('admin/blog/edit/{kode}', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::post('admin/blog/update/{kode}', [BlogController::class, 'update'])->name('blog.update');
+    Route::get('admin/blog/destroy/{kode}', [BlogController::class, 'destroy'])->name('blog.destroy');
 
+    Route::get('admin/media', [MediaController::class, 'index'])->name('media.index');
+    Route::get('admin/media/create', [MediaController::class, 'create'])->name('media.create');
+    Route::post('admin/media/store', [MediaController::class, 'store'])->name('media.store');
+    Route::get('admin/media/edit/{kode}', [MediaController::class, 'edit'])->name('media.edit');
+    Route::post('admin/media/update/{kode}', [MediaController::class, 'update'])->name('media.update');
+    Route::get('admin/media/destroy/{kode}', [MediaController::class, 'destroy'])->name('media.destroy');
+});
 Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
 Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit');
 Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update');
