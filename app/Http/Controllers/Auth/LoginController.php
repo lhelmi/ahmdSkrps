@@ -61,6 +61,9 @@ class LoginController extends Controller
             if(AuthSupport::user()->role == 1){
                 return redirect()->route('warranty.index');
             }
+            if(AuthSupport::user()->role == 2){
+                return redirect()->route('front.index');
+            }
             return redirect()->intended($this->redirectPath());
         }
     }
