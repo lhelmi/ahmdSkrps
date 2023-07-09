@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('front.index') }}">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.blog.index') }}">Pengenalan</a>
+                    <a class="nav-link" href="{{ route('front.blog.index') }}">Berita</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.product.index') }}">Produk</a>
@@ -29,7 +29,10 @@
                     <a class="nav-link" href="{{ route('front.service.index') }}">Jasa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.media.index') }}">Media</a>
+                    <a class="nav-link" href="{{ route('front.warranty.index') }}">Garansi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('front.complaint.index') }}">Keluhan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.order.index') }}">Pemesanan</a>
@@ -43,7 +46,15 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a href="{{ route('dashboard.index') }}" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        @php
+                            $route = "#";
+                            if(Auth::user()->role == 0){
+                                $route = route('dashboard.index');
+                            }if (Auth::user()->role == 1) {
+                                $route = route('warranty.index');
+                            }
+                        @endphp
+                        <a href="{{ $route }}" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
                     </li>

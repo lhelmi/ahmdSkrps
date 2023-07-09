@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('complaints', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('complaint');
-            $table->string('suggestions');
-            $table->string('criticism');
+            $table->string('complaint')->nullable();
+            $table->string('suggestions')->nullable();
+            $table->string('criticism')->nullable();
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

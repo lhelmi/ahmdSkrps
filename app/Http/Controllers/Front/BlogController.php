@@ -29,4 +29,12 @@ class BlogController extends Controller
         $blogs = Blog::paginate(3);
         return view('front.blog.index', compact('blogs'));
     }
+
+    public function show(string $slug)
+    {
+        $blog = Blog::where('slug', $slug)->first();
+        if(!$blog) abort(404);
+
+        return view('front.blog.show', compact('blog'));
+    }
 }

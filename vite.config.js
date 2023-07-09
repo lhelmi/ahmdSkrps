@@ -7,8 +7,15 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/js/select2.full.js',
+                'resources/css/select2.css',
             ],
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '$': 'jquery'
+        },
+    },
 });

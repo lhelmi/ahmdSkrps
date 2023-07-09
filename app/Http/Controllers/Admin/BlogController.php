@@ -46,7 +46,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "title" => ["required", "string", "max:100", "min:1"],
+            "title" => ["required", "string", "max:100", "min:1", "unique:blogs"],
             "description" => ["required", "string", "max:100", "min:1"],
             "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
         ],
@@ -64,7 +64,8 @@ class BlogController extends Controller
 
         try {
             $data = new Blog();
-            $data->title = $request->title;
+            $data->title = trim($request->title);
+            $data->slug = str_replace(' ', '-', trim($request->title));
             $data->description = $request->description;
             $data->image = $uploads;
             $data->created_by = Auth::user()->username;
@@ -108,11 +109,11 @@ class BlogController extends Controller
     {
         $data = Blog::find($id);
         if($data == null) return redirect()->route('blog.index')->with('error', Constant::NOT_FOUND);
+
         $validation = [
-            "title" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "max:100", "min:1"]
         ];
-
+        if($data->title !== $request->title) $validation['title'] = ["required", "string", "max:100", "min:1", "unique:blogs"];
         $message = [];
         if($request->image !== null){
             $validation['image'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
@@ -135,7 +136,8 @@ class BlogController extends Controller
         }
 
         try {
-            $data->title = $request->title;
+            $data->title = trim($request->title);
+            $data->slug = str_replace(' ', '-', trim($request->title));
             $data->description = $request->description;
             $data->image = $upload;
 

@@ -18,6 +18,8 @@ use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\MediaController as FeMediaController;
 use App\Http\Controllers\Front\ServiceController as FEServiceController;
 use App\Http\Controllers\Front\BlogController as FEBlogController;
+use App\Http\Controllers\Front\WarrantyController as FEWarrantyController;
+use App\Http\Controllers\Front\ComplaintController as FEComplaintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,11 @@ Route::get('/media/{id}', [FeMediaController::class, 'download'])->name('front.m
 Route::get('/service', [FEServiceController::class, 'index'])->name('front.service.index');
 Route::get('/service/{id}', [FEServiceController::class, 'show'])->name('front.service.show');
 Route::get('/blog', [FEBlogController::class, 'index'])->name('front.blog.index');
+Route::get('/blog/{slug}', [FEBlogController::class, 'show'])->name('front.blog.show');
+Route::get('/warranty', [FEWarrantyController::class, 'index'])->name('front.warranty.index');
+Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.warranty.store');
+Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.complaint.index');
+Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
 
 Auth::routes();
 Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
