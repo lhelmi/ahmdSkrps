@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('front.index') }}">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.blog.index') }}">Berita</a>
+                    <a class="nav-link" href="{{ route('front.blog.index') }}">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.product.index') }}">Produk</a>
@@ -28,12 +28,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.service.index') }}">Jasa</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.warranty.index') }}">Garansi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.complaint.index') }}">Keluhan</a>
-                </li>
+                @if (Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('front.warranty.index') }}">Garansi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('front.complaint.index') }}">Keluhan</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.order.index') }}">Pemesanan</a>
                 </li>

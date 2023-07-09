@@ -54,7 +54,6 @@ Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.
 
 Auth::routes();
 Route::middleware(['isAdmin'])->group(function () {
-
     Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');
