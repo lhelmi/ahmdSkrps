@@ -9,13 +9,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Ubah Admin</h3>
+        <h3 class="card-title">Ubah User</h3>
         </div>
         <div class="card-body">
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
-            <form action="{{ route('admin.update', $data->id) }}" method="POST">
+            <form action="{{ route('user.update', $data->id) }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -27,15 +27,43 @@
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Masukan Username"
-                        value="{{ old('username') == null ? $data->username : old('username') }}">
 
-                        @error('username')
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="birth_place">Tempat Lahir</label>
+                                <input type="text" class="form-control @error('birth_place') is-invalid @enderror" name="birth_place" id="birth_place" placeholder="Masukan Tempat Lahir"
+                                value="{{ old('birth_place') == null ? $data->birth_place : old('birth_place')}}">
+                                @error('birth_place')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="birth_date">Tanggal Lahir</label>
+                                <input type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" id="birth_date"
+                                value="{{ old('birth_date') == null ? $data->birth_date : old('birth_date')}}">
+                                @error('birth_date')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Alamat</label>
+                        <textarea name="address" id="" cols="10" rows="3"
+                        class="form-control @error('username') is-invalid @enderror"
+                        id="address" placeholder="Masukan Alamat">{{ old('address') == null ? $data->address : old('address')}}</textarea>
+
+
+                        @error('address')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Masukan Email"
@@ -45,6 +73,17 @@
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Masukan Username"
+                        value="{{ old('username') == null ? $data->username : old('username') }}">
+
+                        @error('username')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
@@ -72,7 +111,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Ubah</button>
-                    <a type="button" href="{{ route('admin.index') }}" class="btn btn-default">Batal</a>
+                    <a type="button" href="{{ route('user.index') }}" class="btn btn-default">Batal</a>
                 </div>
             </form>
         </div>

@@ -47,6 +47,19 @@
         </div>
     </div>
 
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>{{ $administrasi }}</h3>
+                <p>Administrasi</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user"></i>
+            </div>
+            {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
+        </div>
+    </div>
+
 </div>
 
 @stop
@@ -58,3 +71,4 @@
 @section('js')
     <script> console.log('Hi!'); </script>
 @stop
+

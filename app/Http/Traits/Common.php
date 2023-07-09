@@ -23,4 +23,11 @@ trait Common {
             "Lisplang" => "L"
         ];
     }
+
+    public function warrantiesType(){
+        return [
+            "process" => "Segera Dihubungi",
+            "finish" => "Selesai",
+        ];
+    }
 }

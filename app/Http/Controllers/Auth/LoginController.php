@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth as AuthSupport;
 
 class LoginController extends Controller
 {
@@ -41,6 +43,26 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        if($request->wantsJson()){
+            return new JsonResponse([], 204);
+        }else{
+            if(AuthSupport::user()->role == 1){
+                return redirect()->route('warranty.index');
+            }
+            return redirect()->intended($this->redirectPath());
+        }
     }
 
     public function username()

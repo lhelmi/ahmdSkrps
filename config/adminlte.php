@@ -315,31 +315,54 @@ return [
             'text'        => 'Dashboard',
             'url'         => 'admin/home',
             'icon'        => 'fa fa-fw fa-home',
+            'role'        => '0',
         ],
         [
-            'text'        => 'Admin',
-            'url'         => 'auth/admin',
+            'text'        => 'Administrasi',
+            'url'         => 'admin/administrasi',
             'icon'        => 'fa fa-fw fa-user',
+            'role'        => '0',
+        ],
+        [
+            'text'        => 'User',
+            'url'         => 'admin/user',
+            'icon'        => 'fa fa-fw fa-user',
+            'role'        => '0',
         ],
         [
             'text'        => 'Produk',
             'url'         => 'admin/product',
             'icon'        => 'fa fa-shopping-bag',
+            'role'        => '0',
         ],
         [
-            'text'        => 'Service',
+            'text'        => 'Jasa',
             'url'         => 'admin/service',
             'icon'        => 'fa fa-briefcase',
+            'role'        => '0',
         ],
+        // [
+        //     'text'        => 'Media',
+        //     'url'         => 'admin/media',
+        //     'icon'        => 'fa fa-rss',
+        // ],
         [
-            'text'        => 'Media',
-            'url'         => 'admin/media',
-            'icon'        => 'fa fa-rss',
-        ],
-        [
-            'text'        => 'Pengenalan',
+            'text'        => 'Blog',
             'url'         => 'admin/blog',
+            'icon'        => 'fa fa-rss',
+            'role'        => '0',
+        ],
+        [
+            'text'        => 'Garansi',
+            'url'         => 'admin/warranty',
+            'icon'        => 'fa fa-book',
+            'role'        => '1',
+        ],
+        [
+            'text'        => 'Keluhan',
+            'url'         => 'admin/complaint',
             'icon'        => 'fa fa-info',
+            'role'        => '1'
         ],
         // ['header' => 'account_settings'],
         // [

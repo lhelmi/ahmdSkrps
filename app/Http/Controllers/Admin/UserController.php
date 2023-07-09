@@ -9,7 +9,7 @@ use config\Constant;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\Common;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     use Common;
     /**
@@ -29,28 +29,33 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', '1')->get();
-        return view('admin.admin.index', compact('users'));
+        $users = User::where('role', '2')->get();
+        return view('admin.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('admin.admin.create');
+        return view('admin.user.create');
     }
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             "name" => ["required", "string", "max:100", "min:1"],
             "username" => ["required", "string", "max:100", "unique:users", "min:8"],
             "email" => ["required", "string", "max:100", "unique:users", "min:1", "email"],
+            "birth_date" => ["required", "string", "max:100", "min:6"],
+            "birth_place" => ["required", "string", "max:100", "min:3"],
+            "address" => ["required", "string", "max:100", "min:8"],
+
             "password" => ["required", "string", "max:100", "confirmed", "min:8"],
             "password_confirmation" => ["required", "string", "max:100", "min:8"]
 
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('admin.create')->withErrors($validator)->withInput();
+            return redirect()->route('user.create')->withErrors($validator)->withInput();
         }
 
         try {
@@ -59,12 +64,15 @@ class AdminController extends Controller
             $data->username = $request->username;
             $data->email = $request->email;
             $data->password = bcrypt($request->password);
-            $data->role = '1';
+            $data->birth_date = $request->birth_date;
+            $data->birth_place = $request->birth_place;
+            $data->address = $request->address;
+            $data->role = '2';
             $data->save();
-            return redirect()->route('admin.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('user.index')->with('success', Constant::SAVE_SUCCESS);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('user.create')->with('error', Constant::SAVE_FAIL);
         }
 
     }
@@ -72,7 +80,7 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         $data = User::find($id);
-        return view('admin.admin.edit', compact('data'));
+        return view('admin.user.edit', compact('data'));
     }
 
     /**
@@ -85,6 +93,9 @@ class AdminController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "username" => ["required", "string", "max:100", "min:8"],
             "email" => ["required", "string", "max:100","min:1", "email"],
+            "birth_date" => ["required", "string", "max:100", "min:6"],
+            "birth_place" => ["required", "string", "max:100", "min:3"],
+            "address" => ["required", "string", "max:100", "min:8"],
         ];
 
         if($data->email !== $request->email) array_push($param['email'], "unique:users");
@@ -98,20 +109,23 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), $param);
 
         if ($validator->fails()) {
-            return redirect()->route('admin.edit', $id)->withErrors($validator)->withInput();
+            return redirect()->route('user.edit', $id)->withErrors($validator)->withInput();
         }
 
         try {
             $data->name = $request->name;
             $data->username = $request->username;
             $data->email = $request->email;
+            $data->birth_date = $request->birth_date;
+            $data->birth_place = $request->birth_place;
+            $data->address = $request->address;
             if($request->password !== "" || $request->password !== null) $data->password = bcrypt($request->password);
 
             $data->save();
-            return redirect()->route('admin.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('user.index')->with('success', Constant::UPDATE_SUCCESS);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('user.edit', $id)->with('error', Constant::UPDATE_FAIL);
         }
     }
 
@@ -121,14 +135,14 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         $data = User::find($id);
-        if($data == null) return redirect()->route('admin.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('user.index')->with('error', Constant::NOT_FOUND);
 
         try {
             $data->delete();
-            return redirect()->route('admin.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('user.index')->with('success', Constant::DESTROY_SUCCESS);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('user.index')->with('error', Constant::DESTROY_FAIL);
         }
     }
 }

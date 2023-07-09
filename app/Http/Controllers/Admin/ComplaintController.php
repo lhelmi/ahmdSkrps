@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\Service;
-use App\Models\User;
+use App\Http\Traits\Common;
+use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class ComplaintController extends Controller
 {
+    use Common;
     /**
      * Create a new controller instance.
      *
@@ -27,11 +26,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $users = User::count();
-        $services = Service::count();
-        $products = Product::count();
-        $administrasi = User::where('role', 1)->count();
+        $complaints = DB::table('complaints as a')
+        ->select(
+            "a.*",
+            "b.name as users_name"
+        )
+        ->join('users as b', 'a.user_id', '=', 'b.id')->get();
 
-        return view('admin.dashboard.index', compact('users', 'services', 'products', 'administrasi'));
+        return view('admin.complaint.index', compact('complaints'));
     }
 }

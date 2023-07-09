@@ -9,13 +9,13 @@
 @section('content')
     <div class="card mt-5">
         <div class="card-header">
-        <h1 class="card-title">Blog</h1>
+        <h1 class="card-title">Garansi</h1>
         </div>
         <div class="card-body">
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <a class="btn btn-md btn-success" href="{{ route('blog.create') }}">Tambah</a>
+
                     </div>
                 </div>
                 @if ($message = Session::get('success'))
@@ -31,9 +31,13 @@
                                 <tr>
                                     <th>No</th>
                                     <th>ID</th>
-                                    <th>Judul</th>
-                                    <th>Tanggal Publish</th>
-                                    <th>Dibuat Oleh</th>
+                                    <th>Nama</th>
+                                    <th>Produk</th>
+                                    <th>Kontak</th>
+                                    <th>Tanggal Pembelian</th>
+                                    <th>Persyaratan Pembelian</th>
+                                    <th>Bukti Pembelian</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -41,16 +45,23 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($blogs as $blog)
+                                @foreach ($warranties as $warranty)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $blog->id }}</td>
-                                        <td>{{ $blog->title }}</td>
-                                        <td>{{ $blog->created_at }}</td>
-                                        <td>{{ $blog->created_by }}</td>
+                                        <td>{{ $warranty->id }}</td>
+                                        <td>{{ $warranty->nama_user }}</td>
+                                        <td>{{ $warranty->nama_product }}</td>
+                                        <td>{{ $warranty->contact }}</td>
+                                        <td>{{ $warranty->purchase_date }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('blog.edit', [$blog->id]) }}">Edit</a> |
-                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('blog.destroy', [$blog->id]) }}">Hapus</a>
+                                            <img src="{{ URL::to('/').'/'.$warranty->requirements }}" width="150px" height="154px" id="image">
+                                        </td>
+                                        <td>
+                                            <img src="{{ URL::to('/').'/'.$warranty->receipt }}" width="150px" height="154px" id="image">
+                                        </td>
+                                        <td>{{ $warranty->status }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('warranty.edit', [$warranty->id]) }}">Edit</a>
                                         </td>
                                     </tr
                                 @endforeach

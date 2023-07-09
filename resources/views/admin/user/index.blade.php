@@ -9,13 +9,13 @@
 @section('content')
     <div class="card mt-5">
         <div class="card-header">
-        <h1 class="card-title">Blog</h1>
+        <h1 class="card-title">User</h1>
         </div>
         <div class="card-body">
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <a class="btn btn-md btn-success" href="{{ route('blog.create') }}">Tambah</a>
+                        <a class="btn btn-md btn-success" href="{{ route('user.create') }}">Tambah</a>
                     </div>
                 </div>
                 @if ($message = Session::get('success'))
@@ -30,10 +30,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID</th>
-                                    <th>Judul</th>
-                                    <th>Tanggal Publish</th>
-                                    <th>Dibuat Oleh</th>
+                                    <th>Nama</th>
+                                    <th>Tempat Tanggal Lahir</th>
+                                    <th>Alamat</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -41,18 +43,20 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($blogs as $blog)
+                                @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $blog->id }}</td>
-                                        <td>{{ $blog->title }}</td>
-                                        <td>{{ $blog->created_at }}</td>
-                                        <td>{{ $blog->created_by }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->birth_place.', '.$user->birth_date }}</td>
+                                        <td>{{ $user->address }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->username }}</td>
+                                        <td>{{ $user->password }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('blog.edit', [$blog->id]) }}">Edit</a> |
-                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('blog.destroy', [$blog->id]) }}">Hapus</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('user.edit', [$user->id]) }}">Edit</a> |
+                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('user.destroy', [$user->id]) }}">Hapus</a>
                                         </td>
-                                    </tr
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
