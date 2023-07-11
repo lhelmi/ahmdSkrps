@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarrantyController;
 use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Auth\ProfileController;
+
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductFeController;
@@ -56,8 +58,15 @@ Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.
 
 Route::get('/verify/{link}', [ConfirmController::class, 'verifyEmail'])->name('front.verify');
 
+
 Auth::routes(['verify' => true]);
+Route::middleware(['verified'])->group(function () {
+    Route::get('profile', [ProfileController::class, 'index'])->name('auth.profile.index');
+    Route::post('profile', [ProfileController::class, 'update'])->name('auth.profile.store');
+});
+
 Route::middleware(['isAdmin', 'verified'])->group(function () {
+
     Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');

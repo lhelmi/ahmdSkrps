@@ -65,7 +65,9 @@
                             <a class="dropdown-item" href="{{ $route }}">Halaman Admin</a>
                             <div class="dropdown-divider"></div>
                         @endif
-                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item" href="{{ route('auth.profile.index') }}">Profile</a>
+
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fa fa-fw fa-power-off text-red"></i>
                             {{ __('adminlte::adminlte.log_out') }}
                         </a>
