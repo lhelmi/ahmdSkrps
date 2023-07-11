@@ -47,19 +47,36 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
-                        @php
-                            $route = "#";
-                            if(Auth::user()->role == 0){
-                                $route = route('dashboard.index');
-                            }if (Auth::user()->role == 1) {
-                                $route = route('warranty.index');
-                            }
-                        @endphp
-                        <a href="{{ $route }}" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                <li class="nav-item dropdown">
+                    @php
+                        $route = "#";
+                        if(Auth::user()->role == 0){
+                            $route = route('dashboard.index');
+                        }if (Auth::user()->role == 1) {
+                            $route = route('warranty.index');
+                        }
+                    @endphp
+
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (Auth::user()->role !== "2")
+                            <a class="dropdown-item" href="{{ $route }}">Halaman Admin</a>
+                            <div class="dropdown-divider"></div>
+                        @endif
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa fa-fw fa-power-off text-red"></i>
+                            {{ __('adminlte::adminlte.log_out') }}
                         </a>
-                    </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @if(config('adminlte.logout_method'))
+                                {{ method_field(config('adminlte.logout_method')) }}
+                            @endif
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
+                  </li>
                 @endguest
             </ul>
         </div>

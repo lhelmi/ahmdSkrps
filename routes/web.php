@@ -54,14 +54,6 @@ Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.wa
 Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.complaint.index');
 Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
 
-Route::get('/testemail', function() {
-    $username = "uyuyuyuyuyuy";
-    $email = "sada@ld.cc";
-
-    // The email sending is done using the to method on the Mail facade
-    Mail::to('testreceiver@gmail.com’')->send(new RegisterEmail($email, $username));
-});
-
 Route::get('/verify/{link}', [ConfirmController::class, 'verifyEmail'])->name('front.verify');
 
 Auth::routes(['verify' => true]);
