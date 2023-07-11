@@ -58,6 +58,7 @@ class LoginController extends Controller
         if($request->wantsJson()){
             return new JsonResponse([], 204);
         }else{
+
             if(AuthSupport::user()->role == 1){
                 return redirect()->route('warranty.index');
             }

@@ -1,7 +1,8 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Mail\RegisterEmail;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Front\ServiceController as FEServiceController;
 use App\Http\Controllers\Front\BlogController as FEBlogController;
 use App\Http\Controllers\Front\WarrantyController as FEWarrantyController;
 use App\Http\Controllers\Front\ComplaintController as FEComplaintController;
+use App\Http\Controllers\Auth\ConfirmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,18 @@ Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.wa
 Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.complaint.index');
 Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
 
-Auth::routes();
-Route::middleware(['isAdmin'])->group(function () {
+Route::get('/testemail', function() {
+    $username = "uyuyuyuyuyuy";
+    $email = "sada@ld.cc";
+
+    // The email sending is done using the to method on the Mail facade
+    Mail::to('testreceiver@gmail.com’')->send(new RegisterEmail($email, $username));
+});
+
+Route::get('/verify/{link}', [ConfirmController::class, 'verifyEmail'])->name('front.verify');
+
+Auth::routes(['verify' => true]);
+Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');

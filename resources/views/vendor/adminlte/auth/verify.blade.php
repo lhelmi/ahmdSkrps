@@ -1,23 +1,32 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'login'])
 
-@section('auth_header', __('adminlte::adminlte.verify_message'))
+@section('auth_header', "Akun anda memerlukan verifikasi")
 
 @section('auth_body')
 
     @if(session('resent'))
         <div class="alert alert-success" role="alert">
-            {{ __('adminlte::adminlte.verify_email_sent') }}
+            Tautan verifikasi baru telah dikirim ke alamat email Anda.
         </div>
     @endif
 
-    {{ __('adminlte::adminlte.verify_check_your_email') }}
-    {{ __('adminlte::adminlte.verify_if_not_recieved') }},
+    Sebelum melanjutkan, periksa email Anda untuk tautan verifikasi.
+    Jika Anda tidak menerima email tersebut,
 
     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
         @csrf
         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
-            {{ __('adminlte::adminlte.verify_request_another') }}
+            klik di sini untuk mengirim permintaan lain
         </button>.
     </form>
+    <br>
+    <br>
+    <div>
+        <a href="{{ route('front.home') }}">
+            <i class="fa fa-backward" aria-hidden="true"></i>
+            Kembali ke halaman depan
+        </a>
+    </div>
+
 
 @stop

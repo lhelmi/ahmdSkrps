@@ -1,5 +1,13 @@
 @extends('front.layouts.app')
 @section('content')
+
+@if ($message = Session::get('success'))
+    <div class="alert alert-success mt-2">{{ $message }}</div>
+@endif
+@if ($message = Session::get('error'))
+    <div class="alert alert-danger mt-2">{{ $message }}</div>
+@endif
+
 <section class="jumbotron text-center">
     <div class="container">
         <div class="content-1">

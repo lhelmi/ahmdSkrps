@@ -21,6 +21,7 @@
 {{-- @section('auth_header', __('adminlte::adminlte.login_message')) --}}
 
 @section('auth_body')
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success mt-2">{{ $message }}</div>
     @endif
@@ -28,6 +29,7 @@
         <div class="alert alert-danger mt-2">{{ $message }}</div>
     @endif
     <form action="{{ $login_url }}" method="post">
+
         @csrf
         {{-- username field --}}
         <div class="input-group mb-3">
