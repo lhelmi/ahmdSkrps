@@ -115,6 +115,7 @@ Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboar
 Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
 Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit')->middleware('isUser');
 Route::get('/admin/warranty/pdf', [WarrantyController::class, 'pdf'])->name('warranty.pdf');
+Route::get('/admin/warranty/destroy/{id}', [WarrantyController::class, 'destroy'])->name('warranty.destroy');
 Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update')->middleware('isUser');
 
 Route::get('/admin/complaint', [ComplaintController::class, 'index'])->name('complaint.index');

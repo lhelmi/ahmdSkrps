@@ -70,7 +70,8 @@
                                         </td>
                                         @if (Auth::user()->role == "1")
                                             <td>
-                                                <a class="btn btn-sm btn-primary" href="{{ route('warranty.edit', [$warranty->id]) }}">Edit</a>
+                                                <a class="btn btn-sm btn-primary" href="{{ route('warranty.edit', [$warranty->id]) }}">Edit</a> |
+                                                <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('warranty.destroy', [$warranty->id]) }}">Hapus</a>
                                             </td>
                                         @endif
                                     </tr

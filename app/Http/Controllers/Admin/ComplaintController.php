@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Common;
+use App\Models\Complaint;
+use config\Constant;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -47,5 +49,18 @@ class ComplaintController extends Controller
 
         $pdf = PDF::loadView('admin.complaint.pdf', compact('data'));
 	    return $pdf->download('Keluhan.pdf');
+    }
+
+    public function destroy(string $id)
+    {
+        $data = Complaint::find($id);
+        if($data == null) return redirect()->route('complaint.index')->with('error', Constant::NOT_FOUND);
+        try {
+            $data->delete();
+            return redirect()->route('complaint.index')->with('success', Constant::DESTROY_SUCCESS);
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            return redirect()->route('complaint.index')->with('error', Constant::DESTROY_FAIL);
+        }
     }
 }

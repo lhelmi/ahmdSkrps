@@ -120,4 +120,17 @@ class WarrantyController extends Controller
         $pdf = PDF::loadView('admin.warranty.pdf', compact('data'));
 	    return $pdf->download('garansi.pdf');
     }
+
+    public function destroy(string $id)
+    {
+        $data = Warranty::find($id);
+        if($data == null) return redirect()->route('warranty.index')->with('error', Constant::NOT_FOUND);
+        try {
+            $data->delete();
+            return redirect()->route('warranty.index')->with('success', Constant::DESTROY_SUCCESS);
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            return redirect()->route('warranty.index')->with('error', Constant::DESTROY_FAIL);
+        }
+    }
 }

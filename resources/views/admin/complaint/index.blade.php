@@ -36,6 +36,7 @@
                                     <th>Keluhan</th>
                                     <th>Kritik</th>
                                     <th>Saran</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,6 +50,9 @@
                                         <td>{{ $complaint->complaint }}</td>
                                         <td>{{ $complaint->criticism }}</td>
                                         <td>{{ $complaint->suggestions }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('complaint.destroy', [$complaint->id]) }}">Hapus</a>
+                                        </td>
                                     </tr
                                 @endforeach
                             </tbody>
