@@ -14,8 +14,10 @@
         <div class="card-body">
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-
+                    <div class="col-sm-12 col-md-12 mb-3">
+                        @if (Auth::user()->role == "1")
+                            <a href="{{ route('complaint.pdf') }}" class="btn btn-sm btn-danger float-right">PDF</a>
+                        @endif
                     </div>
                 </div>
                 @if ($message = Session::get('success'))
@@ -30,7 +32,6 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID</th>
                                     <th>Nama</th>
                                     <th>Keluhan</th>
                                     <th>Kritik</th>
@@ -44,7 +45,6 @@
                                 @foreach ($complaints as $complaint)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $complaint->id }}</td>
                                         <td>{{ $complaint->users_name }}</td>
                                         <td>{{ $complaint->complaint }}</td>
                                         <td>{{ $complaint->criticism }}</td>

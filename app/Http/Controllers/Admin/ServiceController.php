@@ -71,10 +71,10 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            "kode" => ["required", "string", "max:100", "min:1", "unique:services"],
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "estimate" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "max:100", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
@@ -95,7 +95,7 @@ class ServiceController extends Controller
 
         try {
             $data = new Service();
-            $data->kode = $this->setKode($request->type);
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
@@ -152,10 +152,11 @@ class ServiceController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "estimate" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "max:100", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
+
+        if($id !== $request->kode) $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services"];
 
         $message = [];
         $uploadCount = 0;
@@ -207,10 +208,10 @@ class ServiceController extends Controller
         }
 
         try {
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
-            $data->estimate = $request->estimate;
             $data->description = $request->description;
             $data->price = $request->price;
             $data->images = json_encode($temp);

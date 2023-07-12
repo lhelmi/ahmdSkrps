@@ -34,7 +34,6 @@
                                     <th>Nama</th>
                                     <th>Ukuran</th>
                                     <th>Jenis</th>
-                                    <th>Estimasi</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -50,7 +49,6 @@
                                         <td>{{ $service->name }}</td>
                                         <td>{{ $service->size }}</td>
                                         <td>{{ $service->type }}</td>
-                                        <td>{{ $service->estimate }}</td>
                                         <td>{{ $service->price }}</td>
 
                                         <td>

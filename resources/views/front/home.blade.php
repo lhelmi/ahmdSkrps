@@ -11,7 +11,7 @@
 <section class="jumbotron text-center">
     <div class="container">
         <div class="content-1">
-            <img src="{{ asset('front/images/logo.png') }}" alt="logo">
+            <img src="{{ asset('front/images/logo.png') }}" alt="logo" height="534px" width="538px">
             <h1 class="jumbotron-heading">Siapa Kita</h1>
             <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
             Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
@@ -26,8 +26,8 @@
     <div class="container">
         <div class="content-1">
             <h1 class="jumbotron-heading">Visi dan Misi</h1>
-            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
-            Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+            <h4>The Confort of Your Home is Our Priority</h5>
+            <p class="lead text-muted">Kenyamanan Rumah Anda Adalah Proritas Kami</p>
         </div>
     </div>
 </section>

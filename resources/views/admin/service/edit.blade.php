@@ -19,6 +19,16 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
+                        <label>Kode</label>
+                        <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode" placeholder="Masukan Kode"
+                        value="{{ old('kode') == null ? $data->kode : old('kode') }}">
+
+                        @error('kode')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Masukan Nama Lengkap"
                         value="{{ old('name') == null ? $data->name : old('name') }}">
@@ -52,16 +62,6 @@
                         </select>
 
                         @error('type')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Estimasi Waktu</label>
-                        <input type="text" class="form-control @error('estimate') is-invalid @enderror" name="estimate" id="estimate"
-                        placeholder="Masukan Estimasi Waktu Pengerjaan" value="{{ old('estimate') == null ? $data->estimate : old('estimate') }}">
-
-                        @error('estimate')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>

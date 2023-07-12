@@ -59,9 +59,9 @@ class LoginController extends Controller
             return new JsonResponse([], 204);
         }else{
 
-            if(AuthSupport::user()->role == 1){
-                return redirect()->route('warranty.index');
-            }
+            // if(AuthSupport::user()->role == 1){
+            //     return redirect()->route('warranty.index');
+            // }
             if(AuthSupport::user()->role == 2){
                 return redirect()->route('front.index');
             }

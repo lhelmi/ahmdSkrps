@@ -9,10 +9,12 @@ use config\Constant;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\Common;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class WarrantyController extends Controller
 {
     use Common;
+
     /**
      * Create a new controller instance.
      *
@@ -45,8 +47,9 @@ class WarrantyController extends Controller
         )
         ->join('products as b', 'a.product_id', '=', 'b.id')
         ->join('users as c', 'a.user_id', '=', 'c.id')->get();
+        $type = $this->warrantiesType();
 
-        return view('admin.warranty.index', compact('warranties'));
+        return view('admin.warranty.index', compact('warranties', 'type'));
     }
 
     public function edit(string $id)
@@ -96,5 +99,25 @@ class WarrantyController extends Controller
             $this->errorLog($th->getMessage());
             return redirect()->route('warranty.edit', $id)->with('error', Constant::UPDATE_FAIL);
         }
+    }
+
+    public function pdf(){
+        $data = DB::table('warranties as a')
+        ->select(
+            'a.id',
+            'c.name as nama_user',
+            'a.user_id',
+            'a.product_id',
+            'b.name as nama_product',
+            'a.contact',
+            'a.purchase_date',
+            'a.requirements',
+            'a.receipt',
+            'a.status',
+        )
+        ->join('products as b', 'a.product_id', '=', 'b.id')
+        ->join('users as c', 'a.user_id', '=', 'c.id')->get();
+        $pdf = PDF::loadView('admin.warranty.pdf', compact('data'));
+	    return $pdf->download('garansi.pdf');
     }
 }

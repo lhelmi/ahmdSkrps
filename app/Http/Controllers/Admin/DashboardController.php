@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Complaint;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use App\Models\Warranty;
 
 class DashboardController extends Controller
 {
@@ -32,6 +34,9 @@ class DashboardController extends Controller
         $products = Product::count();
         $administrasi = User::where('role', 1)->count();
 
-        return view('admin.dashboard.index', compact('users', 'services', 'products', 'administrasi'));
+        $warranty = Warranty::count();
+        $complaint = Complaint::count();
+
+        return view('admin.dashboard.index', compact('users', 'services', 'products', 'administrasi', 'warranty', 'complaint'));
     }
 }

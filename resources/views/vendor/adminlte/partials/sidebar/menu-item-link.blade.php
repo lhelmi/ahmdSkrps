@@ -1,4 +1,4 @@
-@if (Auth::user()->role == $item['role'])
+@if (in_array(Auth::user()->role, $item['role']))
 <li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item">
 
     <a class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"

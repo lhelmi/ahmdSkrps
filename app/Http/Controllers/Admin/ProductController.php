@@ -71,10 +71,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            "kode" => ["required", "string", "max:100", "min:1", "unique:products"],
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "material" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:1"],
             "description" => ["required", "string", "max:100", "min:1"],
             "price" => ["required", "numeric", "min:1"],
@@ -96,7 +96,8 @@ class ProductController extends Controller
 
         try {
             $data = new Product();
-            $data->kode = $this->setKode($request->type);
+            // $data->kode = $this->setKode($request->type);
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
@@ -154,11 +155,12 @@ class ProductController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "material" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:1"],
             "description" => ["required", "string", "max:100", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
+
+        if($id !== $request->kode) $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products"];
 
         $message = [];
         $uploadCount = 0;
@@ -210,6 +212,7 @@ class ProductController extends Controller
         }
 
         try {
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;

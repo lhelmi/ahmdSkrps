@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-10 mb-3">
                         <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input type="number" class="form-control"
                             value="{{ old('contact') }}" name="contact">
                             @error('contact')
                                 <div class="alert alert-danger mt-1">{{ $message }}</div>

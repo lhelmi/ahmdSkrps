@@ -68,10 +68,13 @@
                     {{ __('adminlte::menu.profile') }}
                 </a>
             @endif
-            <a href="{{ route('auth.profile.index') }}" class="btn btn-default btn-flat mb-3">
-                <i class="fa fa-fw fa-user text-lightblue"></i>
-                {{ __('adminlte::menu.profile') }}
-            </a>
+            @if (Auth::user()->role == "2")
+                <a href="{{ route('auth.profile.index') }}" class="btn btn-default btn-flat mb-3">
+                    <i class="fa fa-fw fa-user text-lightblue"></i>
+                    {{ __('adminlte::menu.profile') }}
+                </a>
+            @endif
+
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif"
                href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-fw fa-power-off text-red"></i>

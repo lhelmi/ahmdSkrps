@@ -89,6 +89,12 @@ class ProfileController extends Controller
             }
 
             $data->save();
+            if($request->password !== null && $request->new_password !== null){
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+            }
+
             return redirect()->route('auth.profile.index')->with('success', Constant::UPDATE_SUCCESS);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());

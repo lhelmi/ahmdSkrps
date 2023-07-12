@@ -34,7 +34,6 @@
                                     <th>Nama</th>
                                     <th>Ukuran</th>
                                     <th>Jenis</th>
-                                    <th>Bahan</th>
                                     <th>Stok</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
@@ -51,7 +50,6 @@
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->size }}</td>
                                         <td>{{ $product->type }}</td>
-                                        <td>{{ $product->material }}</td>
                                         <td>{{ $product->stock }}</td>
                                         <td>{{ $product->price }}</td>
 

@@ -29,20 +29,12 @@
                     <td>{{ $data->name }}</td>
                 </tr>
                 <tr>
-                    <td>Kode</td>
-                    <td>{{ $data->kode }}</td>
-                </tr>
-                <tr>
                     <td>Ukuran</td>
                     <td>{{ $data->size }}</td>
                 </tr>
                 <tr>
                     <td>Jenis</td>
                     <td>{{ $data->type }}</td>
-                </tr>
-                <tr>
-                    <td>Estimasi</td>
-                    <td>{{ $data->estimate }}</td>
                 </tr>
                 <tr>
                     <td>Harga</td>
