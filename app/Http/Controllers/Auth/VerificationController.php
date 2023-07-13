@@ -9,6 +9,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -55,9 +56,14 @@ class VerificationController extends Controller
         }
 
         if ($request->user()->hasVerifiedEmail()) {
-            return $request->wantsJson()
-                        ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath())->with('success', 'Akun anda sudah terverifikasi');
+            if($request->wantsJson()){
+                return new JsonResponse([], 204);
+            }else{
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('login')->with('success', 'Akun anda sudah terverifikasi');
+            }
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -68,8 +74,13 @@ class VerificationController extends Controller
             return $response;
         }
 
-        return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect($this->redirectPath())->with('success', 'Akun anda sudah terverifikasi');
+        if($request->wantsJson()){
+            return new JsonResponse([], 204);
+        }else{
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('success', 'Akun anda sudah terverifikasi');
+        }
     }
 }

@@ -42,7 +42,7 @@ class ConfirmController extends Controller
             return redirect()->route('login')->with('error', "Verifikasi Email Berhasil, Silahkan Login");
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('login')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('login')->with('error', 'Data '.Constant::SAVE_FAIL);
         }
 
 

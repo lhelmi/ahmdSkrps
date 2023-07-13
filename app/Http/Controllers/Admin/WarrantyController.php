@@ -9,12 +9,13 @@ use config\Constant;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\Common;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use PDF;
 
 class WarrantyController extends Controller
 {
     use Common;
-
+    public $obj = 'Garansi';
     /**
      * Create a new controller instance.
      *
@@ -94,15 +95,15 @@ class WarrantyController extends Controller
         try {
             $data->status = $request->status;
             $data->save();
-            return redirect()->route('warranty.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('warranty.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('warranty.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('warranty.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
     public function pdf(){
-        $data = DB::table('warranties as a')
+        $temp = DB::table('warranties as a')
         ->select(
             'a.id',
             'c.name as nama_user',
@@ -117,20 +118,41 @@ class WarrantyController extends Controller
         )
         ->join('products as b', 'a.product_id', '=', 'b.id')
         ->join('users as c', 'a.user_id', '=', 'c.id')->get();
-        $pdf = PDF::loadView('admin.warranty.pdf', compact('data'));
+        $type = $this->warrantiesType();
+        $data = $temp;
+        foreach ($temp as $key => $value) {
+
+            $tmp1 = public_path().'/'.$data[$key]->requirements;
+            $type1 = pathinfo($tmp1, PATHINFO_EXTENSION);
+            $file1 = file_get_contents($tmp1);
+            $file1 = base64_encode($file1);
+            $base641 = 'data:image/' . $type1 . ';base64,' . $file1;
+            $data[$key]->requirements = $base641;
+
+            $tmp2 = public_path().'/'.$data[$key]->receipt;
+            $type2 = pathinfo($tmp2, PATHINFO_EXTENSION);
+            $file2 = file_get_contents($tmp2);
+            $file2 = base64_encode($file2);
+            $base642 = 'data:image/' . $type2 . ';base64,' . $file2;
+            $data[$key]->receipt = $base642;
+        }
+        // dd($data);
+        // return view('admin.warranty.pdf', compact('data'));
+        $pdf = PDF::loadView('admin.warranty.pdf', compact('data', 'type'));
+        $pdf->setPaper('A4', 'landscape');
 	    return $pdf->download('garansi.pdf');
     }
 
     public function destroy(string $id)
     {
         $data = Warranty::find($id);
-        if($data == null) return redirect()->route('warranty.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('warranty.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         try {
             $data->delete();
-            return redirect()->route('warranty.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('warranty.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('warranty.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('warranty.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

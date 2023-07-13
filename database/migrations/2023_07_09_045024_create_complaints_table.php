@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('complaints', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('complaint')->nullable();
-            $table->string('suggestions')->nullable();
-            $table->string('criticism')->nullable();
+            $table->text('complaint')->nullable();
+            $table->text('suggestions')->nullable();
+            $table->text('criticism')->nullable();
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

@@ -17,6 +17,7 @@ class ComplaintController extends Controller
      *
      * @return void
      */
+    public $obj = 'Keluhan';
     public function __construct()
     {
         $this->middleware('auth');
@@ -54,13 +55,13 @@ class ComplaintController extends Controller
     public function destroy(string $id)
     {
         $data = Complaint::find($id);
-        if($data == null) return redirect()->route('complaint.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('complaint.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         try {
             $data->delete();
-            return redirect()->route('complaint.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('complaint.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('complaint.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('complaint.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

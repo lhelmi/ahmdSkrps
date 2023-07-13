@@ -356,13 +356,13 @@ return [
             'text'        => 'Garansi',
             'url'         => 'admin/warranty',
             'icon'        => 'fa fa-book',
-            'role'        => ['0', '1'],
+            'role'        => ['1'],
         ],
         [
             'text'        => 'Keluhan',
             'url'         => 'admin/complaint',
             'icon'        => 'fa fa-info',
-            'role'        => ['0', '1'],
+            'role'        => ['1'],
         ],
         // ['header' => 'account_settings'],
         // [

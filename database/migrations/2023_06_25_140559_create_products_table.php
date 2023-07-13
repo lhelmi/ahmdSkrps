@@ -15,12 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('kode');
             $table->string('name');
-            $table->string('material');
             $table->string('stock');
             $table->string('size');
             $table->string('type');
             $table->bigInteger('price');
-            $table->string('description');
+            $table->text('description');
             $table->string('images');
             $table->string('created_by');
             $table->timestamps();

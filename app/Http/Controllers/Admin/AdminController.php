@@ -12,6 +12,7 @@ use App\Http\Traits\Common;
 class AdminController extends Controller
 {
     use Common;
+    public $obj = 'Admin';
     /**
      * Create a new controller instance.
      *
@@ -61,10 +62,10 @@ class AdminController extends Controller
             $data->password = bcrypt($request->password);
             $data->role = '1';
             $data->save();
-            return redirect()->route('admin.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('admin.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('admin.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
 
     }
@@ -108,10 +109,10 @@ class AdminController extends Controller
             if($request->password !== "" || $request->password !== null) $data->password = bcrypt($request->password);
 
             $data->save();
-            return redirect()->route('admin.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('admin.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('admin.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
@@ -121,14 +122,14 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         $data = User::find($id);
-        if($data == null) return redirect()->route('admin.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('admin.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         try {
             $data->delete();
-            return redirect()->route('admin.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('admin.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('admin.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('admin.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

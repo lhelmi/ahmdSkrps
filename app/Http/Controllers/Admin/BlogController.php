@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 class BlogController extends Controller
 {
     use Common;
+    public $obj = 'Blog';
     /**
      * Create a new controller instance.
      *
@@ -47,7 +48,7 @@ class BlogController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "title" => ["required", "string", "max:100", "min:1", "unique:blogs"],
-            "description" => ["required", "string", "max:100", "min:1"],
+            "description" => ["required", "string", "min:1"],
             "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
         ],
         [
@@ -60,7 +61,7 @@ class BlogController extends Controller
             return redirect()->route('blog.create')->withErrors($validator)->withInput();
         }
         $uploads = $this->moveFile($request->image, $this->path);
-        if($uploads == null) return redirect()->route('blog.create')->with('error', Constant::UPLOAD_FAIL);
+        if($uploads == null) return redirect()->route('blog.create')->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
 
         try {
             $data = new Blog();
@@ -70,10 +71,10 @@ class BlogController extends Controller
             $data->image = $uploads;
             $data->created_by = Auth::user()->username;
             $data->save();
-            return redirect()->route('blog.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('blog.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('blog.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('blog.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
 
     }
@@ -98,7 +99,7 @@ class BlogController extends Controller
     {
         $data = Blog::find($id);
 
-        if($data == null) return redirect()->route('blog.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('blog.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         return view('admin.blog.edit', compact('data'));
     }
 
@@ -108,10 +109,10 @@ class BlogController extends Controller
     public function update(Request $request, string $id)
     {
         $data = Blog::find($id);
-        if($data == null) return redirect()->route('blog.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('blog.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         $validation = [
-            "description" => ["required", "string", "max:100", "min:1"]
+            "description" => ["required", "string", "min:1"]
         ];
         if($data->title !== $request->title) $validation['title'] = ["required", "string", "max:100", "min:1", "unique:blogs"];
         $message = [];
@@ -132,7 +133,7 @@ class BlogController extends Controller
 
         if($request->image !== null){
             $upload = $this->moveFile($request->image, $this->path, $oldFile);
-            if($upload == null) return redirect()->route('blog.edit', $id)->with('error', Constant::UPLOAD_FAIL);
+            if($upload == null) return redirect()->route('blog.edit', $id)->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
         }
 
         try {
@@ -142,10 +143,10 @@ class BlogController extends Controller
             $data->image = $upload;
 
             $data->save();
-            return redirect()->route('blog.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('blog.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('blog.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('blog.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
@@ -155,13 +156,13 @@ class BlogController extends Controller
     public function destroy(string $id)
     {
         $data = Blog::find($id);
-        if($data == null) return redirect()->route('blog.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('blog.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         try {
             $data->delete();
-            return redirect()->route('blog.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('blog.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('blog.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('blog.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

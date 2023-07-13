@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     use Common;
+    public $obj = 'Produk';
     /**
      * Create a new controller instance.
      *
@@ -76,7 +77,7 @@ class ProductController extends Controller
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:1"],
-            "description" => ["required", "string", "max:100", "min:1"],
+            "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
             "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
@@ -92,7 +93,7 @@ class ProductController extends Controller
         }
 
         $uploads = $this->moveFile($request->images, $this->path);
-        if(count($uploads) == 0) return redirect()->route('product.create')->with('error', Constant::UPLOAD_FAIL);
+        if(count($uploads) == 0) return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
 
         try {
             $data = new Product();
@@ -108,10 +109,10 @@ class ProductController extends Controller
             $data->images = json_encode($uploads);
             $data->created_by = Auth::user()->username;
             $data->save();
-            return redirect()->route('product.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('product.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
 
     }
@@ -140,7 +141,7 @@ class ProductController extends Controller
         $typeList = $this->typeList();
         $data->images = json_decode($data->images);
 
-        if($data == null) return redirect()->route('product.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         return view('admin.product.edit', compact('data', 'typeList'));
     }
 
@@ -150,13 +151,13 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $data = Product::where('kode', $id)->first();
-        if($data == null) return redirect()->route('product.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:1"],
-            "description" => ["required", "string", "max:100", "min:1"],
+            "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
 
@@ -223,11 +224,11 @@ class ProductController extends Controller
             $data->images = json_encode($temp);
 
             $data->save();
-            return redirect()->route('product.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
             dd($th->getMessage());
-            return redirect()->route('product.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
@@ -237,14 +238,14 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $data = Product::where('kode', $id)->first();
-        if($data == null) return redirect()->route('product.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         try {
             $data->delete();
-            return redirect()->route('product.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('product.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

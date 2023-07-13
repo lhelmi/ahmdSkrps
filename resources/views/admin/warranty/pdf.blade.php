@@ -23,8 +23,8 @@
                 <th>Produk</th>
                 <th>Kontak</th>
                 <th>Tanggal Pembelian</th>
-                {{-- <th>Persyaratan Pembelian</th>
-                <th>Bukti Pembelian</th> --}}
+                <th>Persyaratan Pembelian</th>
+                <th>Bukti Pembelian</th>
                 <th>Keterangan</th>
 			</tr>
 		</thead>
@@ -39,13 +39,19 @@
                     <td>{{ $warranty->nama_product }}</td>
                     <td>{{ $warranty->contact }}</td>
                     <td>{{ $warranty->purchase_date }}</td>
-                    {{-- <td>
-                        <img src="{{ '/'.$warranty->requirements }}" width="150px" height="154px" id="image">
+                    <td>
+                        <img src="{{ $warranty->requirements }}" width="150px" height="154px" id="image">
                     </td>
                     <td>
-                        <img src="{{ '/'.$warranty->receipt }}" width="150px" height="154px" id="image">
-                    </td> --}}
-                    <td>{{ $warranty->status }}</td>
+                        <img src="{{ $warranty->receipt }}" width="150px" height="154px" id="image">
+                    </td>
+                    <td>
+                        @foreach ($type as $key => $val)
+                            @if ($key == $warranty->status)
+                                {{ $val }}
+                            @endif
+                        @endforeach
+                    </td>
                 </tr
             @endforeach
 

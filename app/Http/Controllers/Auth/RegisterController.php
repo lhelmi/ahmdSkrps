@@ -106,6 +106,6 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        return redirect()->route('login')->with('success', "Registrasi Berhasil! Silahkan Login");
+        return redirect()->route('login')->with('success', "Registrasi Berhasil!");
     }
 }

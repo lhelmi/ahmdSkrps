@@ -12,6 +12,7 @@ use App\Http\Traits\Common;
 class UserController extends Controller
 {
     use Common;
+    public $obj = 'User';
     /**
      * Create a new controller instance.
      *
@@ -69,10 +70,10 @@ class UserController extends Controller
             $data->address = $request->address;
             $data->role = '2';
             $data->save();
-            return redirect()->route('user.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('user.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('user.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('user.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
 
     }
@@ -122,10 +123,10 @@ class UserController extends Controller
             if($request->password !== "" || $request->password !== null) $data->password = bcrypt($request->password);
 
             $data->save();
-            return redirect()->route('user.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('user.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('user.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('user.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
@@ -135,14 +136,14 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $data = User::find($id);
-        if($data == null) return redirect()->route('user.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('user.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         try {
             $data->delete();
-            return redirect()->route('user.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('user.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('user.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('user.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

@@ -30,4 +30,8 @@ trait Common {
             "finish" => "Selesai",
         ];
     }
+
+    public function messageTemplate($message, $table){
+        return 'Data '.$table.' '.$message;
+    }
 }

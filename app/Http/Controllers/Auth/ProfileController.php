@@ -23,6 +23,7 @@ class ProfileController extends Controller
 {
     use Common;
     use VerifiesEmails;
+    public $obj = 'Profile';
     /**
      * Create a new controller instance.
      *
@@ -52,7 +53,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $data = User::find(Auth::user()->id);
-        if($data == null) return redirect()->route('auth.profile.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('auth.profile.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
@@ -95,10 +96,10 @@ class ProfileController extends Controller
                 $request->session()->regenerateToken();
             }
 
-            return redirect()->route('auth.profile.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('auth.profile.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('auth.profile.index')->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('auth.profile.index')->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 

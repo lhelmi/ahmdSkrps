@@ -29,6 +29,7 @@
         <div class="alert alert-danger mt-2">{{ $message }}</div>
     @endif
     <form action="{{ $login_url }}" method="post">
+        <center><h3>Login</h3></center>
 
         @csrf
         {{-- username field --}}

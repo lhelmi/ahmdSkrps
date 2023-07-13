@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 class ServiceController extends Controller
 {
     use Common;
+    public $obj = 'Jasa';
     /**
      * Create a new controller instance.
      *
@@ -75,7 +76,7 @@ class ServiceController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "description" => ["required", "string", "max:100", "min:1"],
+            "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
             "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
@@ -91,7 +92,7 @@ class ServiceController extends Controller
         }
 
         $uploads = $this->moveFile($request->images, $this->path);
-        if(count($uploads) == 0) return redirect()->route('service.create')->with('error', Constant::UPLOAD_FAIL);
+        if(count($uploads) == 0) return redirect()->route('service.create')->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
 
         try {
             $data = new Service();
@@ -105,10 +106,10 @@ class ServiceController extends Controller
             $data->images = json_encode($uploads);
             $data->created_by = Auth::user()->username;
             $data->save();
-            return redirect()->route('service.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('service.create')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('service.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
 
     }
@@ -137,7 +138,7 @@ class ServiceController extends Controller
         $typeList = $this->typeList();
         $data->images = json_decode($data->images);
 
-        if($data == null) return redirect()->route('service.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         return view('admin.service.edit', compact('data', 'typeList'));
     }
 
@@ -147,12 +148,12 @@ class ServiceController extends Controller
     public function update(Request $request, string $id)
     {
         $data = Service::where('kode', $id)->first();
-        if($data == null) return redirect()->route('service.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "description" => ["required", "string", "max:100", "min:1"],
+            "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
 
@@ -217,11 +218,11 @@ class ServiceController extends Controller
             $data->images = json_encode($temp);
 
             $data->save();
-            return redirect()->route('service.index')->with('success', Constant::UPDATE_SUCCESS);
+            return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
             dd($th->getMessage());
-            return redirect()->route('service.edit', $id)->with('error', Constant::UPDATE_FAIL);
+            return redirect()->route('service.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
 
@@ -231,14 +232,14 @@ class ServiceController extends Controller
     public function destroy(string $id)
     {
         $data = Service::where('kode', $id)->first();
-        if($data == null) return redirect()->route('service.index')->with('error', Constant::NOT_FOUND);
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         try {
             $data->delete();
-            return redirect()->route('service.index')->with('success', Constant::DESTROY_SUCCESS);
+            return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('service.index')->with('error', Constant::DESTROY_FAIL);
+            return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }
