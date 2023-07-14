@@ -108,7 +108,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Ubah</button>
-                    <a type="button" href="{{ route('blog.index') }}" class="btn btn-default">Batal</a>
+                    <a type="button" href="{{ route('warranty.index') }}" class="btn btn-default">Batal</a>
                 </div>
             </form>
         </div>

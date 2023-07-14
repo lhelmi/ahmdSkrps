@@ -48,12 +48,12 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('username', $request->username)->first();
-        if($user){
-            if(!$user->email_verified_at){
-                return redirect()->route('login')->with('error', 'Akun belum terverifikasi!');
-            }
-        }
+        // $user = User::where('username', $request->username)->first();
+        // if($user){
+        //     if(!$user->email_verified_at){
+        //         return redirect()->route('login')->with('error', 'Akun belum terverifikasi!');
+        //     }
+        // }
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -115,6 +115,12 @@ class LoginController extends Controller
 
     public function __construct()
     {
+        $this->middleware('verified')->only([
+            'validateLogin',
+            'sendLoginResponse',
+            'attemptLogin',
+            'incrementLoginAttempts'
+        ]);
         $this->middleware('guest')->except('logout');
     }
 }
