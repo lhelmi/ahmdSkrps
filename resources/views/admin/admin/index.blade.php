@@ -9,7 +9,7 @@
 @section('content')
     <div class="card mt-5">
         <div class="card-header">
-        <h1 class="card-title">Admin</h1>
+        <h1 class="card-title">Administrasi</h1>
         </div>
         <div class="card-body">
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">

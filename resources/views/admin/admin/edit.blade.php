@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Ubah Admin</h3>
+        <h3 class="card-title">Ubah Administrasi</h3>
         </div>
         <div class="card-body">
             @if ($message = Session::get('error'))
