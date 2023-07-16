@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Garansi Penukaran Produk</h2>
+        <h2>Keluhan</h2>
     </div>
     @if ($message = Session::get('error'))
         <div class="alert alert-danger">{{ $message }}</div>

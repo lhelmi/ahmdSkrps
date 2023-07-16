@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\Common;
 use App\Models\Service;
 use config\Constant;
 
@@ -14,6 +15,7 @@ class ServiceController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
 

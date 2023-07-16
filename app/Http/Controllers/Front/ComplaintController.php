@@ -20,6 +20,7 @@ class ComplaintController extends Controller
      *
      * @return void
      */
+    public $obj = 'Keluhan';
     public function __construct()
     {
         $this->middleware('auth');
@@ -64,10 +65,10 @@ class ComplaintController extends Controller
             $data->suggestions = $request->suggestions;
 
             $data->save();
-            return redirect()->route('front.complaint.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('front.complaint.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('front.complaint.index')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('front.complaint.index')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
     }
 }
