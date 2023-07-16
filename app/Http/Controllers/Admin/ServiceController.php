@@ -100,7 +100,6 @@ class ServiceController extends Controller
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
-            $data->estimate = $request->estimate;
             $data->description = $request->description;
             $data->price = $request->price;
             $data->images = json_encode($uploads);
@@ -221,7 +220,6 @@ class ServiceController extends Controller
             return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            dd($th->getMessage());
             return redirect()->route('service.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }

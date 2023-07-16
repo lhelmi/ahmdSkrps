@@ -72,22 +72,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:products"],
-            "name" => ["required", "string", "max:100", "min:1"],
-            "size" => ["required", "string", "max:100", "min:1"],
-            "type" => ["required", "string", "max:100", "min:1"],
-            "stock" => ["required", "numeric", "min:1"],
-            "description" => ["required", "string", "min:1"],
-            "price" => ["required", "numeric", "min:1"],
-            "images" => ["required","array","min:1","max:3"],
-            "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
-        ],[
-            'images.*.required' => 'Please upload an image',
-            'images.*.mimes' => 'Only jpeg,png and jpeg images are allowed',
-            'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
-        ]
-    );
-
+                "kode" => ["required", "string", "max:100", "min:1", "unique:products"],
+                "name" => ["required", "string", "max:100", "min:1"],
+                "size" => ["required", "string", "max:100", "min:1"],
+                "type" => ["required", "string", "max:100", "min:1"],
+                "stock" => ["required", "numeric", "min:1"],
+                "description" => ["required", "string", "min:1"],
+                "price" => ["required", "numeric", "min:1"],
+                "images" => ["required","array","min:1","max:3"],
+                "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
+            ],
+            [
+                'images.*.required' => 'Please upload an image',
+                'images.*.mimes' => 'Only jpeg,png and jpeg images are allowed',
+                'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
+            ]
+        );
         if ($validator->fails()) {
             return redirect()->route('product.create')->withErrors($validator)->withInput();
         }
@@ -102,7 +102,6 @@ class ProductController extends Controller
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
-            $data->material = $request->material;
             $data->stock = $request->stock;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -111,6 +110,7 @@ class ProductController extends Controller
             $data->save();
             return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             $this->errorLog($th->getMessage());
             return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
@@ -217,7 +217,6 @@ class ProductController extends Controller
             $data->name = $request->name;
             $data->size = $request->size;
             $data->type = $request->type;
-            $data->material = $request->material;
             $data->stock = $request->stock;
             $data->description = $request->description;
             $data->price = $request->price;
