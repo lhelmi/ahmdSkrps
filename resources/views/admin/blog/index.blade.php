@@ -30,7 +30,6 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID</th>
                                     <th>Judul</th>
                                     <th>Tanggal Publish</th>
                                     <th>Dibuat Oleh</th>
@@ -44,7 +43,6 @@
                                 @foreach ($blogs as $blog)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $blog->id }}</td>
                                         <td>{{ $blog->title }}</td>
                                         <td>{{ $blog->created_at }}</td>
                                         <td>{{ $blog->created_by }}</td>
