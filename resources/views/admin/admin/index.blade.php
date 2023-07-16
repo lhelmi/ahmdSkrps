@@ -25,7 +25,7 @@
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @endif
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="table-responsive-xl">
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
                             <thead>
                                 <tr>

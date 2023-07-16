@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class WarrantyController extends Controller
 {
     use Common;
+    public $obj = 'Garansi';
     /**
      *
      * Create a new controller instance.
@@ -72,10 +73,10 @@ class WarrantyController extends Controller
             $data->requirements = $this->path.'/'.$requirementsName;
             $data->receipt = $this->path.'/'.$receiptName;
             $data->save();
-            return redirect()->route('front.warranty.index')->with('success', Constant::SAVE_SUCCESS);
+            return redirect()->route('front.warranty.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            return redirect()->route('front.warranty.index')->with('error', Constant::SAVE_FAIL);
+            return redirect()->route('front.warranty.index')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
     }
 }
