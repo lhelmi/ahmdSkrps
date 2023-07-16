@@ -111,7 +111,7 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('admin/media/destroy/{kode}', [MediaController::class, 'destroy'])->name('media.destroy');
 });
 
-Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('verified');
 
 Route::middleware(['isAdministrator', 'verified'])->group(function () {
     Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');

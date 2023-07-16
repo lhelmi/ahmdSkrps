@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use config\Constant;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -16,7 +17,12 @@ class BlogController extends Controller
      */
     public function __construct()
     {
-
+        if(Auth::user()){
+            $this->middleware('verified')->only([
+                'index',
+                'show'
+            ]);
+        }
     }
 
     /**

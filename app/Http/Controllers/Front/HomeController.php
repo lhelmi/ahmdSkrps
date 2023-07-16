@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-
+        if(Auth::user()){
+            $this->middleware('verified');
+        }
     }
 
     /**
