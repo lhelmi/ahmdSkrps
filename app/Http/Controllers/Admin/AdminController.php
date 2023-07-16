@@ -12,7 +12,7 @@ use App\Http\Traits\Common;
 class AdminController extends Controller
 {
     use Common;
-    public $obj = 'Admin';
+    public $obj = 'Administrasi';
     /**
      * Create a new controller instance.
      *
