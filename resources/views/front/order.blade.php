@@ -13,7 +13,7 @@
             <img src="{{ asset('front/images/Wa-Icon.png') }}" style="height: 45px; width: 48px;" data-holder-rendered="true" >
             <strong class="text-gray-dark">082214008859</strong>
         </div>
-        <div class="content-2">
+        {{-- <div class="content-2">
             <h1 class="jumbotron-heading">Media Sosial</h1>
             <img src="{{ asset('front/images/Instagram-Icon.png') }}" style="height: 45px; width: 48px;" data-holder-rendered="true" >
             <strong class="text-gray-dark">@sdnajfhajs</strong>
@@ -27,7 +27,7 @@
             <br>
             <img src="{{ asset('front/images/Youtube-Icon.png') }}" style="height: 45px; width: 48px;" data-holder-rendered="true" >
             <strong class="text-gray-dark">@fdfdfgfgegfg</strong>
-        </div>
+        </div> --}}
     </div>
 </section>
 
