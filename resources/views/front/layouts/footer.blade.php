@@ -5,7 +5,7 @@
         </div>
 
         <div class="float-right">
-            <p>Copyright</p>
+            <p>Copyright &copy; CV. Supri Group</p>
         </div>
     </div>
 
