@@ -76,7 +76,7 @@ class ProductController extends Controller
                 "name" => ["required", "string", "max:100", "min:1"],
                 "size" => ["required", "string", "max:100", "min:1"],
                 "type" => ["required", "string", "max:100", "min:1"],
-                "stock" => ["required", "numeric", "min:1"],
+                "stock" => ["required", "numeric", "min:0"],
                 "description" => ["required", "string", "min:1"],
                 "price" => ["required", "numeric", "min:1"],
                 "images" => ["required","array","min:1","max:3"],
@@ -156,7 +156,7 @@ class ProductController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
-            "stock" => ["required", "numeric", "min:1"],
+            "stock" => ["required", "numeric", "min:0"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
