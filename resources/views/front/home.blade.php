@@ -13,8 +13,7 @@
         <div class="content-1">
             <img src="{{ asset('front/images/logo.png') }}" alt="logo" height="534px" width="538px">
             <h1 class="jumbotron-heading">Siapa Kita</h1>
-            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
-            Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+            <p class="lead text-muted">Supri Group merupakan badan usaha milik perseorangan yang berasas kekeluargaan. Usaha kami memiliki komitmen bertanggung jawab, pekerja keras, melayani dengan sepenuh hati.</p>
         </div>
         {{-- <p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
