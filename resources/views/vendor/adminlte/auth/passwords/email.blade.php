@@ -18,6 +18,13 @@
         </div>
     @endif
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success mt-2">{{ $message }}</div>
+    @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger mt-2">{{ $message }}</div>
+    @endif
+
     <form action="{{ $password_email_url }}" method="post">
         @csrf
 
