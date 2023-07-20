@@ -28,7 +28,7 @@ class ProductFeController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(1);
+        $products = Product::paginate(9);
         return view('front.product.index', compact('products'));
     }
 
