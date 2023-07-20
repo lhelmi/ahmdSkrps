@@ -8,12 +8,9 @@
                 {{-- by <a href="#">Mark</a> --}}
             </p>
         </div><!-- /.blog-post -->
-
-        <div class="jumbotron p-3 p-md-5 mt-3 text-white rounded">
-        <div class="col-md-6 px-0">
-            <img src="{{ URL::to('/').'/'.$blog->image }}" class="img-fluid rounded-start" alt="img" style="height: 100%; width: 100%;">
-        </div>
-        </div>
+        <section class="jumbotron text-center p-3 p-md-1 text-white rounded">
+                <img src="{{ URL::to('/').'/'.$blog->image }}" class="img-fluid rounded-start" alt="img" style="height: 534px; width: 538px;">
+        </section>
 
         <div class="p-3 mb-3 bg-light rounded">
             <h4 class="font-italic">About</h4>

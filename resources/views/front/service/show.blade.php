@@ -22,30 +22,32 @@
 </div>
 <section class="jumbotron text-center" style="background-color: #fff">
     <div class="container">
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>Nama</td>
-                    <td>{{ $data->name }}</td>
-                </tr>
-                <tr>
-                    <td>Ukuran</td>
-                    <td>{{ $data->size }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis</td>
-                    <td>{{ $data->type }}</td>
-                </tr>
-                <tr>
-                    <td>Harga</td>
-                    <td>{{ $data->price }}</td>
-                </tr>
-                <tr>
-                    <td>Deskripsi</td>
-                    <td>{{ $data->description }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Nama</td>
+                        <td>{{ $data->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ukuran</td>
+                        <td>{{ $data->size }}</td>
+                    </tr>
+                    <tr>
+                        <td>Jenis</td>
+                        <td>{{ $data->type }}</td>
+                    </tr>
+                    <tr>
+                        <td>Harga</td>
+                        <td><{{ $data->price }}</td>
+                    </tr>
+                    <tr>
+                        <td>Deskripsi</td>
+                        <td><p class="lead text-justify">{{ $data->description }}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>
 @endsection

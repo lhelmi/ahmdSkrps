@@ -22,6 +22,7 @@
 </div>
 <section class="jumbotron text-center" style="background-color: #fff">
     <div class="container">
+        <div class="table-responsive">
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -46,10 +47,15 @@
                 </tr>
                 <tr>
                     <td>Deskripsi</td>
-                    <td>{{ $data->description }}</td>
+                    <td>
+                        <p class="lead text-justify">
+                            {{ $data->description }}
+                        </p>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 </section>
 @endsection
