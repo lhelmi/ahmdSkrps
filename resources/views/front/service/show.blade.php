@@ -8,8 +8,16 @@
                 $div = 12/(integer)$count;
             @endphp
             @foreach ($data->images->images as $service)
+                @if ($count == 1)
+                <div class="col-md-4 offset-md-4">
+                    <div class="card mb-auto box-shadow">
+                @elseif ($count == 2)
+                <div class="col-md-4 offset-md-1">
+                    <div class="card mb-{{$div}} box-shadow">
+                @else
                 <div class="col-md-{{$div}}">
                     <div class="card mb-{{$div}} box-shadow">
+                @endif
                         <img class="card-img-top" style="height: 225px; width: 100%; display: block;"
                         src="{{ URL::to('/').'/'.$data->images->path.'/'.$service }}" data-holder-rendered="true">
                         <div class="card-body">
@@ -39,7 +47,7 @@
                     </tr>
                     <tr>
                         <td>Harga</td>
-                        <td><{{ $data->price }}</td>
+                        <td>{{ $data->price }}</td>
                     </tr>
                     <tr>
                         <td>Deskripsi</td>
