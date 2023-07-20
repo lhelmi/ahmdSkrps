@@ -36,7 +36,7 @@
                     <td>{{ $complaint->complaint }}</td>
                     <td>{{ $complaint->criticism }}</td>
                     <td>{{ $complaint->suggestions }}</td>
-                </tr
+                </tr>
             @endforeach
 
 		</tbody>

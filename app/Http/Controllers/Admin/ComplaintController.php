@@ -48,6 +48,7 @@ class ComplaintController extends Controller
         )
         ->join('users as b', 'a.user_id', '=', 'b.id')->get();
 
+
         $pdf = PDF::loadView('admin.complaint.pdf', compact('data'));
 	    return $pdf->download('Keluhan.pdf');
     }
