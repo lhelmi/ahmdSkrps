@@ -29,10 +29,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $users = User::count();
+        $users = User::where('role', '2')->count();
         $services = Service::count();
         $products = Product::count();
-        $administrasi = User::where('role', 1)->count();
+        $administrasi = User::where('role', '1')->count();
 
         $warranty = Warranty::count();
         $complaint = Complaint::count();
