@@ -352,12 +352,12 @@ return [
             'icon'        => 'fa fa-rss',
             'role'        => ['0'],
         ],
-        [
-            'text'        => 'Garansi',
-            'url'         => 'admin/warranty',
-            'icon'        => 'fa fa-book',
-            'role'        => ['1'],
-        ],
+        // [
+        //     'text'        => 'Garansi',
+        //     'url'         => 'admin/warranty',
+        //     'icon'        => 'fa fa-book',
+        //     'role'        => ['1'],
+        // ],
         [
             'text'        => 'Keluhan',
             'url'         => 'admin/complaint',

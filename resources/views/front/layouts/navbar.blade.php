@@ -23,9 +23,9 @@
                 <a class="nav-link" href="{{ route('front.service.index') }}">Jasa</a>
             </li>
             @if (Auth::user())
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.warranty.index') }}">Garansi</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('front.complaint.index') }}">Keluhan</a>
                 </li>

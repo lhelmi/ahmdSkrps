@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\WarrantyController;
+// use App\Http\Controllers\Admin\WarrantyController;
 use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Auth\ProfileController;
 
@@ -21,7 +21,7 @@ use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\MediaController as FeMediaController;
 use App\Http\Controllers\Front\ServiceController as FEServiceController;
 use App\Http\Controllers\Front\BlogController as FEBlogController;
-use App\Http\Controllers\Front\WarrantyController as FEWarrantyController;
+// use App\Http\Controllers\Front\WarrantyController as FEWarrantyController;
 use App\Http\Controllers\Front\ComplaintController as FEComplaintController;
 use App\Http\Controllers\Auth\ConfirmController;
 
@@ -51,7 +51,7 @@ Route::get('/service', [FEServiceController::class, 'index'])->name('front.servi
 Route::get('/service/{id}', [FEServiceController::class, 'show'])->name('front.service.show');
 Route::get('/blog', [FEBlogController::class, 'index'])->name('front.blog.index');
 Route::get('/blog/{slug}', [FEBlogController::class, 'show'])->name('front.blog.show');
-Route::get('/warranty', [FEWarrantyController::class, 'index'])->name('front.warranty.index');
+// Route::get('/warranty', [FEWarrantyController::class, 'index'])->name('front.warranty.index');
 Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.complaint.index');
 
 Route::get('/verify/{link}', [ConfirmController::class, 'verifyEmail'])->name('front.verify');
@@ -63,7 +63,7 @@ Route::middleware(['verified', 'isUser'])->group(function () {
     Route::post('profile', [ProfileController::class, 'update'])->name('auth.profile.store');
 
     Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
-    Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.warranty.store');
+    // Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.warranty.store');
 });
 
 Route::middleware(['isAdmin', 'verified'])->group(function () {
@@ -114,11 +114,11 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
 Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('verified');
 
 Route::middleware(['isAdministrator', 'verified'])->group(function () {
-    Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
-    Route::get('/admin/warranty/pdf', [WarrantyController::class, 'pdf'])->name('warranty.pdf');
-    Route::get('/admin/warranty/destroy/{id}', [WarrantyController::class, 'destroy'])->name('warranty.destroy');
-    Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit');
-    Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update');
+    // Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
+    // Route::get('/admin/warranty/pdf', [WarrantyController::class, 'pdf'])->name('warranty.pdf');
+    // Route::get('/admin/warranty/destroy/{id}', [WarrantyController::class, 'destroy'])->name('warranty.destroy');
+    // Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit');
+    // Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update');
 
     Route::get('/admin/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
     Route::get('/admin/complaint/pdf', [ComplaintController::class, 'pdf'])->name('complaint.pdf');
