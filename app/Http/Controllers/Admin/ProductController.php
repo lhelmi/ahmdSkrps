@@ -72,7 +72,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-                "kode" => ["required", "string", "max:100", "min:1", "unique:products"],
+                "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
                 "name" => ["required", "string", "max:100", "min:1"],
                 "size" => ["required", "string", "max:100", "min:1"],
                 "type" => ["required", "string", "max:100", "min:1"],
@@ -83,6 +83,7 @@ class ProductController extends Controller
                 "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
             ],
             [
+                "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
                 'images.*.required' => 'Please upload an image',
                 'images.*.mimes' => 'Only jpeg,png and jpeg images are allowed',
                 'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
@@ -160,10 +161,14 @@ class ProductController extends Controller
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
-
-        if($id !== $request->kode) $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products"];
-
         $message = [];
+
+        if($id !== $request->kode){
+            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
+            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+        }
+
+
         $uploadCount = 0;
         if($request->image0 !== null){
             $uploadCount = 1;

@@ -76,6 +76,21 @@
                         <div class="input-group">
                             <input type="file" name="images[]" id="images" multiple=true>
                         </div>
+                        @error('images')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+
+                        @error('images.0')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+
+                        @error('images.1')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+
+                        @error('images.2')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">

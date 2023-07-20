@@ -72,7 +72,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:services"],
+            "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
             "type" => ["required", "string", "max:100", "min:1"],
@@ -80,13 +80,13 @@ class ServiceController extends Controller
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
             "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
-        ],[
+        ],
+        [
             'images.*.required' => 'Please upload an image',
             'images.*.mimes' => 'Only jpeg,png and jpeg images are allowed',
             'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
-        ]
-    );
-
+        ]);
+        // dd($validator->errors());
         if ($validator->fails()) {
             return redirect()->route('service.create')->withErrors($validator)->withInput();
         }
@@ -155,10 +155,14 @@ class ServiceController extends Controller
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
-
-        if($id !== $request->kode) $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services"];
-
         $message = [];
+
+        if($id !== $request->kode){
+            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"];
+            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+        }
+
+
         $uploadCount = 0;
         if($request->image0 !== null){
             $uploadCount = 1;
