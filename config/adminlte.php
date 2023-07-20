@@ -313,7 +313,7 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'admin/home',
+            'url'         => '/dashboard',
             'icon'        => 'fa fa-fw fa-home',
             'role'        => ['0', '1'],
         ],
@@ -360,7 +360,7 @@ return [
         // ],
         [
             'text'        => 'Keluhan',
-            'url'         => 'admin/complaint',
+            'url'         => 'administrasi/complaint',
             'icon'        => 'fa fa-info',
             'role'        => ['1'],
         ],

@@ -63,7 +63,7 @@
     @endif
 
     @if (Auth::user()->role == "1")
-        <div class="col-lg-3 col-6">
+        {{-- <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
                     <h3>{{ $warranty }}</h3>
@@ -72,9 +72,9 @@
                 <div class="icon">
                     <i class="fa fa-file"></i>
                 </div>
-                {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
+
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">

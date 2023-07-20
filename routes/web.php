@@ -111,7 +111,7 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('admin/media/destroy/{kode}', [MediaController::class, 'destroy'])->name('media.destroy');
 });
 
-Route::get('/admin/home', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('verified');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('verified');
 
 Route::middleware(['isAdministrator', 'verified'])->group(function () {
     // Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
@@ -120,9 +120,9 @@ Route::middleware(['isAdministrator', 'verified'])->group(function () {
     // Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit');
     // Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update');
 
-    Route::get('/admin/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
-    Route::get('/admin/complaint/pdf', [ComplaintController::class, 'pdf'])->name('complaint.pdf');
-    Route::get('/admin/complaint/edit/{id}', [ComplaintController::class, 'edit'])->name('complaint.edit');
-    Route::post('/admin/complaint/update/{id}', [ComplaintController::class, 'update'])->name('complaint.update');
-    Route::get('/admin/complaint/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
+    Route::get('/administrasi/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
+    Route::get('/administrasi/complaint/pdf', [ComplaintController::class, 'pdf'])->name('complaint.pdf');
+    Route::get('/administrasi/complaint/edit/{id}', [ComplaintController::class, 'edit'])->name('complaint.edit');
+    Route::post('/administrasi/complaint/update/{id}', [ComplaintController::class, 'update'])->name('complaint.update');
+    Route::get('/administrasi/complaint/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });
