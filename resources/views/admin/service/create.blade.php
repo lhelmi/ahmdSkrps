@@ -47,7 +47,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="username">Jenis</label>
                         <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" >
                             <option value="">Pilih</option>
@@ -59,7 +59,7 @@
                         @error('type')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="username">Price</label>

@@ -65,8 +65,8 @@ class ServiceController extends Controller
 
     public function create()
     {
-        $typeList = $this->typeList();
-        return view('admin.service.create', compact('typeList'));
+        // $typeList = $this->typeList();
+        return view('admin.service.create');
     }
 
     public function store(Request $request)
@@ -75,7 +75,7 @@ class ServiceController extends Controller
             "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
-            "type" => ["required", "string", "max:100", "min:1"],
+            // "type" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
@@ -99,7 +99,7 @@ class ServiceController extends Controller
             $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
-            $data->type = $request->type;
+            // $data->type = $request->type;
             $data->description = $request->description;
             $data->price = $request->price;
             $data->images = json_encode($uploads);
@@ -134,11 +134,11 @@ class ServiceController extends Controller
     public function edit(string $id)
     {
         $data = Service::where('kode', $id)->first();
-        $typeList = $this->typeList();
+        // $typeList = $this->typeList();
         $data->images = json_decode($data->images);
 
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
-        return view('admin.service.edit', compact('data', 'typeList'));
+        return view('admin.service.edit', compact('data'));
     }
 
     /**
@@ -151,7 +151,7 @@ class ServiceController extends Controller
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
-            "type" => ["required", "string", "max:100", "min:1"],
+            // "type" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
         ];
@@ -215,7 +215,7 @@ class ServiceController extends Controller
             $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
-            $data->type = $request->type;
+            // $data->type = $request->type;
             $data->description = $request->description;
             $data->price = $request->price;
             $data->images = json_encode($temp);
@@ -223,6 +223,7 @@ class ServiceController extends Controller
             $data->save();
             return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
+            // dd($th->getMessage());
             $this->errorLog($th->getMessage());
             return redirect()->route('service.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }

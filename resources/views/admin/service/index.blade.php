@@ -33,7 +33,7 @@
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Ukuran</th>
-                                    <th>Jenis</th>
+                                    {{-- <th>Jenis</th> --}}
                                     <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -48,7 +48,7 @@
                                         <td>{{ $service->kode }}</td>
                                         <td>{{ $service->name }}</td>
                                         <td>{{ $service->size }}</td>
-                                        <td>{{ $service->type }}</td>
+                                        {{-- <td>{{ $service->type }}</td> --}}
                                         <td>{{ $service->price }}</td>
 
                                         <td>
