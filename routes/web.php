@@ -53,6 +53,7 @@ Route::get('/blog', [FEBlogController::class, 'index'])->name('front.blog.index'
 Route::get('/blog/{slug}', [FEBlogController::class, 'show'])->name('front.blog.show');
 // Route::get('/warranty', [FEWarrantyController::class, 'index'])->name('front.warranty.index');
 Route::get('/complaint', [FEComplaintController::class, 'index'])->name('front.complaint.index');
+Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
 
 Route::get('/verify/{link}', [ConfirmController::class, 'verifyEmail'])->name('front.verify');
 
@@ -61,8 +62,6 @@ Auth::routes(['verify' => true]);
 Route::middleware(['verified', 'isUser'])->group(function () {
     Route::get('profile', [ProfileController::class, 'index'])->name('auth.profile.index');
     Route::post('profile', [ProfileController::class, 'update'])->name('auth.profile.store');
-
-    Route::post('/complaint', [FEComplaintController::class, 'store'])->name('front.complaint.store');
     // Route::post('/warranty', [FEWarrantyController::class, 'store'])->name('front.warranty.store');
 });
 

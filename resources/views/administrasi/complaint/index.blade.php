@@ -53,7 +53,7 @@
                                         <td>
                                             <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('complaint.destroy', [$complaint->id]) }}">Hapus</a>
                                         </td>
-                                    </tr
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
