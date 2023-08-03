@@ -87,6 +87,7 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('admin/product/edit/{kode}', [ProductController::class, 'edit'])->name('product.edit');
     Route::post('admin/product/update/{kode}', [ProductController::class, 'update'])->name('product.update');
     Route::get('admin/product/destroy/{kode}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::get('admin/product/destroy/image/{kode}/{img}', [ProductController::class, 'destroyImage'])->name('product.destroy.image');
 
     Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
     Route::get('admin/service/create', [ServiceController::class, 'create'])->name('service.create');

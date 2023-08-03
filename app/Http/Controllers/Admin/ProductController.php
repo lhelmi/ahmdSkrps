@@ -65,8 +65,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        $typeList = $this->typeList();
-        return view('admin.product.create', compact('typeList'));
+        // $typeList = $this->typeList();
+        return view('admin.product.create');
     }
 
     public function store(Request $request)
@@ -75,7 +75,7 @@ class ProductController extends Controller
                 "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
                 "name" => ["required", "string", "max:100", "min:1"],
                 "size" => ["required", "string", "max:100", "min:1"],
-                "type" => ["required", "string", "max:100", "min:1"],
+                // "type" => ["required", "string", "max:100", "min:1"],
                 "stock" => ["required", "numeric", "min:0"],
                 "description" => ["required", "string", "min:1"],
                 "price" => ["required", "numeric", "min:1"],
@@ -102,7 +102,7 @@ class ProductController extends Controller
             $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
-            $data->type = $request->type;
+            // $data->type = $request->type;
             $data->stock = $request->stock;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -111,7 +111,7 @@ class ProductController extends Controller
             $data->save();
             return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::SAVE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            // dd($th->getMessage());
             $this->errorLog($th->getMessage());
             return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::SAVE_FAIL, $this->obj));
         }
@@ -139,11 +139,11 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $data = Product::where('kode', $id)->first();
-        $typeList = $this->typeList();
+        // $typeList = $this->typeList();
         $data->images = json_decode($data->images);
 
         if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
-        return view('admin.product.edit', compact('data', 'typeList'));
+        return view('admin.product.edit', compact('data'));
     }
 
     /**
@@ -156,7 +156,7 @@ class ProductController extends Controller
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
             "size" => ["required", "string", "max:100", "min:1"],
-            "type" => ["required", "string", "max:100", "min:1"],
+            // "type" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:0"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"]
@@ -221,7 +221,7 @@ class ProductController extends Controller
             $data->kode = $request->kode;
             $data->name = $request->name;
             $data->size = $request->size;
-            $data->type = $request->type;
+            // $data->type = $request->type;
             $data->stock = $request->stock;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -231,7 +231,7 @@ class ProductController extends Controller
             return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            dd($th->getMessage());
+            // dd($th->getMessage());
             return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }
@@ -250,6 +250,39 @@ class ProductController extends Controller
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
             return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
+        }
+    }
+
+    public function destroyImage(string $id, string $img)
+    {
+        $data = Product::where('kode', $id)->first();
+        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+
+        $data->images = json_decode($data->images);
+        $arrImg = $data->images;
+        $tempKey = null;
+        $countImg = count($arrImg->images);
+
+        if($countImg <= 1) return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate("Gambar Tidak Boleh Kosong", $this->obj));
+        foreach ($arrImg->images as $key => $value) {
+            if($value == $img){
+                $tempKey = $key;
+            }
+        }
+
+        if($tempKey == null && $tempKey !== 0) return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate("Gambar Tidak ditemukan", $this->obj));
+        unset($arrImg->images[$tempKey]);
+        if(File::exists(public_path($this->path.'/'.$img))){
+            File::delete(public_path($this->path.'/'.$img));
+        }
+
+        try {
+            $data->images = json_encode($arrImg);
+            $data->save();
+            return redirect()->route('product.edit', $id)->with('success', $this->messageTemplate("Gambar Berhasil dihapus", $this->obj));
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate(Constant::DESTROY_FAIL, $this->obj));
         }
     }
 }

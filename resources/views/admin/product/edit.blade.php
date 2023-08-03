@@ -15,6 +15,9 @@
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
+            @if ($message = Session::get('success'))
+                    <div class="alert alert-success mt-2">{{ $message }}</div>
+                @endif
             <form method="POST" action="{{ route('product.update', $data->kode) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
@@ -48,7 +51,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Jenis</label>
                         <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" >
                             <option value="">Pilih</option>
@@ -64,7 +67,7 @@
                         @error('type')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label>Stok</label>
@@ -123,6 +126,10 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <input type="file" name="image{{$no}}" id="images_{{$no}}">
+                                    @php
+                                        $temp = $item;
+                                    @endphp
+                                    <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy.image', ['kode' => $data->kode, 'img' => $temp]) }}">Hapus</a>
                                 </div>
                             </div>
                         </div>

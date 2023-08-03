@@ -33,7 +33,7 @@
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Ukuran</th>
-                                    <th>Jenis</th>
+                                    {{-- <th>Jenis</th> --}}
                                     <th>Stok</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
@@ -49,7 +49,7 @@
                                         <td>{{ $product->kode }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->size }}</td>
-                                        <td>{{ $product->type }}</td>
+                                        {{-- <td>{{ $product->type }}</td> --}}
                                         <td>{{ $product->stock }}</td>
                                         <td>{{ $product->price }}</td>
 
