@@ -34,9 +34,9 @@ class DashboardController extends Controller
         $products = Product::count();
         $administrasi = User::where('role', '1')->count();
 
-        $warranty = Warranty::count();
+        // $warranty = Warranty::count();
         $complaint = Complaint::count();
 
-        return view('admin.dashboard.index', compact('users', 'services', 'products', 'administrasi', 'warranty', 'complaint'));
+        return view('admin.dashboard.index', compact('users', 'services', 'products', 'administrasi', 'complaint'));
     }
 }
