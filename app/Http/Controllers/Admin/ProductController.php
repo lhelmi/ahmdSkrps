@@ -264,14 +264,16 @@ class ProductController extends Controller
         $countImg = count($arrImg->images);
 
         if($countImg <= 1) return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate("Gambar Tidak Boleh Kosong", $this->obj));
+        $newImg = [];
         foreach ($arrImg->images as $key => $value) {
-            if($value == $img){
-                $tempKey = $key;
+            if($value == $img) $tempKey = $key;
+            if($value !== $img){
+                array_push($newImg, $value);
             }
         }
-
+        $arrImg->images = $newImg;
         if($tempKey == null && $tempKey !== 0) return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate("Gambar Tidak ditemukan", $this->obj));
-        unset($arrImg->images[$tempKey]);
+
         if(File::exists(public_path($this->path.'/'.$img))){
             File::delete(public_path($this->path.'/'.$img));
         }
