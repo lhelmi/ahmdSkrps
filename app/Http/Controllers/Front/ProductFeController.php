@@ -29,6 +29,9 @@ class ProductFeController extends Controller
     public function index()
     {
         $products = Product::paginate(9);
+        // foreach ($products as $key => $value) {
+        //     dd($value->images);
+        // }
         return view('front.product.index', compact('products'));
     }
 
