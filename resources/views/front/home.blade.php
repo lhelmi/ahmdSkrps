@@ -37,7 +37,7 @@
                 <div class="card mb-4 box-shadow">
                     <img src="{{ asset('front/images/1.jpg') }}" alt="logo" style="height: 300px; width: 340px">
                     <div class="card-body">
-                        <p class="card-text">Kendaraan perusahaan untuk mengantarkan produk ke tempat konsumen.</p>
+                        <p class="card-text">Kendaraan perusahaan untuk mengantarkan produk ke tempat konsumen.</p>
 
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="card mb-4 box-shadow">
                     <img src="{{ asset('front/images/2.jpg') }}" alt="logo" style="height: 300px; width: 340px">
                     <div class="card-body">
-                        <p class="card-text">Tempat penyimpanan beberapa produk yang disediakan di perusahaan.</p>
+                        <p class="card-text">Tempat penyimpanan beberapa produk yang disediakan diperusahaan.</p>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="card mb-4 box-shadow">
                     <img src="{{ asset('front/images/3.jpg') }}" alt="logo" style="height: 300px; width: 340px">
                     <div class="card-body">
-                        <p class="card-text">Plang perusahaan CV. Supri group terdapat alamat dan no telepon.</p>
+                        <p class="card-text">Plang perusahaan CV. Supri group terdapat alamat dan notelepon.</p>
                     </div>
                 </div>
             </div>
