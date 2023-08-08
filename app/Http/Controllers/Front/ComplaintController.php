@@ -44,9 +44,9 @@ class ComplaintController extends Controller
         if(!Auth::user()) return redirect()->route('front.complaint.index')->with('error', "Anda Harus Login Terlebih Dahulu!");
 
         $validator = Validator::make($request->all(), [
-            "criticism" => ["max:100", "regex:/(?!^\d+$)^.+$/"],
-            "complaint" => ["max:100", "regex:/(?!^\d+$)^.+$/"],
-            "suggestions" => ["max:100", "regex:/(?!^\d+$)^.+$/"],
+            "criticism" => ["regex:/(?!^\d+$)^.+$/"],
+            "complaint" => ["regex:/(?!^\d+$)^.+$/"],
+            "suggestions" => ["regex:/(?!^\d+$)^.+$/"],
         ],[
             "complaint.regex" => "Komplain tidak boleh mengandung angka saja!",
             "suggestions.regex" => "Saran tidak boleh mengandung angka saja!",
