@@ -129,7 +129,7 @@
                                     @php
                                         $temp = $item;
                                     @endphp
-                                    <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy.image', ['kode' => $data->kode, 'img' => $temp]) }}">Hapus</a>
+                                    {{-- <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy.image', ['kode' => $data->kode, 'img' => $temp]) }}">Hapus</a> --}}
                                 </div>
                             </div>
                         </div>
