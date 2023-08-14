@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrasi;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Common;
@@ -37,7 +37,7 @@ class ComplaintController extends Controller
         )
         ->join('users as b', 'a.user_id', '=', 'b.id')->get();
 
-        return view('administrasi.complaint.index', compact('complaints'));
+        return view('manager.complaint.index', compact('complaints'));
     }
 
     public function pdf(){
@@ -49,7 +49,7 @@ class ComplaintController extends Controller
         ->join('users as b', 'a.user_id', '=', 'b.id')->get();
 
 
-        $pdf = PDF::loadView('administrasi.complaint.pdf', compact('data'));
+        $pdf = PDF::loadView('manager.complaint.pdf', compact('data'));
 	    return $pdf->download('Keluhan.pdf');
     }
 
