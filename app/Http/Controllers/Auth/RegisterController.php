@@ -72,13 +72,46 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255', "min:1"],
-            'username' => ['required', 'string', 'max:255', 'unique:users', "min:8"],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:100', "min:1"],
+            'username' => ['required', 'string', 'max:100', 'unique:users', "min:8"],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'birth_date' => ['required', 'string', 'max:255', "min:1"],
-            'birth_place' => ['required', 'string', 'max:255', "min:1"],
-            'address' => ['required', 'string', 'max:255', "min:1"],
+            'birth_date' => ['required', 'string', 'max:100', "min:1"],
+            'birth_place' => ['required', 'string', 'max:100', "min:1"],
+            'address' => ['required', 'string', 'max:100', "min:1"],
+        ],
+        [
+            "name.required" => "Nama Harus diisi",
+            "name.max" => "Nama maksimal 100!",
+            "name.min" => "Nama minimal 1 digit!",
+
+            "address.required" => "Alamat Harus diisi",
+            "address.max" => "Alamat maksimal 100!",
+            "address.min" => "Alamat minimal 1 digit!",
+
+            "username.required" => "Nama Harus diisi",
+            "username.max" => "Nama maksimal 100!",
+            "username.min" => "Nama minimal 8 digit!",
+            "username.unique" => "Nama Sudah digunakan!",
+
+            "email.required" => "email Harus diisi",
+            "email.max" => "email maksimal 100!",
+            "email.min" => "email minimal 6 digit!",
+            "email.unique" => "email Sudah digunakan!",
+
+            "birth_date.required" => "Tanggal Lahir Harus diisi",
+            "birth_date.max" => "Tanggal Lahir maksimal 100!",
+            "birth_date.min" => "Tanggal Lahir minimal 6 digit!",
+
+            "birth_place.required" => "Tempat Lahir Harus diisi",
+            "birth_place.max" => "Tempat Lahir maksimal 100!",
+            "birth_place.min" => "Tempat Lahir minimal 6 digit!",
+            "birth_place.unique" => "Tempat Lahir Sudah digunakan!",
+
+            "password.required" => "Password Harus diisi",
+            "password.max" => "Password maksimal 100!",
+            "password.min" => "Password minimal 8 digit!",
+            "password.confirmed" => "Password Tidak Sama Dengan Konfirm Password!",
         ]);
     }
 

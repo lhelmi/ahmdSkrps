@@ -52,9 +52,18 @@ class BlogController extends Controller
             "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
         ],
         [
-            'image.required' => 'Please upload an image',
-            'image.mimes' => 'Only jpeg,png and jpeg image are allowed',
-            'image.max' => 'Sorry! Maximum allowed size for an image is 2MB',
+            "title.required" => "Judul Harus diisi",
+            "title.max" => "Judul maksimal 100!",
+            "title.min" => "Judul minimal 1 digit!",
+            "title.unique" => "Judul Sudah digunakan!",
+
+            "description.required" => "Deksripsi Harus diisi",
+            "description.min" => "Deksripsi minimal 1 digit!",
+            "description.unique" => "Deksripsi Sudah digunakan!",
+
+            'image.required' => 'Gambar harus di upload',
+            'image.mimes' => 'format gambar yang di perbolehkan adalah jpeg,png dan jpeg',
+            'image.max' => 'maksimal ukuran gambar adalah 2MB',
         ]);
 
         if ($validator->fails()) {
@@ -114,13 +123,24 @@ class BlogController extends Controller
         $validation = [
             "description" => ["required", "string", "min:1"]
         ];
-        if($data->title !== $request->title) $validation['title'] = ["required", "string", "max:100", "min:1", "unique:blogs"];
-        $message = [];
+        if($data->title !== $request->title){
+            $validation['title'] = ["required", "string", "max:100", "min:1", "unique:blogs"];
+            $message['title.required'] = 'Judul Harus diisi';
+            $message['title.min'] = 'Judul minimal 1 digit!';
+            $message['title.max'] = 'Judul maksimal 100!';
+            $message['title.unique'] = 'Judul Sudah digunakan!';
+        }
+        $message = [
+            "description.required" => "Deksripsi Harus diisi",
+            "description.min" => "Deksripsi minimal 1 digit!",
+            "description.unique" => "Deksripsi Sudah digunakan!",
+        ];
         if($request->image !== null){
             $validation['image'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
-            $message['image.required'] = 'Please upload an image';
-            $message['image.mimes'] = 'Only jpeg,png and jpeg image are allowed';
-            $message['image.max'] = 'Sorry! Maximum allowed size for an image is 2MB';
+
+            $message['image.required'] = 'Gambar harus di upload';
+            $message['image.mimes'] = 'format gambar yang di perbolehkan adalah jpeg,png dan jpeg';
+            $message['image.max'] = 'maksimal ukuran gambar adalah 2MB';
         }
 
         $validator = Validator::make($request->all(), $validation, $message);

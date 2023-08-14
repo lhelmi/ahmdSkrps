@@ -146,7 +146,7 @@ class ServiceController extends Controller
             "price.required" => "Panjang harus diisi!",
             "images.required" => "Gambar harus diisi!",
 
-            'images.*.required' => 'Tinggi Harus diisi',
+            'images.*.required' => 'Gambar Harus diisi',
             'images.*.mimes' => 'format gambar yang di perbolehkan adalah jpeg,png dan jpeg',
             'images.*.max' => 'maksimal ukuran gambar adalah 2MB',
         ];

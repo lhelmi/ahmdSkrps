@@ -48,6 +48,30 @@ class AdminController extends Controller
             "password" => ["required", "string", "max:100", "confirmed", "min:8"],
             "password_confirmation" => ["required", "string", "max:100", "min:8"]
 
+        ],
+        [
+            "name.required" => "Nama Harus diisi",
+            "name.max" => "Nama maksimal 100!",
+            "name.min" => "Nama minimal 1 digit!",
+
+            "username.required" => "Nama Harus diisi",
+            "username.max" => "Nama maksimal 100!",
+            "username.min" => "Nama minimal 8 digit!",
+            "username.unique" => "Nama Sudah digunakan!",
+
+            "email.required" => "email Harus diisi",
+            "email.max" => "email maksimal 100!",
+            "email.min" => "email minimal 6 digit!",
+            "email.unique" => "email Sudah digunakan!",
+
+            "password.required" => "Password Harus diisi",
+            "password.max" => "Password maksimal 100!",
+            "password.min" => "Password minimal 8 digit!",
+            "password.confirmed" => "Password Tidak Sama Dengan Konfirm Password!",
+
+            "password_confirmation.required" => "Password Harus diisi",
+            "password_confirmation.max" => "Password maksimal 100!",
+            "password_confirmation.min" => "Password minimal 8 digit!",
         ]);
 
         if ($validator->fails()) {
@@ -88,15 +112,41 @@ class AdminController extends Controller
             "email" => ["required", "string", "max:100","min:1", "email"],
         ];
 
+        $message = [
+            "name.required" => "Nama Harus diisi",
+            "name.max" => "Nama maksimal 100!",
+            "name.min" => "Nama minimal 1 digit!",
+
+            "username.required" => "Nama Harus diisi",
+            "username.max" => "Nama maksimal 100!",
+            "username.min" => "Nama minimal 8 digit!",
+            "username.unique" => "Nama Sudah digunakan!",
+
+            "email.required" => "email Harus diisi",
+            "email.max" => "email maksimal 100!",
+            "email.min" => "email minimal 6 digit!",
+            "email.unique" => "email Sudah digunakan!",
+        ];
+
         if($data->email !== $request->email) array_push($param['email'], "unique:users");
         if($data->username !== $request->username) array_push($param['username'], "unique:users");
 
         if($request->password) {
             $param['password'] = ["required", "string", "max:100", "confirmed", "min:8"];
             $param['password_confirmation'] = ["required", "string", "max:100", "min:8"];
+
+            $message['password.required'] = "Password Harus diisi";
+            $message['password.max'] = "Password maksimal 100!";
+            $message['password.min'] = "Password minimal 8 digit!";
+            $message['password.confirmed'] = "Password Tidak Sama Dengan Konfirm Password!";
+
+            $message['password_confirmation.required'] = "Password Harus diisi";
+            $message['password_confirmation.max'] = "Password maksimal 100!";
+            $message['password_confirmation.min'] = "Password minimal 8 digit!";
+            $message['password_confirmation.confirmed'] = "Password Tidak Sama Dengan Konfirm Password!";
         }
 
-        $validator = Validator::make($request->all(), $param);
+        $validator = Validator::make($request->all(), $param, $message);
 
         if ($validator->fails()) {
             return redirect()->route('admin.edit', $id)->withErrors($validator)->withInput();
