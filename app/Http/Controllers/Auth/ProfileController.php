@@ -59,14 +59,39 @@ class ProfileController extends Controller
             "name" => ["required", "string", "max:100", "min:1"],
             "address" => ["required", "string", "max:100", "min:8"],
         ];
-        if($data->email !== $request->email) $validation['email'] = ["required", "string", "max:100", "unique:users", "min:1", "email"];
+
+        $message = [
+            "name.required" => "Nama Harus diisi",
+            "name.max" => "Nama maksimal 100!",
+            "name.min" => "Nama minimal 1 digit!",
+
+            "address.required" => "Alamat Harus diisi",
+            "address.max" => "Alamat maksimal 100!",
+            "address.min" => "Alamat minimal 8 digit!",
+        ];
+        if($data->email !== $request->email){
+            $validation['email'] = ["required", "string", "max:100", "unique:users", "min:8", "email"];
+
+            $message['email.required'] = "email Harus diisi";
+            $message['email.max'] = "email maksimal 100!";
+            $message['email.min'] = "email minimal 8 digit!";
+            $message['email.unique'] = "email sudah digunakan!";
+        }
 
         if($request->password !== null || $request->new_password !== null){
             $validation['password'] = ["required", "string", "max:100", "min:8"];
             $validation['new_password'] = ["required", "string", "max:100", "min:8"];
+
+            $message['password.required'] = "Password Harus diisi";
+            $message['password.max'] = "Password maksimal 100!";
+            $message['password.min'] = "Password minimal 8 digit!";
+
+            $message['new_password.required'] = "Password Baru Harus diisi";
+            $message['new_password.max'] = "Password Baru maksimal 100!";
+            $message['new_password.min'] = "Password Baru minimal 8 digit!";
         }
 
-        $validator = Validator::make($request->all(), $validation);
+        $validator = Validator::make($request->all(), $validation, $message);
         if ($validator->fails()) {
             return redirect()->route('auth.profile.index')->withErrors($validator)->withInput();
         }
