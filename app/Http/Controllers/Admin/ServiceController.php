@@ -109,7 +109,6 @@ class ServiceController extends Controller
             // "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
-            "width" => ["required", "string", "max:1000", "min:1"],
             "type" => ["required", "string"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
@@ -124,13 +123,11 @@ class ServiceController extends Controller
             // "kode.max" => "Kode maksimal 100 digit!",
             "name.max" => "Nama maksimal 100 digit!",
             "length.max" => "Panjang maksimal 1000m!",
-            "width.max" => "Kode maksimal 1000m!",
             "images.max" => "Gambar maksimal 3!",
 
             // "kode.min" => "Kode minimal 1 digit!",
             "name.min" => "Nama minimal 1 digit!",
             "length.min" => "Panjang minimal 1m!",
-            "width.min" => "Kode minimal 1m!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
             "images.min" => "Gambar minimal 1!",
@@ -140,7 +137,6 @@ class ServiceController extends Controller
             // "kode.required" => "Kode harus diisi!",
             "name.required" => "Nama harus diisi!",
             "length.required" => "Panjang harus diisi!",
-            "width.required" => "Lebar harus diisi!",
             "type.required" => "Tipe harus diisi!",
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
@@ -155,6 +151,12 @@ class ServiceController extends Controller
             $message['height.required'] = "Tinggi Harus diisi";
             $message['height.max'] = "Tinggi maksimal 100m!";
             $message['height.min'] = "Tinggi minimal 1m!";
+        }
+        if($request->width !== null){
+            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $message['width.required'] = "Panjang Harus diisi";
+            $message['width.max'] = "Tinggi maksimal 100m!";
+            $message['width.min'] = "Panjang minimal 1m!";
         }
         $validator = Validator::make($request->all(), $validation, $message);
         // dd($validator->errors());
@@ -255,17 +257,14 @@ class ServiceController extends Controller
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "length" => ["required", "string", "max:100", "min:1"],
-            "width" => ["required", "string", "max:100", "min:1"],
         ];
         $message = [
             "name.max" => "Nama maksimal 100 digit!",
             "length.max" => "Panjang maksimal 1000m!",
-            "width.max" => "Kode maksimal 1000m!",
             "images.max" => "Gambar maksimal 3!",
 
             "name.min" => "Nama minimal 1 digit!",
             "length.min" => "Panjang minimal 1m!",
-            "width.min" => "Kode minimal 1m!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
             "images.min" => "Gambar minimal 1!",
@@ -275,7 +274,6 @@ class ServiceController extends Controller
             "kode.required" => "Kode harus diisi!",
             "name.required" => "Nama harus diisi!",
             "length.required" => "Panjang harus diisi!",
-            "width.required" => "Lebar harus diisi!",
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
         ];
@@ -293,6 +291,13 @@ class ServiceController extends Controller
             $message['height.required'] = "Tinggi Harus diisi";
             $message['height.max'] = "Tinggi maksimal 100m!";
             $message['height.min'] = "Tinggi minimal 1m!";
+        }
+
+        if($request->width !== null){
+            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $message['width.required'] = "Panjang Harus diisi";
+            $message['width.max'] = "Tinggi maksimal 100m!";
+            $message['width.min'] = "Panjang minimal 1m!";
         }
 
         $uploadCount = 0;
