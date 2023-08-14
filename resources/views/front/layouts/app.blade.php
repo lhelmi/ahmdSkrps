@@ -19,14 +19,14 @@
     @yield('css')
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="d-flex flex-column min-vh-100">
         @include('front.layouts.navbar')
 
         <main role="main">
             @yield('content')
         </main>
-        @include('front.layouts.footer')
     </div>
+    @include('front.layouts.footer')
     @yield('js')
 </body>
 </html>

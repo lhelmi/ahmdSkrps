@@ -8,10 +8,29 @@
     <div class="alert alert-danger mt-2">{{ $message }}</div>
 @endif
 
+{{-- <div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <img class="card-img-top" style="height: 534px; display: block;"
+            src="{{ asset('front/images/logo.png') }}" data-holder-rendered="true">
+            <div class="card-body">
+                <div class="content-1">
+                <h1 class="jumbotron-heading">Siapa Kita</h1>
+                <p class="lead text-muted">Supri Group merupakan badan usaha milik perseorangan yang berasas kekeluargaan. Usaha kami memiliki komitmen bertanggung jawab, pekerja keras, melayani dengan sepenuh hati.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
 <section class="jumbotron text-center">
     <div class="container">
         <div class="content-1">
-            <img src="{{ asset('front/images/logo.png') }}" alt="logo" height="534px" width="538px">
+            <div class="album py-5">
+                <img class="card-img-top" style="height: 534px; display: block;"
+            src="{{ asset('front/images/logo.png') }}" data-holder-rendered="true">
+            </div>
+
             <h1 class="jumbotron-heading">Siapa Kita</h1>
             <p class="lead text-muted">Supri Group merupakan badan usaha milik perseorangan yang berasas kekeluargaan. Usaha kami memiliki komitmen bertanggung jawab, pekerja keras, melayani dengan sepenuh hati.</p>
         </div>
