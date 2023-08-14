@@ -28,7 +28,7 @@ class ProductFeController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(9);
+        $products = Product::where('is_verify', '1')->paginate(9);
         // foreach ($products as $key => $value) {
         //     dd($value->images);
         // }
@@ -37,7 +37,9 @@ class ProductFeController extends Controller
 
     public function show(String $id)
     {
-        $data = Product::where('kode', $id)->first();
+        $data = Product::where('kode', $id)
+        ->where('is_verify', '1')->first();
+
         if($data == null) return redirect()->route('front.product.index')->with('error', Constant::NOT_FOUND);
 
         $data->images = json_decode($data->images);

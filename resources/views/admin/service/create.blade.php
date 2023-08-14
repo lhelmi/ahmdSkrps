@@ -40,12 +40,28 @@
 
                     <div class="form-group">
                         <label for="username">Ukuran</label>
-                        <input type="text" class="form-control @error('size') is-invalid @enderror" name="size" id="size" placeholder="Masukan size" value="{{ old('size') }}">
-
-                        @error('size')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang" value="{{ old('length') }}">
+                                @error('length')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar" value="{{ old('width') }}">
+                                @error('width')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi" value="{{ old('height') }}">
+                                @error('height')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
+
 
                     {{-- <div class="form-group">
                         <label for="username">Jenis</label>

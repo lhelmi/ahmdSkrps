@@ -60,7 +60,32 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::select("*")->orderBy('updated_at', 'desc')->get();
+        foreach ($services as $key => $value) {
+            $services[$key]->size = json_decode($services[$key]->size);
+            $size = '';
+            foreach ($services[$key]->size as $key1 => $value1) {
+                if($value1 !== '' && $value1 !== null){
+                    if($size !== '') $size = $size. " X ";
+                    $size = $size . $value1;
+                }
+            }
+            $services[$key]->size = $size;
+        }
         return view('admin.service.index', compact('services'));
+    }
+
+    public function detail(string $id)
+    {
+        $data = Service::where('kode', $id)->first();
+        // $typeList = $this->typeList();
+
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+        $data->images = json_decode($data->images);
+        $data->size = json_decode($data->size);
+        $data->length = $data->size->length;
+        $data->width = $data->size->width;
+        $data->height = $data->size->height;
+        return view('admin.service.detail', compact('data'));
     }
 
     public function create()
@@ -71,21 +96,61 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validation = [
             "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
-            "size" => ["required", "string", "max:100", "min:1"],
+            "length" => ["required", "string", "max:1000", "min:1"],
+            "width" => ["required", "string", "max:1000", "min:1"],
             // "type" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
             "images.*" => ["required", "mimes:png,jpg,jpeg", "max:2048"],
-        ],
-        [
-            'images.*.required' => 'Please upload an image',
-            'images.*.mimes' => 'Only jpeg,png and jpeg images are allowed',
-            'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
-        ]);
+        ];
+
+        $message = [
+            "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
+            "kode.unique" => "Kode Produk Sudah digunakan!",
+
+            "kode.max" => "Kode maksimal 100 digit!",
+            "name.max" => "Nama maksimal 100 digit!",
+            "length.max" => "Panjang maksimal 1000m!",
+            "width.max" => "Kode maksimal 1000m!",
+
+            "images.max" => "Gambar maksimal 3!",
+
+            "kode.min" => "Kode minimal 1 digit!",
+            "name.min" => "Nama minimal 1 digit!",
+            "length.min" => "Panjang minimal 1m!",
+            "width.min" => "Kode minimal 1m!",
+
+            "description.min" => "Deskripsi minimal 1 digit!",
+            "price.min" => "Harga minimal 1!",
+            "images.min" => "Gambar minimal 1!",
+
+            "price.numeric" => "Harga harus angka!",
+
+
+            "kode.required" => "Kode harus diisi!",
+            "name.required" => "Nama harus diisi!",
+            "length.required" => "Panjang harus diisi!",
+            "width.required" => "Lebar harus diisi!",
+
+            "description.required" => "Deskripsi harus diisi!",
+            "price.required" => "Panjang harus diisi!",
+            "images.required" => "Gambar harus diisi!",
+
+            'images.*.required' => 'Tinggi Harus diisi',
+            'images.*.mimes' => 'format gambar yang di perbolehkan adalah jpeg,png dan jpeg',
+            'images.*.max' => 'maksimal ukuran gambar adalah 2MB',
+        ];
+        if($request->height !== null){
+            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $message['height.required'] = "Tinggi Harus diisi";
+            $message['height.max'] = "Tinggi maksimal 100m!";
+            $message['height.min'] = "Tinggi minimal 1m!";
+        }
+        $validator = Validator::make($request->all(), $validation, $message);
         // dd($validator->errors());
         if ($validator->fails()) {
             return redirect()->route('service.create')->withErrors($validator)->withInput();
@@ -98,7 +163,13 @@ class ServiceController extends Controller
             $data = new Service();
             $data->kode = $request->kode;
             $data->name = $request->name;
-            $data->size = $request->size;
+            $size = [
+                'length' => $request->length,
+                'width' => $request->width,
+                'height' => $request->height,
+            ];
+            $size = json_encode($size);
+            $data->size = $size;
             // $data->type = $request->type;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -134,11 +205,34 @@ class ServiceController extends Controller
     public function edit(string $id)
     {
         $data = Service::where('kode', $id)->first();
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         // $typeList = $this->typeList();
         $data->images = json_decode($data->images);
-
-        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+        $data->size = json_decode($data->size);
+        $data->length = $data->size->length;
+        $data->width = $data->size->width;
+        $data->height = $data->size->height;
         return view('admin.service.edit', compact('data'));
+    }
+
+    public function verify(string $id)
+    {
+        $data = Service::where('kode', $id)->first();
+        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+
+        try {
+            if(strtoupper($data->verify_description) == strtoupper("hapus data")){
+                $data->delete();
+                return redirect()->route('service.index')->with('success', 'Data Jasa Berhasil Dihapus');
+            }
+            $data->is_verify = $data->is_verify == '0' ? '1' : '0';
+            $data->save();
+            return redirect()->route('service.index')->with('success', 'Data Jasa Berhasil Disetujui');
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            // dd($th->getMessage());
+            return redirect()->route('service.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
+        }
     }
 
     /**
@@ -150,42 +244,73 @@ class ServiceController extends Controller
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
-            "size" => ["required", "string", "max:100", "min:1"],
             // "type" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "min:1"],
-            "price" => ["required", "numeric", "min:1"]
+            "price" => ["required", "numeric", "min:1"],
+            "length" => ["required", "string", "max:100", "min:1"],
+            "width" => ["required", "string", "max:100", "min:1"],
         ];
-        $message = [];
+        $message = [
+            "name.max" => "Nama maksimal 100 digit!",
+            "length.max" => "Panjang maksimal 1000m!",
+            "width.max" => "Kode maksimal 1000m!",
+            "images.max" => "Gambar maksimal 3!",
+
+            "name.min" => "Nama minimal 1 digit!",
+            "length.min" => "Panjang minimal 1m!",
+            "width.min" => "Kode minimal 1m!",
+            "description.min" => "Deskripsi minimal 1 digit!",
+            "price.min" => "Harga minimal 1!",
+            "images.min" => "Gambar minimal 1!",
+
+            "price.numeric" => "Harga harus angka!",
+
+            "kode.required" => "Kode harus diisi!",
+            "name.required" => "Nama harus diisi!",
+            "length.required" => "Panjang harus diisi!",
+            "width.required" => "Lebar harus diisi!",
+            "description.required" => "Deskripsi harus diisi!",
+            "price.required" => "Panjang harus diisi!",
+        ];
 
         if($id !== $request->kode){
             $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"];
             $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+            $message["kode.unique"] = "Kode Produk Sudah digunakan!";
+            $message["kode.max"] = "Kode maksimal 100 digit!";
+            $message["kode.min"] = "Kode minimal 1 digit!";
         }
 
+        if($request->height !== null){
+            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $message['height.required'] = "Tinggi Harus diisi";
+            $message['height.max'] = "Tinggi maksimal 100m!";
+            $message['height.min'] = "Tinggi minimal 1m!";
+        }
 
         $uploadCount = 0;
         if($request->image0 !== null){
             $uploadCount = 1;
             $validation['image0'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
-            $message['image0.required'] = 'Please upload an image';
-            $message['image0.mimes'] = 'Only jpeg,png and jpeg images are allowed';
-            $message['image0.max'] = 'Sorry! Maximum allowed size for an image is 2MB';
+            $message['image0.required'] = 'Tinggi Harus diisi';
+            $message['image0.mimes'] = 'Tinggi maksimal 100m!';
+            $message['image0.max'] = 'Tinggi minimal 1m!';
         }
 
         if($request->image1 !== null){
             $uploadCount = 2;
             $validation['image1'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
-            $message['image1.required'] = 'Please upload an image';
-            $message['image1.mimes'] = 'Only jpeg,png and jpeg images are allowed';
-            $message['image1.max'] = 'Sorry! Maximum allowed size for an image is 2MB';
+            $message['image1.required'] = 'Tinggi Harus diisi';
+            $message['image1.mimes'] = 'Tinggi maksimal 100m!';
+            $message['image1.max'] = 'Tinggi minimal 1m!';
         }
 
         if($request->image2 !== null){
             $uploadCount = 3;
             $validation['image2'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
-            $message['image2.required'] = 'Please upload an image';
-            $message['image2.mimes'] = 'Only jpeg,png and jpeg images are allowed';
-            $message['image2.max'] = 'Sorry! Maximum allowed size for an image is 2MB';
+            $message['image2.required'] = 'Tinggi Harus diisi';
+            $message['image2.mimes'] = 'Tinggi maksimal 100m!';
+            $message['image2.max'] = 'Tinggi minimal 1m!';
         }
 
         $validator = Validator::make($request->all(), $validation, $message);
@@ -214,7 +339,15 @@ class ServiceController extends Controller
         try {
             $data->kode = $request->kode;
             $data->name = $request->name;
-            $data->size = $request->size;
+            $size = [
+                'length' => $request->length,
+                'width' => $request->width,
+                'height' => $request->height,
+            ];
+            $size = json_encode($size);
+            $data->size = $size;
+            $data->is_verify = '0';
+            $data->verify_description = "ubah data";
             // $data->type = $request->type;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -238,6 +371,12 @@ class ServiceController extends Controller
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
 
         try {
+            if(Auth::user()->role == '0'){
+                $data->is_verify = '0';
+                $data->verify_description = "hapus data";
+                $data->save();
+                return redirect()->route('service.index')->with('success', "Data Jasa Berhasil Diubah");
+            }
             $data->delete();
             return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {

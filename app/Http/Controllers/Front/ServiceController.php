@@ -28,13 +28,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::paginate(9);
+        $services = Service::where('is_verify', '1')->paginate(9);
         return view('front.service.index', compact('services'));
     }
 
     public function show(String $id)
     {
-        $data = Service::where('kode', $id)->first();
+        $data = Service::where('kode', $id)
+        ->where('is_verify', '1')->first();
         if($data == null) return redirect()->route('front.service.index')->with('error', Constant::NOT_FOUND);
 
         $data->images = json_decode($data->images);

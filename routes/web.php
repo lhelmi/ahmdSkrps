@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\UserController;
 // use App\Http\Controllers\Admin\WarrantyController;
-use App\Http\Controllers\Administrasi\ComplaintController;
+use App\Http\Controllers\manager\ComplaintController;
 use App\Http\Controllers\Auth\ProfileController;
 
 
@@ -67,12 +67,12 @@ Route::middleware(['verified', 'isUser'])->group(function () {
 
 Route::middleware(['isAdmin', 'verified'])->group(function () {
 
-    Route::get('/admin/administrasi', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/administrasi/create', [AdminController::class, 'create'])->name('admin.create');
-    Route::post('/admin/administrasi/store', [AdminController::class, 'store'])->name('admin.store');
-    Route::get('/admin/administrasi/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-    Route::post('/admin/administrasi/update/{id}', [AdminController::class, 'update'])->name('admin.update');
-    Route::get('/admin/administrasi/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::get('/admin/manager', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/manager/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin/manager/store', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/manager/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::post('/admin/manager/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+    Route::get('/admin/manager/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
     Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
@@ -81,7 +81,6 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::post('/admin/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('admin/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('admin/product/store', [ProductController::class, 'store'])->name('product.store');
     Route::get('admin/product/edit/{kode}', [ProductController::class, 'edit'])->name('product.edit');
@@ -89,7 +88,6 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('admin/product/destroy/{kode}', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::get('admin/product/destroy/image/{kode}/{img}', [ProductController::class, 'destroyImage'])->name('product.destroy.image');
 
-    Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
     Route::get('admin/service/create', [ServiceController::class, 'create'])->name('service.create');
     Route::post('admin/service/store', [ServiceController::class, 'store'])->name('service.store');
     Route::get('admin/service/edit/{kode}', [ServiceController::class, 'edit'])->name('service.edit');
@@ -113,6 +111,14 @@ Route::middleware(['isAdmin', 'verified'])->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('verified');
 
+Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('admin/product/detail/{kode}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('admin/product/verify/{kode}', [ProductController::class, 'verify'])->name('product.verify');
+
+Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
+Route::get('admin/service/detail/{kode}', [ServiceController::class, 'detail'])->name('service.detail');
+Route::get('admin/service/verify/{kode}', [ServiceController::class, 'verify'])->name('service.verify');
+
 Route::middleware(['isAdministrator', 'verified'])->group(function () {
     // Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
     // Route::get('/admin/warranty/pdf', [WarrantyController::class, 'pdf'])->name('warranty.pdf');
@@ -120,9 +126,9 @@ Route::middleware(['isAdministrator', 'verified'])->group(function () {
     // Route::get('/admin/warranty/edit/{id}', [WarrantyController::class, 'edit'])->name('warranty.edit');
     // Route::post('/admin/warranty/update/{id}', [WarrantyController::class, 'update'])->name('warranty.update');
 
-    Route::get('/administrasi/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
-    Route::get('/administrasi/complaint/pdf', [ComplaintController::class, 'pdf'])->name('complaint.pdf');
-    Route::get('/administrasi/complaint/edit/{id}', [ComplaintController::class, 'edit'])->name('complaint.edit');
-    Route::post('/administrasi/complaint/update/{id}', [ComplaintController::class, 'update'])->name('complaint.update');
-    Route::get('/administrasi/complaint/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
+    Route::get('/manager/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
+    Route::get('/manager/complaint/pdf', [ComplaintController::class, 'pdf'])->name('complaint.pdf');
+    Route::get('/manager/complaint/edit/{id}', [ComplaintController::class, 'edit'])->name('complaint.edit');
+    Route::post('/manager/complaint/update/{id}', [ComplaintController::class, 'update'])->name('complaint.update');
+    Route::get('/manager/complaint/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });

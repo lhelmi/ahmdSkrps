@@ -318,8 +318,8 @@ return [
             'role'        => ['0', '1'],
         ],
         [
-            'text'        => 'Administrasi',
-            'url'         => 'admin/administrasi',
+            'text'        => 'Manager',
+            'url'         => 'admin/manager',
             'icon'        => 'fa fa-fw fa-user',
             'role'        => ['0'],
         ],
@@ -333,13 +333,13 @@ return [
             'text'        => 'Produk',
             'url'         => 'admin/product',
             'icon'        => 'fa fa-shopping-bag',
-            'role'        => ['0'],
+            'role'        => ['0', '1'],
         ],
         [
             'text'        => 'Jasa',
             'url'         => 'admin/service',
             'icon'        => 'fa fa-briefcase',
-            'role'        => ['0'],
+            'role'        => ['0', '1'],
         ],
         // [
         //     'text'        => 'Media',
@@ -360,7 +360,7 @@ return [
         // ],
         [
             'text'        => 'Keluhan',
-            'url'         => 'administrasi/complaint',
+            'url'         => 'manager/complaint',
             'icon'        => 'fa fa-info',
             'role'        => ['1'],
         ],

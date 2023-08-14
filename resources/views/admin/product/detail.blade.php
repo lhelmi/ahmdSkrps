@@ -7,21 +7,26 @@
 @stop
 
 @section('content')
+    <br>
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Ubah Jasa</h3>
+        <h3 class="card-title">Detail Product</h3>
         </div>
         <div class="card-body">
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
-            <form method="POST" action="{{ route('service.update', $data->kode) }}" enctype="multipart/form-data">
-                @csrf
+            @if ($message = Session::get('success'))
+                    <div class="alert alert-success mt-2">{{ $message }}</div>
+            @endif
                 <div class="card-body">
+                    <div class="form-group">
+                        <h5>Verifikasi Data untuk : <b>{{ strtoupper($data->verify_description) }}</b></h5>
+                    </div>
                     <div class="form-group">
                         <label>Kode</label>
                         <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode" placeholder="Masukan Kode"
-                        value="{{ old('kode') == null ? $data->kode : old('kode') }}">
+                        value="{{ old('kode') == null ? $data->kode : old('kode') }}" readonly>
 
                         @error('kode')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
@@ -31,7 +36,7 @@
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Masukan Nama Lengkap"
-                        value="{{ old('name') == null ? $data->name : old('name') }}">
+                        value="{{ old('name') == null ? $data->name : old('name') }}" readonly>
 
                         @error('name')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
@@ -43,25 +48,16 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
-                                value="{{ old('length') == null ? $data->length : old('length') }}">
-
-                                @error('length')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('length') == null ? $data->length : old('length') }}" readonly>
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
-                                value="{{ old('width') == null ? $data->width : old('width') }}">
-                                @error('width')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('width') == null ? $data->width : old('width') }}" readonly>
+
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
-                                value="{{ old('height') == null ? $data->height : old('height') }}">
-                                @error('height')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('height') == null ? $data->height : old('height') }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -85,9 +81,19 @@
                     </div> --}}
 
                     <div class="form-group">
+                        <label>Stok</label>
+                        <input type="number" class="form-control @error('stock') is-invalid @enderror" name="stock" id="stock"
+                        placeholder="Masukan Stok" value="{{ old('stock') == null ? $data->stock : old('stock') }}" readonly>
+
+                        @error('stock')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label>Price</label>
                         <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" id="price"
-                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}">
+                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}" readonly>
 
                         @error('price')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
@@ -96,7 +102,7 @@
 
                     <div class="form-group">
                         <label>Deskripsi</label>
-                        <textarea name="description" id="description"
+                        <textarea name="description" id="description" readonly
                         class="form-control @error('description') is-invalid @enderror" cols="30" rows="10">{{ old('description') == null ? $data->description : old('description') }}</textarea>
 
                         @error('description')
@@ -130,7 +136,10 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div class="form-group">
-                                    <input type="file" name="image{{$no}}" id="images_{{$no}}">
+                                    @php
+                                        $temp = $item;
+                                    @endphp
+                                    {{-- <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy.image', ['kode' => $data->kode, 'img' => $temp]) }}">Hapus</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -142,10 +151,9 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-success">Ubah</button>
-                    <a type="button" href="{{ route('service.index') }}" class="btn btn-default">Batal</a>
+                    <a type="button" href="{{ route('product.index') }}" class="btn btn-default">Kembali</a>
                 </div>
-            </form>
+
         </div>
     </div>
 

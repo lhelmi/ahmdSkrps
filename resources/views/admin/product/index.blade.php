@@ -15,7 +15,9 @@
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <a class="btn btn-md btn-success" href="{{ route('product.create') }}">Tambah</a>
+                        @if (Auth::user()->role == '0')
+                            <a class="btn btn-md btn-success" href="{{ route('product.create') }}">Tambah</a>
+                        @endif
                     </div>
                 </div>
                 @if ($message = Session::get('success'))
@@ -36,6 +38,7 @@
                                     {{-- <th>Jenis</th> --}}
                                     <th>Stok</th>
                                     <th>Harga</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -48,14 +51,29 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $product->kode }}</td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->size }}</td>
+                                        <td>{{ $product->size}}</td>
                                         {{-- <td>{{ $product->type }}</td> --}}
                                         <td>{{ $product->stock }}</td>
                                         <td>{{ $product->price }}</td>
-
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('product.edit', [$product->kode]) }}">Edit</a> |
-                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy', [$product->kode]) }}">Hapus</a>
+                                            {{ $product->verify_description. ' : ' }}
+                                            @if ($product->is_verify == '1')
+                                                <span class="badge badge-success">Sudah Disetuji</span>
+                                            @else
+                                                <span class="badge badge-secondary">Belum Disetuji</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (Auth::user()->role == '1')
+                                                <a class="btn btn-sm btn-secondary" href="{{ route('product.detail', [$product->kode]) }}">Detail</a> |
+                                                <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $product->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('product.verify', [$product->kode]) }}">
+                                                    {{ $product->is_verify == '0' ? 'Setujui' : 'Batal Disetujui' }}
+                                                </a>
+                                            @else
+                                                <a class="btn btn-sm btn-primary" href="{{ route('product.edit', [$product->kode]) }}">Edit</a> |
+                                                <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy', [$product->kode]) }}">Hapus</a>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach

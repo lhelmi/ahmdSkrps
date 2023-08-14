@@ -12,7 +12,7 @@ class Product extends Model
         'name', 'stock',
         'size', 'price', 'description',
         'created_by', 'kode',
-        // 'type',
+        'type', 'is_verify', 'verify_description'
     ];
 
 }

@@ -15,27 +15,17 @@
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
-            <form method="POST" action="{{ route('service.update', $data->kode) }}" enctype="multipart/form-data">
-                @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label>Kode</label>
                         <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode" placeholder="Masukan Kode"
-                        value="{{ old('kode') == null ? $data->kode : old('kode') }}">
-
-                        @error('kode')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
+                        value="{{ old('kode') == null ? $data->kode : old('kode') }}" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Masukan Nama Lengkap"
-                        value="{{ old('name') == null ? $data->name : old('name') }}">
-
-                        @error('name')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
+                        value="{{ old('name') == null ? $data->name : old('name') }}" readonly>
                     </div>
 
                     <div class="form-group">
@@ -43,25 +33,15 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
-                                value="{{ old('length') == null ? $data->length : old('length') }}">
-
-                                @error('length')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('length') == null ? $data->length : old('length') }}" readonly>
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
-                                value="{{ old('width') == null ? $data->width : old('width') }}">
-                                @error('width')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('width') == null ? $data->width : old('width') }}" readonly>
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
-                                value="{{ old('height') == null ? $data->height : old('height') }}">
-                                @error('height')
-                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                                @enderror
+                                value="{{ old('height') == null ? $data->height : old('height') }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -87,21 +67,13 @@
                     <div class="form-group">
                         <label>Price</label>
                         <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" id="price"
-                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}">
-
-                        @error('price')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
+                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}" readonly>
                     </div>
 
                     <div class="form-group">
                         <label>Deskripsi</label>
-                        <textarea name="description" id="description"
+                        <textarea name="description" id="description" readonly
                         class="form-control @error('description') is-invalid @enderror" cols="30" rows="10">{{ old('description') == null ? $data->description : old('description') }}</textarea>
-
-                        @error('description')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
                     </div>
                     @php
                         $no = 0;
@@ -111,26 +83,13 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="">Gambar {{$sort}}</label>
-                                @if ($sort == 1)
-                                    @error('image0')
-                                        <div class="alert alert-danger mt-1 img0">{{ $message }}</div>
-                                    @enderror
-                                @elseif ($sort == 2)
-                                    @error('image1')
-                                        <div class="alert alert-danger mt-1 img1">{{ $message }}</div>
-                                    @enderror
-                                @elseif ($sort == 3)
-                                    @error('image2')
-                                        <div class="alert alert-danger mt-1 img2">{{ $message }}</div>
-                                    @enderror
-                                @endif
                                 <div class="form-group">
                                     <img src="{{ URL::to('/').'/'.$data->images->path.$item }}" width="100%" height="100%" id="img_{{$no}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div class="form-group">
-                                    <input type="file" name="image{{$no}}" id="images_{{$no}}">
+
                                 </div>
                             </div>
                         </div>
@@ -142,7 +101,6 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-success">Ubah</button>
                     <a type="button" href="{{ route('service.index') }}" class="btn btn-default">Batal</a>
                 </div>
             </form>
