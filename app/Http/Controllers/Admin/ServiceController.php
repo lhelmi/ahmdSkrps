@@ -45,15 +45,24 @@ class ServiceController extends Controller
         return $data;
     }
 
-    private function setKode($type){
+    private function setKode($name, $type){
         $list = $this->typeList();
-        $kode = 'UNLIST';
+        $kode = 'UNL';
         foreach ($list as $key => $value) {
             if($key == $type) $kode = $value;
         }
+        $name = trim(str_replace('PEMASANGAN', ' ', strtoupper($name)));
+        $nameCode = explode(' ', $name);
+        $temp = "";
+        for ($i=0; $i < count($nameCode); $i++) {
+            if($i < 3) $temp = $temp . substr($nameCode[$i], 0, 1);
+        }
+        $nameCode = strtoupper(trim($temp));
+
         $number = $this->getNumber();
         $number = (integer)$number->id + 1;
-        $kode = $kode.$number;
+        $kode = $nameCode.'-'.$kode.'-'.$number;
+
         return $kode;
     }
 
@@ -77,7 +86,7 @@ class ServiceController extends Controller
     public function detail(string $id)
     {
         $data = Service::where('kode', $id)->first();
-        // $typeList = $this->typeList();
+        $typeList = $this->typeList();
 
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $data->images = json_decode($data->images);
@@ -90,18 +99,18 @@ class ServiceController extends Controller
 
     public function create()
     {
-        // $typeList = $this->typeList();
-        return view('admin.service.create');
+        $typeList = $this->typeList();
+        return view('admin.service.create', compact('typeList'));
     }
 
     public function store(Request $request)
     {
         $validation = [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
+            // "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
             "width" => ["required", "string", "max:1000", "min:1"],
-            // "type" => ["required", "string", "max:100", "min:1"],
+            "type" => ["required", "string"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "images" => ["required","array","min:1","max:3"],
@@ -109,33 +118,30 @@ class ServiceController extends Controller
         ];
 
         $message = [
-            "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
-            "kode.unique" => "Kode Produk Sudah digunakan!",
+            // "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
+            // "kode.unique" => "Kode Produk Sudah digunakan!",
 
-            "kode.max" => "Kode maksimal 100 digit!",
+            // "kode.max" => "Kode maksimal 100 digit!",
             "name.max" => "Nama maksimal 100 digit!",
             "length.max" => "Panjang maksimal 1000m!",
             "width.max" => "Kode maksimal 1000m!",
-
             "images.max" => "Gambar maksimal 3!",
 
-            "kode.min" => "Kode minimal 1 digit!",
+            // "kode.min" => "Kode minimal 1 digit!",
             "name.min" => "Nama minimal 1 digit!",
             "length.min" => "Panjang minimal 1m!",
             "width.min" => "Kode minimal 1m!",
-
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
             "images.min" => "Gambar minimal 1!",
-
             "price.numeric" => "Harga harus angka!",
 
 
-            "kode.required" => "Kode harus diisi!",
+            // "kode.required" => "Kode harus diisi!",
             "name.required" => "Nama harus diisi!",
             "length.required" => "Panjang harus diisi!",
             "width.required" => "Lebar harus diisi!",
-
+            "type.required" => "Tipe harus diisi!",
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
             "images.required" => "Gambar harus diisi!",
@@ -161,7 +167,8 @@ class ServiceController extends Controller
 
         try {
             $data = new Service();
-            $data->kode = $request->kode;
+            // $data->kode = $request->kode;
+            $data->kode = $this->setKode($request->name, $request->type);
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,
@@ -170,7 +177,7 @@ class ServiceController extends Controller
             ];
             $size = json_encode($size);
             $data->size = $size;
-            // $data->type = $request->type;
+            $data->type = $request->type;
             $data->description = $request->description;
             $data->price = $request->price;
             $data->images = json_encode($uploads);
@@ -206,13 +213,13 @@ class ServiceController extends Controller
     {
         $data = Service::where('kode', $id)->first();
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
-        // $typeList = $this->typeList();
+        $typeList = $this->typeList();
         $data->images = json_decode($data->images);
         $data->size = json_decode($data->size);
         $data->length = $data->size->length;
         $data->width = $data->size->width;
         $data->height = $data->size->height;
-        return view('admin.service.edit', compact('data'));
+        return view('admin.service.edit', compact('data', 'typeList'));
     }
 
     public function verify(string $id)
@@ -244,7 +251,7 @@ class ServiceController extends Controller
         if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
-            // "type" => ["required", "string", "max:100", "min:1"],
+            "type" => ["required", "string", "max:100", "min:1"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "length" => ["required", "string", "max:100", "min:1"],
@@ -273,13 +280,13 @@ class ServiceController extends Controller
             "price.required" => "Panjang harus diisi!",
         ];
 
-        if($id !== $request->kode){
-            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"];
-            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
-            $message["kode.unique"] = "Kode Produk Sudah digunakan!";
-            $message["kode.max"] = "Kode maksimal 100 digit!";
-            $message["kode.min"] = "Kode minimal 1 digit!";
-        }
+        // if($id !== $request->kode){
+        //     $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"];
+        //     $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+        //     $message["kode.unique"] = "Kode Produk Sudah digunakan!";
+        //     $message["kode.max"] = "Kode maksimal 100 digit!";
+        //     $message["kode.min"] = "Kode minimal 1 digit!";
+        // }
 
         if($request->height !== null){
             $validation['height'] = ["required", "numeric", "max:100", "min:1"];
@@ -337,7 +344,9 @@ class ServiceController extends Controller
         }
 
         try {
-            $data->kode = $request->kode;
+            if($data->name !== $request->name || $data->type !== $request->type){
+                $data->kode = $this->setKode($request->name, $request->type);
+            }
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,

@@ -45,15 +45,17 @@ class ProductController extends Controller
         return $data;
     }
 
-    private function setKode($type){
+    private function setKode($name, $type){
         $list = $this->typeList();
-        $kode = 'UNLIST';
+        $kode = 'UNL';
         foreach ($list as $key => $value) {
             if($key == $type) $kode = $value;
         }
+        $nameCode = strtoupper(trim(substr($name, 0, 3)));
         $number = $this->getNumber();
         $number = (integer)$number->id + 1;
-        $kode = $kode.$number;
+        $kode = $nameCode.'-'.$kode.'-'.$number;
+
         return $kode;
     }
 
@@ -76,20 +78,19 @@ class ProductController extends Controller
 
     public function create()
     {
-        // $typeList = $this->typeList();
-        return view('admin.product.create');
+        $typeList = $this->typeList();
+        return view('admin.product.create', compact('typeList'));
     }
 
     public function store(Request $request)
     {
-
         $validation = [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
+            // "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
             "width" => ["required", "string", "max:1000", "min:1"],
 
-            // "type" => ["required", "string", "max:100", "min:1"],
+            "type" => ["required", "string"],
             "stock" => ["required", "numeric", "min:0", "max:2000"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
@@ -128,6 +129,7 @@ class ProductController extends Controller
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
             "images.required" => "Gambar harus diisi!",
+            "type.required" => "Tipe harus diisi!",
 
             'images.*.required' => 'Please upload an image',
             'images.*.mimes' => 'format gambar yang di perbolehkan adalah jpeg,png dan jpeg',
@@ -147,11 +149,9 @@ class ProductController extends Controller
 
         $uploads = $this->moveFile($request->images, $this->path);
         if(count($uploads) == 0) return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
-
         try {
             $data = new Product();
-            // $data->kode = $this->setKode($request->type);
-            $data->kode = $request->kode;
+            $data->kode = $this->setKode($request->name, $request->type);
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,
@@ -160,7 +160,7 @@ class ProductController extends Controller
             ];
             $size = json_encode($size);
             $data->size = $size;
-            // $data->type = $request->type;
+            $data->type = $request->type;
             $data->stock = $request->stock;
             $data->description = $request->description;
             $data->price = $request->price;
@@ -217,7 +217,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $data = Product::where('kode', $id)->first();
-        // $typeList = $this->typeList();
+        $typeList = $this->typeList();
         if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $data->images = json_decode($data->images);
         $data->size = json_decode($data->size);
@@ -225,13 +225,13 @@ class ProductController extends Controller
         $data->width = $data->size->width;
         $data->height = $data->size->height;
 
-        return view('admin.product.edit', compact('data'));
+        return view('admin.product.edit', compact('data', 'typeList'));
     }
 
     public function detail(string $id)
     {
         $data = Product::where('kode', $id)->first();
-        // $typeList = $this->typeList();
+        $typeList = $this->typeList();
 
         if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $data->images = json_decode($data->images);
@@ -239,7 +239,7 @@ class ProductController extends Controller
         $data->length = $data->size->length;
         $data->width = $data->size->width;
         $data->height = $data->size->height;
-        return view('admin.product.detail', compact('data'));
+        return view('admin.product.detail', compact('data', 'typeList'));
     }
 
     /**
@@ -251,7 +251,7 @@ class ProductController extends Controller
         if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         $validation = [
             "name" => ["required", "string", "max:100", "min:1"],
-            // "type" => ["required", "string", "max:100", "min:1"],
+            "type" => ["required", "string", "max:100", "min:1"],
             "stock" => ["required", "numeric", "min:0"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
@@ -285,13 +285,13 @@ class ProductController extends Controller
             "price.required" => "Panjang harus diisi!",
         ];
 
-        if($id !== $request->kode){
-            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
-            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
-            $message["kode.unique"] = "Kode Produk Sudah digunakan!";
-            $message["kode.max"] = "Kode maksimal 100 digit!";
-            $message["kode.min"] = "Kode minimal 1 digit!";
-        }
+        // if($id !== $request->kode){
+        //     $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
+        //     $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+        //     $message["kode.unique"] = "Kode Produk Sudah digunakan!";
+        //     $message["kode.max"] = "Kode maksimal 100 digit!";
+        //     $message["kode.min"] = "Kode minimal 1 digit!";
+        // }
 
         if($request->height !== null){
             $validation['height'] = ["required", "numeric", "max:100", "min:1"];
@@ -349,7 +349,9 @@ class ProductController extends Controller
         }
 
         try {
-            $data->kode = $request->kode;
+            if($data->name !== $request->name || $data->type !== $request->type){
+                $data->kode = $this->setKode($request->name, $request->type);
+            }
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,
@@ -358,7 +360,7 @@ class ProductController extends Controller
             ];
             $size = json_encode($size);
             $data->size = $size;
-            // $data->type = $request->type;
+            $data->type = $request->type;
             $data->is_verify = '0';
             $data->verify_description = "ubah data";
             $data->stock = $request->stock;

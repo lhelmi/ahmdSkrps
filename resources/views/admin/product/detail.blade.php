@@ -62,9 +62,9 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label>Jenis</label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" >
+                        <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" disabled>
                             <option value="">Pilih</option>
                             @foreach ($typeList as $key => $list)
                                 <option value="{{ $key }}" @if(old('type') == $key)
@@ -74,11 +74,7 @@
                                 @endif >{{ $key }}</option>
                             @endforeach
                         </select>
-
-                        @error('type')
-                            <div class="alert alert-danger mt-1">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
+                    </div>
 
                     <div class="form-group">
                         <label>Stok</label>

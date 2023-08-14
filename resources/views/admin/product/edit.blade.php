@@ -21,7 +21,7 @@
             <form method="POST" action="{{ route('product.update', $data->kode) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Kode</label>
                         <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode" placeholder="Masukan Kode"
                         value="{{ old('kode') == null ? $data->kode : old('kode') }}">
@@ -29,7 +29,7 @@
                         @error('kode')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="name">Nama</label>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label>Jenis</label>
                         <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" >
                             <option value="">Pilih</option>
@@ -85,7 +85,7 @@
                         @error('type')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
-                    </div> --}}
+                    </div>
 
                     <div class="form-group">
                         <label>Stok</label>
