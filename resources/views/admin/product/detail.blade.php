@@ -89,7 +89,7 @@
                     <div class="form-group">
                         <label>Price</label>
                         <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" id="price"
-                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}" readonly>
+                        placeholder="Masukan Harga" value="{{ old('price') == null ? $data->price : old('price') }}" readonly>
 
                         @error('price')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>

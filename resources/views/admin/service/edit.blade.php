@@ -18,15 +18,15 @@
             <form method="POST" action="{{ route('service.update', $data->kode) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label>Kode</label>
-                        <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode" placeholder="Masukan Kode"
-                        value="{{ old('kode') == null ? $data->kode : old('kode') }}">
+                        <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode"
+                        value="{{ old('kode') == null ? $data->kode : old('kode') }}" readonly>
 
                         @error('kode')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
-                    </div> --}}
+                    </div>
 
                     <div class="form-group">
                         <label for="name">Nama</label>
@@ -68,10 +68,10 @@
 
                     <div class="form-group">
                         <label>Jenis</label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" >
+                        <select name="type" class="form-control @error('type') is-invalid @enderror" name="type" id="type">
                             <option value="">Pilih</option>
                             @foreach ($typeList as $key => $list)
-                                <option value="{{ $key }}" @if(old('type') == $key)
+                                <option data-kode="{{ $list }}" value="{{ $key }}" @if(old('type') == $key)
                                     {{ 'selected' }}
                                 @elseif ($key == $data->type)
                                     {{ 'selected' }}
@@ -87,7 +87,7 @@
                     <div class="form-group">
                         <label>Price</label>
                         <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" id="price"
-                        placeholder="Masukan Stok" value="{{ old('price') == null ? $data->price : old('price') }}">
+                        placeholder="Masukan Harga" value="{{ old('price') == null ? $data->price : old('price') }}">
 
                         @error('price')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
@@ -156,6 +156,67 @@
 @stop
 
 @section('js')
-    <script>
-    </script>
+<script type="module">
+    $(document).ready(function(){
+        const APP_URL = {!! json_encode(url('/')) !!}
+        let currentName = "";
+
+        function setUrl(target) {
+            if (!target.startsWith('/'))
+                target = '/' + target;
+            return APP_URL + target;
+        }
+
+        function checkKode() {
+            let name = $("#name").val();
+            name = name.substr(0, 3);
+            let type = $("#type :selected").data('kode');
+            if ( typeof type === "undefined") type = 'xxx';
+            if(currentName !== name || type !== 'xxx'){
+                let type = $("#type :selected").data('kode');
+                if ( typeof type === "undefined") type = 'xxx';
+                let param = name+'-'+type;
+                const kode = $.ajax({
+                    url: setUrl(`/admin/service/kode/check/${param}`),
+                    type: 'GET',
+                    dataType: 'json',
+                    // beforeSend: function() {
+                    //     showLoader()
+                    // },
+                    success: function(payload, message, xhr) {
+                        currentName = name;
+                        if (payload.status != 200) {
+                            alert('error : gagal mendapatkan kode!');
+                        } else {
+                            let number = parseInt(payload.data) + 1;
+                            type = type == 'xxx' ? '' : type;
+                            let newKode = name+'-'+type+'-'+number;
+                            $("#kode").val(newKode.toUpperCase());
+                        }
+                    },
+                    // complete: function(payload, message, xhr) {
+                    //     $(this).prop('disabled', false)
+                    //     hideLoader()
+                    //     enable(button)
+                    //     enable(checkbox)
+                    // },
+                    error: function(xhr, message, error) {
+                        let payload = xhr.responseJSON
+                        alert(error)
+                        // showMessage(error, 'error')
+                    }
+                })
+            }
+        }
+
+        $('#type').on('change', function(){
+            checkKode();
+        });
+
+        $('#name').on('keyup', function(){
+            checkKode();
+        });
+    })
+
+</script>
 @stop

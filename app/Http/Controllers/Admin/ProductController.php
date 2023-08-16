@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\Common;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -85,7 +86,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validation = [
-            // "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
+            "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
 
@@ -154,7 +155,8 @@ class ProductController extends Controller
         if(count($uploads) == 0) return redirect()->route('product.create')->with('error', $this->messageTemplate(Constant::UPLOAD_FAIL, $this->obj));
         try {
             $data = new Product();
-            $data->kode = $this->setKode($request->name, $request->type);
+            // $data->kode = $this->setKode($request->name, $request->type);
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,
@@ -194,6 +196,18 @@ class ProductController extends Controller
             }
         }
         return $result;
+    }
+
+    public function checkKode(string $kode){
+        try {
+            $newKode = substr($kode, 0, 6);
+            $count = Product::whereRaw("left(kode, 6) = ?", [$newKode])->count();
+            return response()->json([ 'status' => 200, 'message' => 'Kode', 'data' => $count ], 200);
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            // dd($th->getMessage());
+            return response()->json([ 'status' => 400, 'message' => 'Error', 'data' => null ], 500);
+        }
     }
 
     public function verify(string $id)
@@ -284,13 +298,13 @@ class ProductController extends Controller
             "price.required" => "Panjang harus diisi!",
         ];
 
-        // if($id !== $request->kode){
-        //     $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
-        //     $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
-        //     $message["kode.unique"] = "Kode Produk Sudah digunakan!";
-        //     $message["kode.max"] = "Kode maksimal 100 digit!";
-        //     $message["kode.min"] = "Kode minimal 1 digit!";
-        // }
+        if($id !== $request->kode){
+            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
+            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+            $message["kode.unique"] = "Kode Produk Sudah digunakan!";
+            $message["kode.max"] = "Kode maksimal 100 digit!";
+            $message["kode.min"] = "Kode minimal 1 digit!";
+        }
 
         if($request->height !== null){
             $validation['height'] = ["required", "numeric", "max:100", "min:1"];
@@ -356,7 +370,8 @@ class ProductController extends Controller
 
         try {
             if($data->name !== $request->name || $data->type !== $request->type){
-                $data->kode = $this->setKode($request->name, $request->type);
+                // $data->kode = $this->setKode($request->name, $request->type);
+                $data->kode = $request->kode;
             }
             $data->name = $request->name;
             $size = [

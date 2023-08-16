@@ -114,10 +114,13 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('admin/product/detail/{kode}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('admin/product/verify/{kode}', [ProductController::class, 'verify'])->name('product.verify');
+Route::get('admin/product/kode/check/{kode}', [ProductController::class, 'checkKode'])->name('product.kode.check');
 
 Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
 Route::get('admin/service/detail/{kode}', [ServiceController::class, 'detail'])->name('service.detail');
 Route::get('admin/service/verify/{kode}', [ServiceController::class, 'verify'])->name('service.verify');
+Route::get('admin/service/kode/check/{kode}', [ServiceController::class, 'checkKode'])->name('service.kode.check');
+
 
 Route::middleware(['isAdministrator', 'verified'])->group(function () {
     // Route::get('/admin/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
