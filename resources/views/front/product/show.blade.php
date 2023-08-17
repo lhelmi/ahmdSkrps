@@ -31,7 +31,7 @@
 <section class="jumbotron text-center" style="background-color: #fff">
     <div class="container">
         <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered lead text-justify">
             <tbody>
                 <tr>
                     <td>Nama</td>
@@ -39,7 +39,25 @@
                 </tr>
                 <tr>
                     <td>Ukuran</td>
-                    <td>{{ $data->size }}</td>
+                    <td>
+                        @if ($data->length !== null)
+                            <li >
+                                {{ 'Panjang : '.  $data->length }}
+                            </li>
+                        @endif
+
+                        @if ($data->width !== null)
+                            <li >
+                                {{ 'Lebar : '.  $data->width }}
+                            </li>
+                        @endif
+
+                        @if ($data->height !== null)
+                            <li >
+                                {{ 'Tinggi : '.  $data->height }}
+                            </li>
+                        @endif
+                    </td>
                 </tr>
                 {{-- <tr>
                     <td>Jenis</td>
@@ -56,7 +74,7 @@
                 <tr>
                     <td>Deskripsi</td>
                     <td>
-                        <p class="lead text-justify">
+                        <p >
                             {{ $data->description }}
                         </p>
                     </td>

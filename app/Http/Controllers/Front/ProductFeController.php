@@ -43,6 +43,11 @@ class ProductFeController extends Controller
         if($data == null) return redirect()->route('front.product.index')->with('error', Constant::NOT_FOUND);
 
         $data->images = json_decode($data->images);
+        $data->size = json_decode($data->size);
+        $data->length = $data->size->length;
+        $data->width = $data->size->width;
+        $data->height = $data->size->height;
+        // dd($data);
         return view('front.product.show', compact('data'));
     }
 }

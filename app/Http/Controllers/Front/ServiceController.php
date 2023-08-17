@@ -39,6 +39,10 @@ class ServiceController extends Controller
         if($data == null) return redirect()->route('front.service.index')->with('error', Constant::NOT_FOUND);
 
         $data->images = json_decode($data->images);
+        $data->size = json_decode($data->size);
+        $data->length = $data->size->length;
+        $data->width = $data->size->width;
+        $data->height = $data->size->height;
         return view('front.service.show', compact('data'));
     }
 }
