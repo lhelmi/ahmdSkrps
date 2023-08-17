@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\UserController;
 // use App\Http\Controllers\Admin\WarrantyController;
-use App\Http\Controllers\manager\ComplaintController;
+use App\Http\Controllers\Manager\ComplaintController;
 use App\Http\Controllers\Auth\ProfileController;
 
 
