@@ -20,9 +20,43 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Kode</label>
-                        <input type="text" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode"
+                        <label for="name">Kode</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control @error('kode-name') is-invalid @enderror" name="kode-name" id="kode-name" placeholder=""
+                                        value="{{ old('kode-name') == null ? $data->kodeName : old('kode-name') }}" maxlength="3">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h3>-</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control @error('kode-type') is-invalid @enderror" name="kode-type" id="kode-type" placeholder=""
+                                        value="{{ old('kode-type') == null ? $data->kodeType : old('kode-type') }}" readonly>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h3>-</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control @error('kode-number') is-invalid @enderror" name="kode-number" id="kode-number" placeholder=""
+                                        value="{{ old('kode-number') == null ? $data->kodeNumber : old('kode-number') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control @error('kode') is-invalid @enderror" name="kode" id="kode"
                         value="{{ old('kode') == null ? $data->kode : old('kode') }}" readonly>
 
+                        @error('kode-name')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+                        @error('kode-type')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
+                        @error('kode-number')
+                            <div class="alert alert-danger mt-1">{{ $message }}</div>
+                        @enderror
                         @error('kode')
                             <div class="alert alert-danger mt-1">{{ $message }}</div>
                         @enderror
@@ -210,12 +244,33 @@
         }
 
         $('#type').on('change', function(){
-            checkKode();
+            let type = $("#type :selected").data('kode');
+            $("#kode-type").val(type);
+            SetKode();
         });
 
-        $('#name').on('keyup', function(){
-            checkKode();
+        $('#kode-name').on('keyup', function(){
+            SetKode();
         });
+
+        $('#kode-number').on('keyup', function(){
+            SetKode();
+        });
+
+        function SetKode() {
+            let kode = $("#kode").val()
+            let name = $('#kode-name').val();
+            if ( typeof name === "undefined") name = '';
+            let type = $("#type :selected").data('kode');
+            if ( typeof type === "undefined") type = '';
+            let number = $('#kode-number').val();
+            if ( typeof number === "undefined") number = '';
+
+            let merge = name + '-' + type + '-' + number;
+            if(name == '-' && type == '-' && number == '-') merge = ""
+            $("#kode").val(merge)
+            if(kode == "--") $("#kode").val("");
+        }
     })
 
 </script>

@@ -113,6 +113,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('admin/product/detail/{kode}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('admin/product/test', [ProductController::class, 'test'])->name('product.test');
+
 Route::get('admin/product/verify/{kode}', [ProductController::class, 'verify'])->name('product.verify');
 Route::get('admin/product/kode/check/{kode}', [ProductController::class, 'checkKode'])->name('product.kode.check');
 

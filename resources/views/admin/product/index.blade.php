@@ -64,6 +64,7 @@
                                             @endif
                                         </td>
                                         <td>
+                                            <a class="btn btn-sm btn-secondary" href="{{ route('product.test') }}">Detail</a> |
                                             @if (Auth::user()->role == '1')
                                                 <a class="btn btn-sm btn-secondary" href="{{ route('product.detail', [$product->kode]) }}">Detail</a> |
                                                 <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $product->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('product.verify', [$product->kode]) }}">

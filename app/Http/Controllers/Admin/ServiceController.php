@@ -106,7 +106,12 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validation = [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
+            // "kode" => ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"],
+            "kode" => ["required", "string", "max:100", "min:1", "unique:services"],
+            "kode-name" => ["required", "string", "max:3", "min:1"],
+            "kode-type" => ["required", "string", "max:3", "min:1"],
+            "kode-number" => ["required", "string", "max:3", "min:1"],
+
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
             "type" => ["required", "string"],
@@ -117,15 +122,29 @@ class ServiceController extends Controller
         ];
 
         $message = [
-            "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
+            // "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
             "kode.unique" => "Kode Produk Sudah digunakan!",
-
             "kode.max" => "Kode maksimal 100 digit!",
+            "kode.min" => "Kode minimal 1 digit!",
+            "kode.required" => "Kode harus diisi!",
+
+            "kode-type.max" => "Tipe Kode maksimal 3 digit!",
+            "kode-type.min" => "Tipe Kode minimal 1 digit!",
+            "kode-type.required" => "Tipe Kode harus diisi!",
+
+            "kode-name.max" => "Nama Kode maksimal 3 digit!",
+            "kode-name.min" => "Nama Kode minimal 1 digit!",
+            "kode-name.required" => "Nama Kode harus diisi!",
+
+            "kode-number.max" => "Nomor Kode maksimal 3 digit!",
+            "kode-number.min" => "Nomor Kode minimal 1 digit!",
+            "kode-number.required" => "Nomor Kode harus diisi!",
+
             "name.max" => "Nama maksimal 100 digit!",
             "length.max" => "Panjang maksimal 1000m!",
             "images.max" => "Gambar maksimal 3!",
 
-            "kode.min" => "Kode minimal 1 digit!",
+
             "name.min" => "Nama minimal 1 digit!",
             "length.min" => "Panjang minimal 1m!",
             "description.min" => "Deskripsi minimal 1 digit!",
@@ -134,7 +153,6 @@ class ServiceController extends Controller
             "price.numeric" => "Harga harus angka!",
 
 
-            "kode.required" => "Kode harus diisi!",
             "name.required" => "Nama harus diisi!",
             "length.required" => "Panjang harus diisi!",
             "type.required" => "Tipe harus diisi!",
@@ -233,6 +251,10 @@ class ServiceController extends Controller
         $data->length = $data->size->length;
         $data->width = $data->size->width;
         $data->height = $data->size->height;
+        $kodeTemp = explode('-', $data->kode);
+        $data->kodeName = $kodeTemp[0];
+        $data->kodeType = $kodeTemp[1];
+        $data->kodeNumber = $kodeTemp[2];
         return view('admin.service.edit', compact('data', 'typeList'));
     }
 
@@ -269,6 +291,10 @@ class ServiceController extends Controller
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "length" => ["required", "string", "max:100", "min:1"],
+
+            "kode-name" => ["required", "string", "max:3", "min:1"],
+            "kode-type" => ["required", "string", "max:3", "min:1"],
+            "kode-number" => ["required", "string", "max:3", "min:1"],
         ];
         $message = [
             "name.max" => "Nama maksimal 100 digit!",
@@ -288,10 +314,22 @@ class ServiceController extends Controller
             "length.required" => "Panjang harus diisi!",
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
+
+            "kode-type.max" => "Tipe Kode maksimal 3 digit!",
+            "kode-type.min" => "Tipe Kode minimal 1 digit!",
+            "kode-type.required" => "Tipe Kode harus diisi!",
+
+            "kode-name.max" => "Nama Kode maksimal 3 digit!",
+            "kode-name.min" => "Nama Kode minimal 1 digit!",
+            "kode-name.required" => "Nama Kode harus diisi!",
+
+            "kode-number.max" => "Nomor Kode maksimal 3 digit!",
+            "kode-number.min" => "Nomor Kode minimal 1 digit!",
+            "kode-number.required" => "Nomor Kode harus diisi!",
         ];
 
         if($id !== $request->kode){
-            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services", "regex:/(?!^\d+$)^.+$/"];
+            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:services"];
             $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
             $message["kode.unique"] = "Kode Produk Sudah digunakan!";
             $message["kode.max"] = "Kode maksimal 100 digit!";
@@ -363,8 +401,9 @@ class ServiceController extends Controller
         try {
             if($data->name !== $request->name || $data->type !== $request->type){
                 // $data->kode = $this->setKode($request->name, $request->type);
-                $data->name = $request->kode;
+                // $data->kode = $request->kode;
             }
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,

@@ -86,7 +86,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validation = [
-            "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
+            // "kode" => ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"],
+            "kode" => ["required", "string", "max:100", "min:1", "unique:products"],
+            "kode-name" => ["required", "string", "max:3", "min:1"],
+            "kode-type" => ["required", "string", "max:3", "min:1"],
+            "kode-number" => ["required", "string", "max:3", "min:1"],
             "name" => ["required", "string", "max:100", "min:1"],
             "length" => ["required", "string", "max:1000", "min:1"],
 
@@ -99,16 +103,27 @@ class ProductController extends Controller
         ];
 
         $message = [
-            "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
+            // "kode.regex" => "Kode harus mengandung angka dan huruf saja!",
             "kode.unique" => "Kode Produk Sudah digunakan!",
 
-            "kode.max" => "Kode maksimal 100 digit!",
+            "kode-type.max" => "Tipe Kode maksimal 3 digit!",
+            "kode-type.min" => "Tipe Kode minimal 1 digit!",
+            "kode-type.required" => "Tipe Kode harus diisi!",
+
+            "kode-name.max" => "Nama Kode maksimal 3 digit!",
+            "kode-name.min" => "Nama Kode minimal 1 digit!",
+            "kode-name.required" => "Nama Kode harus diisi!",
+
+            "kode-number.max" => "Nomor Kode maksimal 3 digit!",
+            "kode-number.min" => "Nomor Kode minimal 1 digit!",
+            "kode-number.required" => "Nomor Kode harus diisi!",
+
             "name.max" => "Nama maksimal 100 digit!",
             "length.max" => "Panjang maksimal 1000m!",
             "stock.max" => "Stok maksimal 2000!",
             "images.max" => "Gambar maksimal 3!",
 
-            "kode.min" => "Kode minimal 1 digit!",
+
             "name.min" => "Nama minimal 1 digit!",
             "length.min" => "Panjang minimal 1m!",
             "stock.min" => "Stok minimal 0!",
@@ -119,7 +134,7 @@ class ProductController extends Controller
             "price.numeric" => "Harga harus angka!",
             "stock.numeric" => "Stok harus angka!",
 
-            "kode.required" => "Kode harus diisi!",
+
             "name.required" => "Nama harus diisi!",
             "length.required" => "Panjang harus diisi!",
             "stock.required" => "Stock harus diisi!",
@@ -241,6 +256,10 @@ class ProductController extends Controller
         $data->length = $data->size->length;
         $data->width = $data->size->width;
         $data->height = $data->size->height;
+        $kodeTemp = explode('-', $data->kode);
+        $data->kodeName = $kodeTemp[0];
+        $data->kodeType = $kodeTemp[1];
+        $data->kodeNumber = $kodeTemp[2];
 
         return view('admin.product.edit', compact('data', 'typeList'));
     }
@@ -259,6 +278,11 @@ class ProductController extends Controller
         return view('admin.product.detail', compact('data', 'typeList'));
     }
 
+    public function test()
+    {
+        return view('admin.product.test');
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -273,6 +297,10 @@ class ProductController extends Controller
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
             "length" => ["required", "string", "max:100", "min:1"],
+
+            "kode-name" => ["required", "string", "max:3", "min:1"],
+            "kode-type" => ["required", "string", "max:3", "min:1"],
+            "kode-number" => ["required", "string", "max:3", "min:1"],
         ];
         $message = [
             "name.max" => "Nama maksimal 100 digit!",
@@ -296,11 +324,22 @@ class ProductController extends Controller
             "stock.required" => "Stock harus diisi!",
             "description.required" => "Deskripsi harus diisi!",
             "price.required" => "Panjang harus diisi!",
+
+            "kode-type.max" => "Tipe Kode maksimal 3 digit!",
+            "kode-type.min" => "Tipe Kode minimal 1 digit!",
+            "kode-type.required" => "Tipe Kode harus diisi!",
+
+            "kode-name.max" => "Nama Kode maksimal 3 digit!",
+            "kode-name.min" => "Nama Kode minimal 1 digit!",
+            "kode-name.required" => "Nama Kode harus diisi!",
+
+            "kode-number.max" => "Nomor Kode maksimal 3 digit!",
+            "kode-number.min" => "Nomor Kode minimal 1 digit!",
+            "kode-number.required" => "Nomor Kode harus diisi!",
         ];
 
         if($id !== $request->kode){
-            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products", "regex:/(?!^\d+$)^.+$/"];
-            $message["kode.regex"] = "Kode harus mengandung angka dan huruf saja!";
+            $validation["kode"] = ["required", "string", "max:100", "min:1", "unique:products"];
             $message["kode.unique"] = "Kode Produk Sudah digunakan!";
             $message["kode.max"] = "Kode maksimal 100 digit!";
             $message["kode.min"] = "Kode minimal 1 digit!";
@@ -371,8 +410,9 @@ class ProductController extends Controller
         try {
             if($data->name !== $request->name || $data->type !== $request->type){
                 // $data->kode = $this->setKode($request->name, $request->type);
-                $data->kode = $request->kode;
+                // $data->kode = $request->kode;
             }
+            $data->kode = $request->kode;
             $data->name = $request->name;
             $size = [
                 'length' => $request->length,
