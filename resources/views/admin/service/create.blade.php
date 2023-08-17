@@ -72,19 +72,19 @@
                         <label for="username">Ukuran</label>
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang" value="{{ old('length') }}">
+                                <input type="text" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang" value="{{ old('length') }}">
                                 @error('length')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar" value="{{ old('width') }}">
+                                <input type="text" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar" value="{{ old('width') }}">
                                 @error('width')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi" value="{{ old('height') }}">
+                                <input type="text" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi" value="{{ old('height') }}">
                                 @error('height')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror

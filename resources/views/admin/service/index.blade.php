@@ -54,13 +54,13 @@
                                         <td>
                                             {{ $service->verify_description. ' : ' }}
                                             @if ($service->is_verify == '1')
-                                                <span class="badge badge-success">Sudah Disetuji</span>
+                                                <span class="badge badge-success">Sudah Disetujui</span>
                                             @elseif ($service->is_verify == '2')
                                                 <span class="badge badge-danger">Ditolak</span>
                                             @elseif ($service->is_verify == '3')
                                                 <span class="badge badge-primary">Sudah Diperbaiki</span>
                                             @else
-                                                <span class="badge badge-secondary">Belum Disetuji</span>
+                                                <span class="badge badge-secondary">Belum Disetujui</span>
                                             @endif
                                         </td>
                                         <td>
