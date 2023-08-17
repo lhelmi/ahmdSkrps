@@ -10,7 +10,7 @@
     <br>
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Detail Product</h3>
+        <h3 class="card-title">Detail Service</h3>
         </div>
         <div class="card-body">
             @if ($message = Session::get('error'))
@@ -21,15 +21,13 @@
             @endif
                 <div class="card-body">
                     <div class="form-group">
-                        <textarea name="" id="" cols="30" rows="10" class="form-control">
-                            Dibatalkan karena blablablabla
-                        </textarea>
+                        <textarea name="" id="" cols="30" rows="10" class="form-control">{{ $data->note }}</textarea>
                     </div>
 
                 </div>
 
                 <div class="card-footer">
-                    <a type="button" href="{{ route('product.index') }}" class="btn btn-default">Kembali</a>
+                    <a type="button" href="{{ route('service.index') }}" class="btn btn-default">Kembali</a>
                 </div>
 
         </div>

@@ -12,7 +12,11 @@
         <div class="small-box bg-success">
             <div class="inner">
                 <h3>{{ $products }}</h3>
-                <p>Produk</p>
+                @if (Auth::user()->role == "0")
+                    <p>Produk</p>
+                @else
+                    <p>Verifikasi Produk</p>
+                @endif
             </div>
             <div class="icon">
                 <i class="fa fa-shopping-bag"></i>
@@ -25,7 +29,11 @@
         <div class="small-box bg-warning">
             <div class="inner">
                 <h3>{{ $services }}</h3>
-                <p>Jasa</p>
+                @if (Auth::user()->role == "0")
+                    <p>Jasa</p>
+                @else
+                    <p>Verifikasi Jasa</p>
+                @endif
             </div>
             <div class="icon">
                 <i class="fa fa-briefcase"></i>

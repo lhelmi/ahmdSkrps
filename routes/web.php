@@ -113,15 +113,17 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('admin/product/detail/{kode}', [ProductController::class, 'detail'])->name('product.detail');
-Route::get('admin/product/test', [ProductController::class, 'test'])->name('product.test');
+Route::post('admin/product/detail/update/{kode}', [ProductController::class, 'approval'])->name('product.detail.update');
 
 Route::get('admin/product/verify/{kode}', [ProductController::class, 'verify'])->name('product.verify');
 Route::get('admin/product/kode/check/{kode}', [ProductController::class, 'checkKode'])->name('product.kode.check');
 
 Route::get('admin/service', [ServiceController::class, 'index'])->name('service.index');
 Route::get('admin/service/detail/{kode}', [ServiceController::class, 'detail'])->name('service.detail');
+Route::post('admin/service/detail/update/{kode}', [ServiceController::class, 'approval'])->name('service.detail.update');
 Route::get('admin/service/verify/{kode}', [ServiceController::class, 'verify'])->name('service.verify');
 Route::get('admin/service/kode/check/{kode}', [ServiceController::class, 'checkKode'])->name('service.kode.check');
+
 
 
 Route::middleware(['isAdministrator', 'verified'])->group(function () {

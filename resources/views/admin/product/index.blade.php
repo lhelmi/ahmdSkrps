@@ -59,18 +59,24 @@
                                             {{ $product->verify_description. ' : ' }}
                                             @if ($product->is_verify == '1')
                                                 <span class="badge badge-success">Sudah Disetuji</span>
+                                            @elseif ($product->is_verify == '2')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @elseif ($product->is_verify == '3')
+                                                <span class="badge badge-primary">Sudah Diperbaiki</span>
                                             @else
                                                 <span class="badge badge-secondary">Belum Disetuji</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-secondary" href="{{ route('product.test') }}">Detail</a> |
                                             @if (Auth::user()->role == '1')
-                                                <a class="btn btn-sm btn-secondary" href="{{ route('product.detail', [$product->kode]) }}">Detail</a> |
-                                                <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $product->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('product.verify', [$product->kode]) }}">
+                                                <a class="btn btn-sm btn-secondary" href="{{ route('product.detail', [$product->kode]) }}">Detail</a>
+                                                {{-- <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $product->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('product.verify', [$product->kode]) }}">
                                                     {{ $product->is_verify == '0' ? 'Setujui' : 'Batal Disetujui' }}
-                                                </a>
+                                                </a> --}}
                                             @else
+                                                @if ($product->is_verify == "2")
+                                                    <a class="btn btn-sm btn-secondary" href="{{ route('product.detail', [$product->kode]) }}">Detail</a> |
+                                                @endif
                                                 <a class="btn btn-sm btn-primary" href="{{ route('product.edit', [$product->kode]) }}">Edit</a> |
                                                 <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('product.destroy', [$product->kode]) }}">Hapus</a>
                                             @endif

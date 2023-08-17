@@ -55,17 +55,24 @@
                                             {{ $service->verify_description. ' : ' }}
                                             @if ($service->is_verify == '1')
                                                 <span class="badge badge-success">Sudah Disetuji</span>
+                                            @elseif ($service->is_verify == '2')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @elseif ($service->is_verify == '3')
+                                                <span class="badge badge-primary">Sudah Diperbaiki</span>
                                             @else
                                                 <span class="badge badge-secondary">Belum Disetuji</span>
                                             @endif
                                         </td>
                                         <td>
                                             @if (Auth::user()->role == '1')
-                                                <a class="btn btn-sm btn-secondary" href="{{ route('service.detail', [$service->kode]) }}">Detail</a> |
-                                                <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $service->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('service.verify', [$service->kode]) }}">
+                                                <a class="btn btn-sm btn-secondary" href="{{ route('service.detail', [$service->kode]) }}">Detail</a>
+                                                {{-- <a onclick="return confirm('Apakah anda yakin?')" class="btn btn-sm btn-{{ $service->is_verify == '0' ? 'success' : 'danger' }}" href="{{ route('service.verify', [$service->kode]) }}">
                                                     {{ $service->is_verify == '0' ? 'Setujui' : 'Batal Disetujui' }}
-                                                </a>
+                                                </a> --}}
                                             @else
+                                                @if ($service->is_verify == "2")
+                                                    <a class="btn btn-sm btn-secondary" href="{{ route('service.detail', [$service->kode]) }}">Detail</a> |
+                                                @endif
                                                 <a class="btn btn-sm btn-primary" href="{{ route('service.edit', [$service->kode]) }}">Edit</a> |
                                                 <a class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')" href="{{ route('service.destroy', [$service->kode]) }}">Hapus</a>
                                             @endif

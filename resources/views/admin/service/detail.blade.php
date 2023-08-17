@@ -9,12 +9,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Ubah Jasa</h3>
+        <h3 class="card-title">Detail Jasa</h3>
         </div>
         <div class="card-body">
             @if ($message = Session::get('error'))
                 <div class="alert alert-danger">{{ $message }}</div>
             @endif
+            @if (Auth::user()->role == "1")
                 <div class="card-body">
                     <div class="form-group">
                         <label>Kode</label>
@@ -95,11 +96,28 @@
                         @endphp
                     @endforeach
                 </div>
+            @endif
+            <form method="POST" action="{{ route('service.detail.update', $data->kode) }}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label>Note</label>
+                    <textarea name="note" id="note"
+                    @if (Auth::user()->role == "0") @disabled(true) @endif
+                    class="form-control @error('note') is-invalid @enderror" cols="30" rows="10">{{ old('note') == null ? $data->note : old('note') }}</textarea>
 
+                    @error('note')
+                        <div class="alert alert-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="card-footer">
-                    <a type="button" href="{{ route('service.index') }}" class="btn btn-default">Batal</a>
+                    @if (Auth::user()->role == "1")
+                        <button type="submit" class="btn btn-success" name="approve" value="0">Setujui</button>
+                        <button type="submit" class="btn btn-danger" name="reject" value="1">Tolak</button>
+                    @endif
+                    <a type="button" href="{{ route('service.index') }}" class="btn btn-default">Kembali</a>
                 </div>
             </form>
+
         </div>
     </div>
 

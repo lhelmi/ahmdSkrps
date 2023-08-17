@@ -278,9 +278,49 @@ class ProductController extends Controller
         return view('admin.product.detail', compact('data', 'typeList'));
     }
 
-    public function test()
+
+    public function approval(Request $request, string $id)
     {
-        return view('admin.product.test');
+        $data = Product::where('kode', $id)->first();
+        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+        $validation = [];
+        $message = [
+            "kode.required" => "Kode harus diisi!",
+        ];
+
+        if($id !== $request->kode){
+            $validation["kode"] = ["required", "string"];
+        }
+
+        if($request->reject == '1'){
+            $validation["note"] = ["required", "string", "min:1"];
+            $message["note.min"] = "Note/Catatan harus diisi minimal 1 digit!";
+            $message["note.required"] = "Note/Catatan harus diisi, untuk data yang ditolak!";
+        }
+
+        $validator = Validator::make($request->all(), $validation, $message);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.detail', $id)->withErrors($validator)->withInput();
+        }
+
+        try {
+            if($request->reject == '1'){
+                $data->is_verify = '2';
+                $data->note = $request->note;
+            }
+            if($request->approve == '0'){
+                $data->is_verify = '1';
+                $data->note = "";
+            }
+
+            $data->save();
+            return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
+        } catch (\Throwable $th) {
+            $this->errorLog($th->getMessage());
+            // dd($th->getMessage());
+            return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
+        }
     }
 
     /**
@@ -412,6 +452,11 @@ class ProductController extends Controller
                 // $data->kode = $this->setKode($request->name, $request->type);
                 // $data->kode = $request->kode;
             }
+            if($data->is_verify == "2"){
+                $data->is_verify = "3";
+            }else{
+                $data->is_verify = '0';
+            }
             $data->kode = $request->kode;
             $data->name = $request->name;
             $size = [
@@ -422,7 +467,6 @@ class ProductController extends Controller
             $size = json_encode($size);
             $data->size = $size;
             $data->type = $request->type;
-            $data->is_verify = '0';
             $data->verify_description = "ubah data";
             $data->stock = $request->stock;
             $data->description = $request->description;
