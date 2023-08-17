@@ -13,13 +13,13 @@ trait Common {
 
     public function typeList(){
         return [
-            "Gypsum Board" => 'GB',
+            "Gypsum Board" => 'G',
             "Baja Ringan & Hollow" => "B",
-            "Sealant & Baut" => "SB",
-            "Kebutuhan Bangunan" => "KB",
-            "Profil Gypsum" => "PG",
-            "PVC" => "PVC",
-            "Atap" => "AT",
+            "Sealant & Baut" => "S",
+            "Kebutuhan Bangunan" => "K",
+            "Profil Gypsum" => "P",
+            "PVC" => "V",
+            "Atap" => "A",
             "Lisplang" => "L"
         ];
     }
