@@ -157,7 +157,7 @@ class ServiceController extends Controller
             "kode-number" => ["required", "string", "max:3", "min:1"],
 
             "name" => ["required", "string", "max:100", "min:1"],
-            "length" => ["required", "string", "max:1000", "min:1"],
+            "length" => ["required", "string", "max:255", "min:1"],
             "type" => ["required", "string"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
@@ -185,12 +185,12 @@ class ServiceController extends Controller
             "kode-number.required" => "Nomor Kode harus diisi!",
 
             "name.max" => "Nama maksimal 100 digit!",
-            "length.max" => "Panjang maksimal 1000m!",
+            "length.max" => "Panjang maksimal 255!",
             "images.max" => "Gambar maksimal 3!",
 
 
             "name.min" => "Nama minimal 1 digit!",
-            "length.min" => "Panjang minimal 1m!",
+            "length.min" => "Panjang minimal 1!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
             "images.min" => "Gambar minimal 1!",
@@ -209,16 +209,16 @@ class ServiceController extends Controller
             'images.*.max' => 'maksimal ukuran gambar adalah 2MB',
         ];
         if($request->height !== null){
-            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $validation['height'] = ["required", "string", "max:255", "min:1"];
             $message['height.required'] = "Tinggi Harus diisi";
-            $message['height.max'] = "Tinggi maksimal 100m!";
-            $message['height.min'] = "Tinggi minimal 1m!";
+            $message['height.max'] = "Tinggi maksimal 255!";
+            $message['height.min'] = "Tinggi minimal 1!";
         }
         if($request->width !== null){
-            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $validation['width'] = ["required", "string", "max:255", "min:1"];
             $message['width.required'] = "Panjang Harus diisi";
-            $message['width.max'] = "Tinggi maksimal 100m!";
-            $message['width.min'] = "Panjang minimal 1m!";
+            $message['width.max'] = "Tinggi maksimal 255!";
+            $message['width.min'] = "Panjang minimal 1!";
         }
         $validator = Validator::make($request->all(), $validation, $message);
         // dd($validator->errors());
@@ -346,7 +346,7 @@ class ServiceController extends Controller
             "images.max" => "Gambar maksimal 3!",
 
             "name.min" => "Nama minimal 1 digit!",
-            "length.min" => "Panjang minimal 1m!",
+            "length.min" => "Panjang minimal 1!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
             "images.min" => "Gambar minimal 1!",
@@ -381,17 +381,17 @@ class ServiceController extends Controller
         }
 
         if($request->height !== null){
-            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $validation['height'] = ["required", "string", "max:255", "min:1"];
             $message['height.required'] = "Tinggi Harus diisi";
-            $message['height.max'] = "Tinggi maksimal 100m!";
-            $message['height.min'] = "Tinggi minimal 1m!";
+            $message['height.max'] = "Tinggi maksimal 255!";
+            $message['height.min'] = "Tinggi minimal 1!";
         }
 
         if($request->width !== null){
-            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $validation['width'] = ["required", "string", "max:255", "min:1"];
             $message['width.required'] = "Panjang Harus diisi";
-            $message['width.max'] = "Tinggi maksimal 100m!";
-            $message['width.min'] = "Panjang minimal 1m!";
+            $message['width.max'] = "Tinggi maksimal 255!";
+            $message['width.min'] = "Panjang minimal 1!";
         }
 
         $uploadCount = 0;
@@ -399,24 +399,24 @@ class ServiceController extends Controller
             $uploadCount = 1;
             $validation['image0'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
             $message['image0.required'] = 'Tinggi Harus diisi';
-            $message['image0.mimes'] = 'Tinggi maksimal 100m!';
-            $message['image0.max'] = 'Tinggi minimal 1m!';
+            $message['image0.mimes'] = 'Tinggi maksimal 255!';
+            $message['image0.max'] = 'Tinggi minimal 1!';
         }
 
         if($request->image1 !== null){
             $uploadCount = 2;
             $validation['image1'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
             $message['image1.required'] = 'Tinggi Harus diisi';
-            $message['image1.mimes'] = 'Tinggi maksimal 100m!';
-            $message['image1.max'] = 'Tinggi minimal 1m!';
+            $message['image1.mimes'] = 'Tinggi maksimal 255!';
+            $message['image1.max'] = 'Tinggi minimal 1!';
         }
 
         if($request->image2 !== null){
             $uploadCount = 3;
             $validation['image2'] = ["required", "mimes:png,jpg,jpeg", "max:2048"];
             $message['image2.required'] = 'Tinggi Harus diisi';
-            $message['image2.mimes'] = 'Tinggi maksimal 100m!';
-            $message['image2.max'] = 'Tinggi minimal 1m!';
+            $message['image2.mimes'] = 'Tinggi maksimal 255!';
+            $message['image2.max'] = 'Tinggi minimal 1!';
         }
 
         $validator = Validator::make($request->all(), $validation, $message);

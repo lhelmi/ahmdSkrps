@@ -92,7 +92,7 @@ class ProductController extends Controller
             "kode-type" => ["required", "string", "max:3", "min:1"],
             "kode-number" => ["required", "string", "max:3", "min:1"],
             "name" => ["required", "string", "max:100", "min:1"],
-            "length" => ["required", "string", "max:1000", "min:1"],
+            "length" => ["required", "string", "max:255", "min:1"],
 
             "type" => ["required", "string"],
             "stock" => ["required", "numeric", "min:0", "max:2000"],
@@ -125,7 +125,7 @@ class ProductController extends Controller
 
 
             "name.min" => "Nama minimal 1 digit!",
-            "length.min" => "Panjang minimal 1m!",
+            "length.min" => "Panjang minimal 1!",
             "stock.min" => "Stok minimal 0!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
@@ -148,17 +148,17 @@ class ProductController extends Controller
             'images.*.max' => 'maksimal ukuran gambar adalah 2MB',
         ];
         if($request->height !== null){
-            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $validation['height'] = ["required", "string", "max:255", "min:1"];
             $message['height.required'] = "Tinggi Harus diisi";
-            $message['height.max'] = "Tinggi maksimal 100m!";
-            $message['height.min'] = "Tinggi minimal 1m!";
+            $message['height.max'] = "Tinggi maksimal 255!";
+            $message['height.min'] = "Tinggi minimal 1!";
         }
 
         if($request->width !== null){
-            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $validation['width'] = ["required", "string", "max:255", "min:1"];
             $message['width.required'] = "Panjang Harus diisi";
-            $message['width.max'] = "Tinggi maksimal 100m!";
-            $message['width.min'] = "Panjang minimal 1m!";
+            $message['width.max'] = "Tinggi maksimal 255!";
+            $message['width.min'] = "Panjang minimal 1!";
         }
 
         $validator = Validator::make($request->all(), $validation,$message);
@@ -336,7 +336,7 @@ class ProductController extends Controller
             "stock" => ["required", "numeric", "min:0"],
             "description" => ["required", "string", "min:1"],
             "price" => ["required", "numeric", "min:1"],
-            "length" => ["required", "string", "max:100", "min:1"],
+            "length" => ["required", "string", "max:255", "min:1"],
 
             "kode-name" => ["required", "string", "max:3", "min:1"],
             "kode-type" => ["required", "string", "max:3", "min:1"],
@@ -349,7 +349,7 @@ class ProductController extends Controller
             "images.max" => "Gambar maksimal 3!",
 
             "name.min" => "Nama minimal 1 digit!",
-            "length.min" => "Panjang minimal 1m!",
+            "length.min" => "Panjang minimal 1!",
             "stock.min" => "Stok minimal 0!",
             "description.min" => "Deskripsi minimal 1 digit!",
             "price.min" => "Harga minimal 1!",
@@ -386,17 +386,17 @@ class ProductController extends Controller
         }
 
         if($request->height !== null){
-            $validation['height'] = ["required", "numeric", "max:100", "min:1"];
+            $validation['height'] = ["required", "string", "max:255", "min:1"];
             $message['height.required'] = "Tinggi Harus diisi";
-            $message['height.max'] = "Tinggi maksimal 100m!";
-            $message['height.min'] = "Tinggi minimal 1m!";
+            $message['height.max'] = "Tinggi maksimal 255!";
+            $message['height.min'] = "Tinggi minimal 1!";
         }
 
         if($request->width !== null){
-            $validation['width'] = ["required", "numeric", "max:1000", "min:1"];
+            $validation['width'] = ["required", "string", "max:255", "min:1"];
             $message['width.required'] = "Panjang Harus diisi";
-            $message['width.max'] = "Tinggi maksimal 100m!";
-            $message['width.min'] = "Panjang minimal 1m!";
+            $message['width.max'] = "Tinggi maksimal 255!";
+            $message['width.min'] = "Panjang minimal 1!";
         }
 
         $uploadCount = 0;
@@ -477,7 +477,7 @@ class ProductController extends Controller
             return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
-            // dd($th->getMessage());
+            dd($th->getMessage());
             return redirect()->route('product.edit', $id)->with('error', $this->messageTemplate(Constant::UPDATE_FAIL, $this->obj));
         }
     }

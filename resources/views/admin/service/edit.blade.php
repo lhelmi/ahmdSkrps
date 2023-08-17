@@ -76,7 +76,7 @@
                         <label for="username">Ukuran</label>
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
+                                <input type="text" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
                                 value="{{ old('length') == null ? $data->length : old('length') }}">
 
                                 @error('length')
@@ -84,14 +84,14 @@
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
+                                <input type="text" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
                                 value="{{ old('width') == null ? $data->width : old('width') }}">
                                 @error('width')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
+                                <input type="text" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
                                 value="{{ old('height') == null ? $data->height : old('height') }}">
                                 @error('height')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
