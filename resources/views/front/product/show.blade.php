@@ -59,10 +59,10 @@
                         @endif
                     </td>
                 </tr>
-                {{-- <tr>
+                <tr>
                     <td>Jenis</td>
                     <td>{{ $data->type }}</td>
-                </tr> --}}
+                </tr>
                 <tr>
                     <td>Stok</td>
                     <td>{{ $data->stock }}</td>

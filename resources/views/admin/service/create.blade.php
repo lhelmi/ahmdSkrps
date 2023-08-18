@@ -36,7 +36,8 @@
                                         <h3>-</h3>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="number" class="form-control @error('kode-number') is-invalid @enderror" name="kode-number" id="kode-number" placeholder="" value="{{ old('kode-number') }}" maxlength="3">
+                                        <input type="text" class="form-control @error('kode-number') is-invalid @enderror" name="kode-number" id="kode-number" placeholder=""
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="{{ old('kode-number') }}" maxlength="3">
                                     </div>
                                 </div>
                             </div>

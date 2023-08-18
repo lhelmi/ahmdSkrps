@@ -60,6 +60,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Jenis</td>
+                        <td>{{ $data->type }}</td>
+                    </tr>
+                    <tr>
                         <td>Harga</td>
                         <td>{{ $data->price }}</td>
                     </tr>
