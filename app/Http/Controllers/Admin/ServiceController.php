@@ -122,18 +122,21 @@ class ServiceController extends Controller
             return redirect()->route('service.detail', $id)->withErrors($validator)->withInput();
         }
 
+        $message = "Error : Data Jasa Gagal Diproses";
         try {
             if($request->reject == '1'){
                 $data->is_verify = '2';
                 $data->note = $request->note;
+                $message = "Data Jasa Telah Ditolak";
             }
             if($request->approve == '0'){
                 $data->is_verify = '1';
                 $data->note = "";
+                $message = "Data Jasa Telah Disetujui";
             }
 
             $data->save();
-            return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
+            return redirect()->route('service.index')->with('success', $message);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
             // dd($th->getMessage());

@@ -45,7 +45,7 @@ class LoginController extends Controller
             'password' => 'required|string',
         ],
         [
-            "username.required" => "Nama Harus diisi",
+            "username.required" => "Username Harus diisi",
             "password.required" => "Password Harus diisi",
         ]
         );

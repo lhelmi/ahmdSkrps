@@ -54,10 +54,10 @@ class AdminController extends Controller
             "name.max" => "Nama maksimal 100!",
             "name.min" => "Nama minimal 1 digit!",
 
-            "username.required" => "Nama Harus diisi",
-            "username.max" => "Nama maksimal 100!",
-            "username.min" => "Nama minimal 8 digit!",
-            "username.unique" => "Nama Sudah digunakan!",
+            "username.required" => "username Harus diisi",
+            "username.max" => "username maksimal 100!",
+            "username.min" => "username minimal 8 digit!",
+            "username.unique" => "username Sudah digunakan!",
 
             "email.required" => "email Harus diisi",
             "email.max" => "email maksimal 100!",
@@ -117,10 +117,10 @@ class AdminController extends Controller
             "name.max" => "Nama maksimal 100!",
             "name.min" => "Nama minimal 1 digit!",
 
-            "username.required" => "Nama Harus diisi",
-            "username.max" => "Nama maksimal 100!",
-            "username.min" => "Nama minimal 8 digit!",
-            "username.unique" => "Nama Sudah digunakan!",
+            "username.required" => "username Harus diisi",
+            "username.max" => "username maksimal 100!",
+            "username.min" => "username minimal 8 digit!",
+            "username.unique" => "username Sudah digunakan!",
 
             "email.required" => "email Harus diisi",
             "email.max" => "email maksimal 100!",

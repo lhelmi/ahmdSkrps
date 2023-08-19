@@ -89,10 +89,10 @@ class RegisterController extends Controller
             "address.max" => "Alamat maksimal 100!",
             "address.min" => "Alamat minimal 1 digit!",
 
-            "username.required" => "Nama Harus diisi",
-            "username.max" => "Nama maksimal 100!",
-            "username.min" => "Nama minimal 8 digit!",
-            "username.unique" => "Nama Sudah digunakan!",
+            "username.required" => "Username Harus diisi",
+            "username.max" => "Username maksimal 100!",
+            "username.min" => "Username minimal 8 digit!",
+            "username.unique" => "Username Sudah digunakan!",
 
             "email.required" => "email Harus diisi",
             "email.max" => "email maksimal 100!",

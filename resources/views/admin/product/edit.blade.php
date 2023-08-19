@@ -28,7 +28,8 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <input type="text" class="form-control @error('kode-name') is-invalid @enderror" name="kode-name" id="kode-name" placeholder=""
-                                        value="{{ old('kode-name') == null ? $data->kodeName : old('kode-name') }}" maxlength="3">
+                                        value="{{ old('kode-name') == null ? $data->kodeName : old('kode-name') }}" maxlength="3"
+                                        oninput="this.value=this.value.replace(/[^A-Za-z]+$/,'');">
                                     </div>
                                     <div class="col-md-1">
                                         <h3>-</h3>
@@ -78,7 +79,7 @@
                         <label for="username">Ukuran</label>
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
+                                <input type="text" class="form-control @error('length') is-invalid @enderror" name="length" id="length" placeholder="Panjang"
                                 value="{{ old('length') == null ? $data->length : old('length') }}">
 
                                 @error('length')
@@ -86,14 +87,14 @@
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
+                                <input type="text" class="form-control @error('width') is-invalid @enderror" name="width" id="width" placeholder="Lebar"
                                 value="{{ old('width') == null ? $data->width : old('width') }}">
                                 @error('width')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
+                                <input type="text" class="form-control @error('height') is-invalid @enderror" name="height" id="height" placeholder="Tinggi"
                                 value="{{ old('height') == null ? $data->height : old('height') }}">
                                 @error('height')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>

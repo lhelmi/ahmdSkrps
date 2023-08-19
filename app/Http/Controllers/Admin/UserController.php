@@ -63,10 +63,10 @@ class UserController extends Controller
             "address.max" => "Alamat maksimal 100!",
             "address.min" => "Alamat minimal 1 digit!",
 
-            "username.required" => "Nama Harus diisi",
-            "username.max" => "Nama maksimal 100!",
-            "username.min" => "Nama minimal 8 digit!",
-            "username.unique" => "Nama Sudah digunakan!",
+            "username.required" => "username Harus diisi",
+            "username.max" => "username maksimal 100!",
+            "username.min" => "username minimal 8 digit!",
+            "username.unique" => "username Sudah digunakan!",
 
             "email.required" => "email Harus diisi",
             "email.max" => "email maksimal 100!",
@@ -146,10 +146,10 @@ class UserController extends Controller
             "address.max" => "Alamat maksimal 100!",
             "address.min" => "Alamat minimal 1 digit!",
 
-            "username.required" => "Nama Harus diisi",
-            "username.max" => "Nama maksimal 100!",
-            "username.min" => "Nama minimal 8 digit!",
-            "username.unique" => "Nama Sudah digunakan!",
+            "username.required" => "username Harus diisi",
+            "username.max" => "username maksimal 100!",
+            "username.min" => "username minimal 8 digit!",
+            "username.unique" => "username Sudah digunakan!",
 
             "email.required" => "email Harus diisi",
             "email.max" => "email maksimal 100!",

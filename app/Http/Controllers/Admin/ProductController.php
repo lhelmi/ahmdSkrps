@@ -304,18 +304,21 @@ class ProductController extends Controller
             return redirect()->route('product.detail', $id)->withErrors($validator)->withInput();
         }
 
+        $message = "Error : Data Produk Gagal Diproses";
         try {
             if($request->reject == '1'){
                 $data->is_verify = '2';
                 $data->note = $request->note;
+                $message = "Data Produk Telah Ditolak";
             }
             if($request->approve == '0'){
                 $data->is_verify = '1';
                 $data->note = "";
+                $message = "Data Produk Telah Disetujui";
             }
 
             $data->save();
-            return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::UPDATE_SUCCESS, $this->obj));
+            return redirect()->route('product.index')->with('success', $message);
         } catch (\Throwable $th) {
             $this->errorLog($th->getMessage());
             // dd($th->getMessage());

@@ -24,7 +24,8 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control @error('kode-name') is-invalid @enderror" name="kode-name" id="kode-name" placeholder="" value="{{ old('kode-name') }}" maxlength="3">
+                                        <input type="text" class="form-control @error('kode-name') is-invalid @enderror" name="kode-name" id="kode-name" placeholder=""
+                                        value="{{ old('kode-name') }}" maxlength="3" oninput="this.value=this.value.replace(/[^A-Za-z]+$/,'');">
                                     </div>
                                     <div class="col-md-1">
                                         <h3>-</h3>
