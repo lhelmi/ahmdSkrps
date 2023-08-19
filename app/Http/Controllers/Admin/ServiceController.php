@@ -484,16 +484,15 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Service::where('kode', $id)->first();
-        if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
-
         try {
-            if(Auth::user()->role == '0'){
-                $data->is_verify = '0';
-                $data->verify_description = "hapus data";
-                $data->save();
-                return redirect()->route('service.index')->with('success', "Data Jasa Berhasil Diubah");
-            }
+            $data = Service::where('kode', $id)->first();
+            if($data == null) return redirect()->route('service.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+            // if(Auth::user()->role == '0'){
+            //     $data->is_verify = '0';
+            //     $data->verify_description = "hapus data";
+            //     $data->save();
+            //     return redirect()->route('service.index')->with('success', "Data Jasa Berhasil Diubah");
+            // }
             $data->delete();
             return redirect()->route('service.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {

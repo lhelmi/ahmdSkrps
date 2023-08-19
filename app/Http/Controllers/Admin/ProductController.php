@@ -490,15 +490,15 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Product::where('kode', $id)->first();
-        if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
         try {
-            if(Auth::user()->role == '0'){
-                $data->is_verify = '0';
-                $data->verify_description = "hapus data";
-                $data->save();
-                return redirect()->route('product.index')->with('success', "Data Produk Berhasil Diubah");
-            }
+            $data = Product::where('kode', $id)->first();
+            if($data == null) return redirect()->route('product.index')->with('error', $this->messageTemplate(Constant::NOT_FOUND, $this->obj));
+            // if(Auth::user()->role == '0'){
+            //     $data->is_verify = '0';
+            //     $data->verify_description = "hapus data";
+            //     $data->save();
+            //     return redirect()->route('product.index')->with('success', "Data Produk Berhasil Diubah");
+            // }
             $data->delete();
             return redirect()->route('product.index')->with('success', $this->messageTemplate(Constant::DESTROY_SUCCESS, $this->obj));
         } catch (\Throwable $th) {
